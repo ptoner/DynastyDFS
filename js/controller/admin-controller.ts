@@ -19,6 +19,16 @@ class AdminController {
         });
     }
 
+    async showLeagueSettings() {
+
+        let leagueSettings = await this.leagueSettingsService.getLeagueSettings()
+
+        let leagueSettingsViewModel = this._translateToCommandModel(leagueSettings)
+
+        return new ModelView(leagueSettingsViewModel, "pages/admin/league_settings.html")
+
+    }
+
     async showLeagueSettingsForm() {
 
         let leagueSettings = await this.leagueSettingsService.getLeagueSettings()

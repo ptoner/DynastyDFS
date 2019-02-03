@@ -62,6 +62,17 @@ class RouteService {
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
         self.initAndResolve(resolve,function() {
+          return Global.adminController.showLeagueSettings()
+        })
+      }
+    })
+
+    routes.push({
+      path: '/admin/showLeagueSettingsForm',
+
+      // @ts-ignore
+      async async(routeTo, routeFrom, resolve, reject) {
+        self.initAndResolve(resolve,function() {
           return Global.adminController.showLeagueSettingsForm()
         })
       }
