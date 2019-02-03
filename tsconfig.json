@@ -2,11 +2,11 @@
   "compilerOptions": {
     "lib": [ "es2015", "dom" ],
     "skipLibCheck": true
-  },
+  }
 
-  "include": [
-    "./typings-custom/**/*.ts"
-  ]
+//  "include": [
+//    "./typings-custom/**/*.ts"
+//  ]
 
 
 }
