@@ -25,13 +25,14 @@ class LeagueSettingsService {
 
         let currentSettings = await this.getLeagueSettings()
 
+        leagueSettings.id = currentSettings.id
 
         if (!currentSettings) {
             //Create them if they don't exist
             return Global.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
         } else {
             //Update existing
-            return Global.freedom.update(LEAGUE_SETTINGS_REPO, leagueSettings.id, leagueSettings)
+            return Global.freedom.update(LEAGUE_SETTINGS_REPO, currentSettings.id, leagueSettings)
         }
 
     }

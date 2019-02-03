@@ -49,10 +49,16 @@ class AdminController {
             //Get data
             var leagueSettingCommandModel = Global.app.form.convertToData('#league-settings-form');
 
-            this._translateFromCommandModel(leagueSettingCommandModel)
+            console.log(leagueSettingCommandModel)
+
+            let leagueSettings = this._translateFromCommandModel(leagueSettingCommandModel)
+
+            console.log(leagueSettings)
 
             //Save
-            //await this.leagueSettingsService.update(leagueSettings)
+            leagueSettings = await this.leagueSettingsService.update(leagueSettings)
+
+            console.log(leagueSettings)
 
             //Redirect
             // @ts-ignore
@@ -67,7 +73,7 @@ class AdminController {
 
     _translateFromCommandModel(commandModel: any) {
 
-        let positionLimits: PositionLimits[]
+        let positionLimits: PositionLimits[] = []
 
         positionLimits.push(new PositionLimits("C", commandModel.catcherStarters, commandModel.catcherMax))
         positionLimits.push(new PositionLimits("1B", commandModel.firstBaseStarters, commandModel.firstBaseMax))
@@ -83,6 +89,7 @@ class AdminController {
 
 
         const leagueSettings = new LeagueSettings (
+            commandModel.id,
             commandModel.leagueName,
             commandModel.rosterSize,
             commandModel.totalStarters,
@@ -140,18 +147,17 @@ class AdminController {
 
     _translateToCommandModel(leagueSettings: LeagueSettings) : any {
 
-
-        const catchers: PositionLimits = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "C" })[0]
-        const firstBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "1B" })[0]
-        const secondBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "2B" })[0]
-        const thirdBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "3B" })[0]
-        const shortstop: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "SS" })[0]
-        const infield: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "IF" })[0]
-        const outfield: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "OF" })[0]
-        const util: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "UTIL" })[0]
-        const sp: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "SP" })[0]
-        const rp: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "RP" })[0]
-        const p: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { positionLimit.position == "P" })[0]
+        const catchers: PositionLimits = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "C" })[0]
+        const firstBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "1B" })[0]
+        const secondBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "2B" })[0]
+        const thirdBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "3B" })[0]
+        const shortstop: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "SS" })[0]
+        const infield: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "IF" })[0]
+        const outfield: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "OF" })[0]
+        const util: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "UTIL" })[0]
+        const sp: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "SP" })[0]
+        const rp: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "RP" })[0]
+        const p: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "P" })[0]
 
 
         const commandModel = {
@@ -238,8 +244,6 @@ class AdminController {
             rpMax: rp.maximums
         }
 
-
-        console.log(commandModel)
 
         return commandModel
     }
