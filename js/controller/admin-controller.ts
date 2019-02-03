@@ -63,7 +63,6 @@ class AdminController {
 
             let leagueSettings = this._translateFromCommandModel(leagueSettingCommandModel)
 
-            console.log(leagueSettings)
 
             //Save
             leagueSettings = await this.leagueSettingsService.update(leagueSettings)
@@ -157,17 +156,35 @@ class AdminController {
 
     _translateToCommandModel(leagueSettings: LeagueSettings) : any {
 
-        const catchers: PositionLimits = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "C" })[0]
-        const firstBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "1B" })[0]
-        const secondBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "2B" })[0]
-        const thirdBase: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "3B" })[0]
-        const shortstop: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "SS" })[0]
-        const infield: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "IF" })[0]
-        const outfield: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "OF" })[0]
-        const util: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "UTIL" })[0]
-        const sp: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "SP" })[0]
-        const rp: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "RP" })[0]
-        const p: PositionLimits  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "P" })[0]
+        if (!leagueSettings) return null
+
+        let catchers: PositionLimits
+        let firstBase: PositionLimits
+        let secondBase: PositionLimits
+        let thirdBase: PositionLimits
+        let shortstop: PositionLimits
+        let infield: PositionLimits
+        let outfield: PositionLimits
+        let util: PositionLimits
+        let sp: PositionLimits
+        let rp: PositionLimits
+        let p: PositionLimits
+
+
+        if (leagueSettings.positionLimits) {
+            catchers = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "C" })[0]
+            firstBase  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "1B" })[0]
+            secondBase  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "2B" })[0]
+            thirdBase  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "3B" })[0]
+            shortstop  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "SS" })[0]
+            infield  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "IF" })[0]
+            outfield  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "OF" })[0]
+            util  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "UTIL" })[0]
+            sp  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "SP" })[0]
+            rp  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "RP" })[0]
+            p  = leagueSettings.positionLimits.filter(function(positionLimit) { return positionLimit.position == "P" })[0]
+        }
+
 
 
         const commandModel = {
@@ -220,38 +237,38 @@ class AdminController {
 
 
             //Define position limits
-            catcherStarters: catchers.starters,
-            catcherMax: catchers.maximums,
+            catcherStarters: catchers ? catchers.starters : null,
+            catcherMax: catchers ? catchers.maximums : null,
 
-            firstBaseStarters: firstBase.starters,
-            firstBaseMax: firstBase.maximums,
+            firstBaseStarters: firstBase? firstBase.starters : null,
+            firstBaseMax: firstBase ? firstBase.maximums : null,
 
-            secondBaseStarters: secondBase.starters,
-            secondBaseMax: secondBase.maximums,
+            secondBaseStarters: secondBase ? secondBase.starters : null,
+            secondBaseMax: secondBase ? secondBase.maximums : null,
 
-            thirdBaseStarters: thirdBase.starters,
-            thirdBaseMax: thirdBase.maximums,
+            thirdBaseStarters: thirdBase ? thirdBase.starters : null,
+            thirdBaseMax: thirdBase ? thirdBase.maximums : null,
 
-            shortstopStarters: shortstop.starters,
-            shortstopMax: shortstop.maximums,
+            shortstopStarters: shortstop ? shortstop.starters : null,
+            shortstopMax: shortstop ? shortstop.maximums : null,
 
-            infieldStarters: infield.starters,
-            infieldMax: infield.maximums,
+            infieldStarters: infield ? infield.starters : null,
+            infieldMax: infield ? infield.maximums : null,
 
-            ofStarters: outfield.starters,
-            ofMax: outfield.maximums,
+            ofStarters: outfield ? outfield.starters : null,
+            ofMax: outfield ? outfield.maximums : null,
 
-            utilStarters: util.starters,
-            utilMax: util.maximums,
+            utilStarters: util ? util.starters : null,
+            utilMax: util ? util.maximums : null,
 
-            spStarters: sp.starters,
-            spMax: sp.maximums,
+            spStarters: sp? sp.starters : null,
+            spMax: sp? sp.maximums : null,
 
-            pStarters: p.starters,
-            pMax : p.maximums,
+            pStarters: p ? p.starters : null,
+            pMax : p ? p.maximums : null,
 
-            rpStarters: rp.starters,
-            rpMax: rp.maximums
+            rpStarters: rp ? rp.starters : null,
+            rpMax: rp ? rp.maximums : null
         }
 
 

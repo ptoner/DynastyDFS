@@ -1,7 +1,4 @@
 const Freedom: any = require('freedom-for-data')
-
-console.log(Freedom)
-
 const Framework7: any = require('framework7')
 
 
@@ -23,13 +20,6 @@ import {AdminController}  from '../js/controller/admin-controller'
 
 
 module.exports = async () => {
-
-    Global.freedom = await Freedom({
-        ipfsHost: "localhost",
-        ipfsPort: 5001,
-        recordContractAddress: "0xE6655028D4A85DBfD6F362446541057aCC1b10A2",
-        recordContractTransactionHash: "0x7f8d430867b1d59cf918faece6ccde7ddc97874ddc80c559ca2cba40001a291b"
-    })
 
     let settingsService = new SettingsService()
     let routeService = new RouteService(settingsService)

@@ -6,6 +6,7 @@ import {Template7} from "framework7";
 const Freedom: any = require('freedom-for-data')
 
 import {ModelView} from "../model-view";
+import freedom = Global.freedom;
 
 class RouteService {
 
@@ -18,7 +19,7 @@ class RouteService {
 
     // @ts-ignore
     const homeRoute = async function(routeTo, routeFrom, resolve, reject) {
-
+      console.log('here')
       let settings = self.settingsService.getSettings()
 
       if (!settings) {
@@ -87,6 +88,8 @@ class RouteService {
 // @ts-ignore
   async initialize() {
 
+    if (Global.freedom) return
+
     const settings = this.settingsService.getSettings()
     if (!settings) {
       throw 'No settings found'
@@ -97,12 +100,14 @@ class RouteService {
       ipfsGateway: `http://${settings.ipfsHost}:${settings.ipfsGatewayPort}/ipfs`
     }
 
+
     Global.freedom = await Freedom({
       ipfsHost: settings.ipfsHost,
       ipfsPort: settings.ipfsApiPort,
       recordContractAddress: settings.recordContractAddress,
       recordContractTransactionHash: settings.recordContractTransactionHash
     });
+
 
   }
 
