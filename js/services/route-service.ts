@@ -97,13 +97,16 @@ class RouteService {
 
     Template7.global = {
       settings: settings,
-      ipfsGateway: `http://${settings.ipfsHost}:${settings.ipfsGatewayPort}/ipfs`
+      ipfsGateway: `https://${settings.ipfsHost}:${settings.ipfsGatewayPort}/ipfs`
     }
 
 
     Global.freedom = await Freedom({
-      ipfsHost: settings.ipfsHost,
-      ipfsPort: settings.ipfsApiPort,
+      ipfsConfig: {
+        host: settings.ipfsHost,
+        port: settings.ipfsApiPort,
+        protocol: 'https'
+      },
       recordContractAddress: settings.recordContractAddress,
       recordContractTransactionHash: settings.recordContractTransactionHash
     });

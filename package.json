@@ -9,6 +9,7 @@
   "scripts": {
     "test": "truffle test",
     "serve": "http-server ./www/ -o -c 1 -a localhost -p 8081",
+    "build": "./build.sh",
     "watch": "watchify --debug -s Fantasy -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-proposal-class-properties ] ] ./js/index.ts -p [ tsify  ] -o ./www/js/fantasybaseball.js -v"
   },
   "keywords": [

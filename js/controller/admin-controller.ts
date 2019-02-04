@@ -39,7 +39,7 @@ class AdminController {
             leagueSettingsCommandModel = this._translateToCommandModel(leagueSettings)
         }
 
-
+        console.log(leagueSettingsCommandModel)
         return new ModelView(leagueSettingsCommandModel, "pages/admin/league_settings_form.html")
 
     }
@@ -188,6 +188,7 @@ class AdminController {
 
 
         const commandModel = {
+            id: leagueSettings.id,
             leagueName: leagueSettings.leagueName,
             rosterSize: leagueSettings.rosterSize,
             totalStarters: leagueSettings.totalStarters,
