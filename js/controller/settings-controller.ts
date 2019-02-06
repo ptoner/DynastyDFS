@@ -33,8 +33,7 @@ class SettingsController {
         this.settingsService.saveSettings(settingsData)
 
 
-        // @ts-ignore
-        Global.app.methods.navigate("/?reinit=true");
+        Global.navigate("/?reinit=true");
 
     }
 

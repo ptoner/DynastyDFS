@@ -48,24 +48,6 @@ module.exports = async () => {
             }
         },
 
-        methods: {
-
-            // @ts-ignore
-            navigate(url: string) {
-                this.view.main.router.navigate(url);
-            },
-
-            // @ts-ignore
-            showExceptionPopup: function (ex) {
-                if (ex.name == "IpfsException") {
-                    Global.app.dialog.alert(ex.message, "Problem connecting to IPFS")
-                } else {
-                    Global.app.dialog.alert(ex.message, "There was an error")
-                }
-            }
-
-        },
-
         // App routes
         routes: routeService.getRoutes(rootUrl.pathname)
 

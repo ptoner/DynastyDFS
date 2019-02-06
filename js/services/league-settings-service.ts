@@ -27,7 +27,6 @@ class LeagueSettingsService {
 
         if (!currentSettings) {
             //Create them if they don't exist
-            console.log(1)
             return Global.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
         } else {
             leagueSettings.id = currentSettings.id

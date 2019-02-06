@@ -12,9 +12,20 @@ export namespace Global {
     export var homeController: HomeController
     export var adminController: AdminController
     export var settingsController: SettingsController
-    export var leagueSettingsService: LeagueSettingsService
-    export var playerService: PlayerService
-    export var settingsService: SettingsService
-    export var routeService: RouteService
     export var app: Framework7
+
+
+    // @ts-ignore
+    export function navigate(url: string) {
+        this.view.main.router.navigate(url);
+    }
+
+    // @ts-ignore
+    export function showExceptionPopup(ex) {
+        if (ex.name == "IpfsException") {
+            Global.app.dialog.alert(ex.message, "Problem connecting to IPFS")
+        } else {
+            Global.app.dialog.alert(ex.message, "There was an error")
+        }
+    }
 }

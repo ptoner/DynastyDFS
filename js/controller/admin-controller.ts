@@ -71,11 +71,11 @@ class AdminController {
 
             //Redirect
             // @ts-ignore
-            Global.app.methods.navigate("/admin")
+            Global.navigate("/admin")
 
         } catch (ex) {
             // @ts-ignore
-            Global.app.methods.showExceptionPopup(ex)
+            Global.showExceptionPopup(ex)
         }
     }
 
