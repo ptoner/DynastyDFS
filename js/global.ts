@@ -15,17 +15,16 @@ export namespace Global {
     export var app: Framework7
 
 
-    // @ts-ignore
+
     export function navigate(url: string) {
-        this.view.main.router.navigate(url);
+        app.view.main.router.navigate(url);
     }
 
-    // @ts-ignore
     export function showExceptionPopup(ex) {
         if (ex.name == "IpfsException") {
-            Global.app.dialog.alert(ex.message, "Problem connecting to IPFS")
+            app.dialog.alert(ex.message, "Problem connecting to IPFS")
         } else {
-            Global.app.dialog.alert(ex.message, "There was an error")
+            app.dialog.alert(ex.message, "There was an error")
         }
     }
 }

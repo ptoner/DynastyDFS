@@ -47,6 +47,8 @@ export default {
       preloadPreviousPage: true,
       allowDuplicateUrls: false,
       reloadPages: false,
+      reloadDetail: false,
+      masterDetailBreakpoint: 0,
       removeElements: true,
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
@@ -74,7 +76,6 @@ export default {
       pushStateOnLoad: true,
       // Animate Pages
       animate: true,
-      animateWithJS: false,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
       iosSeparateDynamicNavbar: true,
@@ -82,7 +83,7 @@ export default {
       iosAnimateNavbarBackIcon: true,
       // Delays
       iosPageLoadDelay: 0,
-      materialPageLoadDelay: 0,
+      mdPageLoadDelay: 0,
       // Routes hooks
       routesBeforeEnter: null,
       routesBeforeLeave: null,

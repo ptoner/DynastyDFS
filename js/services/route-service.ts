@@ -19,7 +19,7 @@ class RouteService {
 
     // @ts-ignore
     const homeRoute = async function(routeTo, routeFrom, resolve, reject) {
-      console.log('here')
+
       let settings = self.settingsService.getSettings()
 
       if (!settings) {
@@ -27,7 +27,7 @@ class RouteService {
         return
       }
 
-      self.initAndResolve(resolve,function() {
+      await self.initAndResolve(resolve,function() {
         return Global.homeController.showHomePage()
       })
 
@@ -52,7 +52,7 @@ class RouteService {
 
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
-        self.resolveController(resolve, Global.settingsController.showSettingsForm())
+        await self.resolveController(resolve, Global.settingsController.showSettingsForm())
       }
     })
 
@@ -62,7 +62,7 @@ class RouteService {
 
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
-        self.initAndResolve(resolve,function() {
+        await self.initAndResolve(resolve,function() {
           return Global.adminController.showLeagueSettings()
         })
       }
@@ -73,7 +73,7 @@ class RouteService {
 
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
-        self.initAndResolve(resolve,function() {
+        await self.initAndResolve(resolve,function() {
           return Global.adminController.showLeagueSettingsForm()
         })
       }
@@ -105,7 +105,7 @@ class RouteService {
       ipfsConfig: {
         host: settings.ipfsHost,
         port: settings.ipfsApiPort,
-        protocol: 'https'
+        protocol: 'http'
       },
       recordContractAddress: settings.recordContractAddress,
       recordContractTransactionHash: settings.recordContractTransactionHash
@@ -124,12 +124,12 @@ class RouteService {
 
       console.log(ex)
 
-      // @ts-ignore
-      Global.app.methods.showExceptionPopup(ex)
 
-      // @ts-ignore
-      Global.app.methods.navigate("/settings")
+      Global.showExceptionPopup(ex)
+
+      Global.navigate("/settings")
     }
+
   }
 
 
@@ -150,9 +150,10 @@ class RouteService {
           context: modelView.model
         })
 
+
     } catch (ex) {
-      // @ts-ignore
-      Global.app.methods.showExceptionPopup(ex)
+
+      Global.showExceptionPopup(ex)
 
       console.log(ex)
     }

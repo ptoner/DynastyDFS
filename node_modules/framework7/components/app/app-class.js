@@ -4,6 +4,7 @@ import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
+import EventsClass from '../../utils/events-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 import ModalMethods from '../../utils/modal-methods';
 import loadModule from './load-module';
@@ -11,6 +12,9 @@ import loadModule from './load-module';
 class Framework7 extends Framework7Class {
   constructor(params) {
     super(params);
+    if (Framework7.instance) {
+      throw new Error('Framework7 is already initialized and can\'t be initialized more than once');
+    }
 
     const passedParams = Utils.extend({}, params);
 
@@ -75,6 +79,9 @@ class Framework7 extends Framework7Class {
     // Install Modules
     app.useModules();
 
+    // Init Data & Methods
+    app.initData();
+
     // Init
     if (app.params.init) {
       if (Device.cordova && app.params.initOnDeviceReady) {
@@ -89,22 +96,8 @@ class Framework7 extends Framework7Class {
     return app;
   }
 
-  init() {
+  initData() {
     const app = this;
-    if (app.initialized) return app;
-
-    app.root.addClass('framework7-initializing');
-
-    // RTL attr
-    if (app.rtl) {
-      $('html').attr('dir', 'rtl');
-    }
-
-    // Root class
-    app.root.addClass('framework7-root');
-
-    // Theme class
-    $('html').removeClass('ios md').addClass(app.theme);
 
     // Data
     app.data = {};
@@ -124,6 +117,25 @@ class Framework7 extends Framework7Class {
         }
       });
     }
+  }
+
+  init() {
+    const app = this;
+    if (app.initialized) return app;
+
+    app.root.addClass('framework7-initializing');
+
+    // RTL attr
+    if (app.rtl) {
+      $('html').attr('dir', 'rtl');
+    }
+
+    // Root class
+    app.root.addClass('framework7-root');
+
+    // Theme class
+    $('html').removeClass('ios md').addClass(app.theme);
+
     // Init class
     Utils.nextFrame(() => {
       app.root.removeClass('framework7-initializing');
@@ -174,6 +186,10 @@ class Framework7 extends Framework7Class {
 
   static get Class() {
     return Framework7Class;
+  }
+
+  static get Events() {
+    return EventsClass;
   }
 }
 

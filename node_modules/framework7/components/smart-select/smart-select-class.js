@@ -77,7 +77,7 @@ class SmartSelect extends Framework7Class {
       const value = ss.$selectEl.val();
       ss.$el.trigger('smartselect:change', ss, value);
       ss.emit('local::change smartSelectChange', ss, value);
-      ss.setValue();
+      ss.setTextValue();
     }
     ss.attachEvents = function attachEvents() {
       $el.on('click', onClick);
@@ -141,6 +141,43 @@ class SmartSelect extends Framework7Class {
     return ss;
   }
 
+  setValue(value) {
+    const ss = this;
+    let newValue = value;
+    let optionText = [];
+    let optionEl;
+    let displayAs;
+    let text;
+    if (ss.multiple) {
+      if (!Array.isArray(newValue)) newValue = [newValue];
+      for (let i = 0; i < ss.selectEl.options.length; i += 1) {
+        optionEl = ss.selectEl.options[i];
+        if (newValue.indexOf(optionEl.value) >= 0) {
+          optionEl.selected = true;
+        } else {
+          optionEl.selected = false;
+        }
+        if (optionEl.selected) {
+          displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
+          text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
+          optionText.push(text.trim());
+        }
+      }
+    } else {
+      optionEl = ss.$selectEl.find(`option[value="${newValue}"]`)[0];
+      displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
+      text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
+      optionText = [text];
+      ss.selectEl.value = newValue;
+    }
+    ss.$valueEl.text(optionText.join(', '));
+  }
+
+  getValue() {
+    const ss = this;
+    return ss.$selectEl.val();
+  }
+
   getView() {
     const ss = this;
     let view = ss.view || ss.params.view;
@@ -170,7 +207,7 @@ class SmartSelect extends Framework7Class {
     }
   }
 
-  setValue(value) {
+  setTextValue(value) {
     const ss = this;
     let valueArray = [];
     if (typeof value !== 'undefined') {
@@ -311,8 +348,8 @@ class SmartSelect extends Framework7Class {
     const cssClass = ss.params.cssClass;
     const pageHtml = `
       <div class="page smart-select-page ${cssClass}" data-name="smart-select-page" data-select-name="${ss.selectName}">
-        <div class="navbar ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
-          <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
+        <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
+          <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
             <div class="left">
               <a href="#" class="link back">
                 <i class="icon icon-back"></i>
@@ -325,7 +362,7 @@ class SmartSelect extends Framework7Class {
         </div>
         ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
         <div class="page-content">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
             <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>
@@ -347,7 +384,7 @@ class SmartSelect extends Framework7Class {
       <div class="popup smart-select-popup ${cssClass} ${ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : ''}" data-select-name="${ss.selectName}">
         <div class="view">
           <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
-            <div class="navbar ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
+            <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
               <div class="navbar-inner sliding">
                 <div class="left">
                   <a href="#" class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">
@@ -361,7 +398,7 @@ class SmartSelect extends Framework7Class {
             </div>
             ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
             <div class="page-content">
-              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
+              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
                 <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
               </div>
             </div>
@@ -378,7 +415,7 @@ class SmartSelect extends Framework7Class {
     const cssClass = ss.params.cssClass;
     const sheetHtml = `
       <div class="sheet-modal smart-select-sheet ${cssClass}" data-select-name="${ss.selectName}">
-        <div class="toolbar ${ss.params.toolbarColorTheme ? `theme-${ss.params.toolbarColorTheme}` : ''}">
+        <div class="toolbar toolbar-top ${ss.params.toolbarColorTheme ? `color-${ss.params.toolbarColorTheme}` : ''}">
           <div class="toolbar-inner">
             <div class="left"></div>
             <div class="right">
@@ -388,7 +425,7 @@ class SmartSelect extends Framework7Class {
         </div>
         <div class="sheet-modal-inner">
           <div class="page-content">
-            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
+            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
               <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
             </div>
           </div>
@@ -405,7 +442,7 @@ class SmartSelect extends Framework7Class {
     const popoverHtml = `
       <div class="popover smart-select-popover ${cssClass}" data-select-name="${ss.selectName}">
         <div class="popover-inner">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
             <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>
@@ -712,7 +749,7 @@ class SmartSelect extends Framework7Class {
   init() {
     const ss = this;
     ss.attachEvents();
-    ss.setValue();
+    ss.setTextValue();
   }
 
   destroy() {

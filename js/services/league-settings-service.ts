@@ -15,6 +15,9 @@ class LeagueSettingsService {
         try {
             leagueSettings = await Global.freedom.readByIndex(LEAGUE_SETTINGS_REPO, 0)
         } catch (ex) {
+            if (ex.name != "Web3Exception") {
+                throw ex
+            }
             console.log(ex)
         }
 
@@ -30,6 +33,8 @@ class LeagueSettingsService {
             return Global.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
         } else {
             leagueSettings.id = currentSettings.id
+
+
 
             //Update existing
             return Global.freedom.update(LEAGUE_SETTINGS_REPO, leagueSettings.id, leagueSettings)

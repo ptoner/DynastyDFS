@@ -39,7 +39,6 @@ class AdminController {
             leagueSettingsCommandModel = this._translateToCommandModel(leagueSettings)
         }
 
-        console.log(leagueSettingsCommandModel)
         return new ModelView(leagueSettingsCommandModel, "pages/admin/league_settings_form.html")
 
     }
@@ -59,22 +58,15 @@ class AdminController {
             //Get data
             var leagueSettingCommandModel = Global.app.form.convertToData('#league-settings-form');
 
-            console.log(leagueSettingCommandModel)
-
             let leagueSettings = this._translateFromCommandModel(leagueSettingCommandModel)
-
 
             //Save
             leagueSettings = await this.leagueSettingsService.update(leagueSettings)
 
-            console.log(leagueSettings)
-
             //Redirect
-            // @ts-ignore
             Global.navigate("/admin")
 
         } catch (ex) {
-            // @ts-ignore
             Global.showExceptionPopup(ex)
         }
     }
