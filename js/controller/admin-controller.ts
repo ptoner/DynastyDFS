@@ -55,6 +55,8 @@ class AdminController {
 
             //Look up existing league settings
 
+            console.log(Global.app.$app)
+
             //Get data
             var leagueSettingCommandModel = Global.app.form.convertToData('#league-settings-form');
 

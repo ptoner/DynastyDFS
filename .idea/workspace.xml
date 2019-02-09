@@ -2,438 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d647d291-abac-4732-933e-9ea322f178b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/www/css/framework7.bundle.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/js/services/stat-download-service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/controller/admin-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/js/controller/admin-controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/global.ts" beforeDir="false" afterPath="$PROJECT_DIR$/js/global.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/services/league-settings-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/js/services/league-settings-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/services/route-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/js/services/route-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/accordion/accordion-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/accordion/accordion-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/accordion/accordion-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/accordion/accordion-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/accordion/accordion.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/accordion/accordion.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/actions/actions.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/app/app-class.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/app/app-class.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/app/app-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/app/app-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/app/app-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/app/app-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/app/app-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/app/app-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/app/app.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/app/app.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/autocomplete/autocomplete.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/badge/badge-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/badge/badge-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/badge/badge-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/badge/badge-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/badge/badge.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/badge/badge.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/block/block-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/block/block-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/block/block-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/block/block-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/block/block.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/block/block.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/button/button-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/button/button-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/button/button-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/button/button-md.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/js/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/button/button.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/button/button.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/calendar/calendar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/card/card-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/card/card-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/card/card-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/card/card-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/card/card.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/card/card.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/card/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/card/card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/card/card.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/card/card.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/checkbox/checkbox-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/checkbox/checkbox-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/checkbox/checkbox-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/checkbox/checkbox-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/checkbox/checkbox.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/checkbox/checkbox.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/chip/chip-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/chip/chip-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/chip/chip-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/chip/chip-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/chip/chip.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/chip/chip.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/contacts-list/contacts-list-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/contacts-list/contacts-list-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/contacts-list/contacts-list-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/contacts-list/contacts-list-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/contacts-list/contacts-list.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/contacts-list/contacts-list.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/data-table/data-table-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/data-table/data-table-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/data-table/data-table-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/data-table/data-table-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/data-table/data-table.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/data-table/data-table.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/elevation/elevation-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/elevation/elevation-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/elevation/elevation-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/elevation/elevation-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/elevation/elevation.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/elevation/elevation.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/fab/fab-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/fab/fab-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/fab/fab-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/fab/fab-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/fab/fab.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/fab/fab.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/form/form.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/form/form.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/gauge/gauge-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/gauge/gauge-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/gauge/gauge-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/gauge/gauge-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/grid/grid-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/grid/grid-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/grid/grid-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/grid/grid-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/grid/grid.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/grid/grid.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/icon/icon-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/icon/icon-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/icon/icon-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/icon/icon-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/icon/icon.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/icon/icon.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/input/input-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/input/input-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/input/input-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/input/input-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/input/input.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/input/input.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/input/input.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/input/input.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/lazy/lazy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/link/link-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/link/link-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/link/link-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/link/link-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/link/link.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/link/link.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/list-index/list-index-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/list-index/list-index-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/list-index/list-index-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/list-index/list-index-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/list-index/list-index.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/list-index/list-index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/list/list-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/list/list-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/list/list-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/list/list-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/list/list.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/list/list.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/login-screen/login-screen-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/login-screen/login-screen-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/login-screen/login-screen-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/login-screen/login-screen-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/login-screen/login-screen.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/login-screen/login-screen.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messagebar/messagebar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messagebar/messagebar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messagebar/messagebar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messagebar/messagebar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messagebar/messagebar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messagebar/messagebar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/messages/messages.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/modal/modal-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/modal/modal-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/modal/modal.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/modal/modal.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/navbar/navbar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/notification/notification-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/notification/notification-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/notification/notification-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/notification/notification-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/notification/notification.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/notification/notification.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/page/page-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/page/page-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/page/page-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/page/page-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/page/page.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/page/page.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/panel/panel.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/panel/swipe-panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/panel/swipe-panel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/photo-browser/photo-browser.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/picker/picker.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/popover/popover-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/popover/popover-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/popover/popover-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/popover/popover-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/popover/popover.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/popover/popover.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/popup/popup-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/popup/popup-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/popup/popup-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/popup/popup-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/popup/popup.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/popup/popup.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/preloader/preloader.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/progressbar/progressbar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/progressbar/progressbar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/progressbar/progressbar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/progressbar/progressbar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/progressbar/progressbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/progressbar/progressbar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/pull-to-refresh/pull-to-refresh.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/radio/radio-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/radio/radio-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/radio/radio-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/radio/radio-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/radio/radio.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/radio/radio.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/range/range-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/range/range-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/range/range-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/range/range-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/range/range-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/range/range-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/range/range.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/range/range.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/range/range.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/range/range.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/searchbar/searchbar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/sheet/sheet-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/sheet/sheet-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/sheet/sheet-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/sheet/sheet-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/sheet/sheet.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/sheet/sheet.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/smart-select/smart-select.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/sortable/sortable-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/sortable/sortable-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/sortable/sortable-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/sortable/sortable-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/sortable/sortable.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/sortable/sortable.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/statusbar/statusbar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/stepper/stepper-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/stepper/stepper-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/stepper/stepper-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/stepper/stepper-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/stepper/stepper.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/stepper/stepper.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/subnavbar/subnavbar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/subnavbar/subnavbar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/subnavbar/subnavbar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/subnavbar/subnavbar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/subnavbar/subnavbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/subnavbar/subnavbar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/swipeout/swipeout-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/swipeout/swipeout-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/swipeout/swipeout-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/swipeout/swipeout-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/swipeout/swipeout.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/swipeout/swipeout.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/swiper/swiper-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/swiper/swiper-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/swiper/swiper-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/swiper/swiper-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/swiper/swiper.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/swiper/swiper.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tabs/tabs-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tabs/tabs-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tabs/tabs-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tabs/tabs-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/timeline/timeline-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/timeline/timeline-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/timeline/timeline-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/timeline/timeline-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/timeline/timeline.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/timeline/timeline.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toast/toast.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toggle/toggle-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toggle/toggle-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toggle/toggle-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toggle/toggle-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toggle/toggle.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toggle/toggle.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toolbar/toolbar-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toolbar/toolbar-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toolbar/toolbar-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toolbar/toolbar-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/toolbar/toolbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/toolbar/toolbar.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/touch-ripple/touch-ripple-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/touch-ripple/touch-ripple-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/touch-ripple/touch-ripple-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/touch-ripple/touch-ripple-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/touch-ripple/touch-ripple.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/touch-ripple/touch-ripple.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/typography/typography-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/typography/typography-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/typography/typography-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/typography/typography-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/typography/typography.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/typography/typography.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/vi/vi-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/vi/vi-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/vi/vi-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/vi/vi-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/view/view-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/view/view-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/view/view.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/view/view.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/view/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/view/view.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/view/view.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/view/view.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/virtual-list/virtual-list.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7-lazy.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7-lazy.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7-lazy.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7-lazy.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tooltip.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tooltip.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/components/tooltip/tooltip-class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.bundle.rtl.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.ios.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.ios.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.md.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.md.min.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.ios.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.ios.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.md.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.md.min.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/css/framework7.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/framework7.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/framework7.esm.bundle.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/framework7.esm.bundle.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/framework7.esm.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/framework7.esm.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/framework7.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/framework7.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/framework7.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/framework7.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7-lazy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7-lazy.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7-lazy.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/js/framework7.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/js/framework7.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/js/framework7.bundle.min.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/js/framework7.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/js/framework7.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/js/framework7.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/js/framework7.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/accordion.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/accordion.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/accordion.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/actions.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/actions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/actions.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/autocomplete.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/autocomplete.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/autocomplete.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/calendar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/calendar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/calendar.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/card.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/card.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/card.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/checkbox.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/checkbox.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/checkbox.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/chip.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/chip.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/chip.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/contacts-list.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/contacts-list.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/contacts-list.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/data-table.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/data-table.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/data-table.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/dialog.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/dialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/dialog.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/elevation.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/elevation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/elevation.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/fab.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/fab.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/fab.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/form.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/form.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/form.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/gauge.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/gauge.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/gauge.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/grid.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/grid.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/grid.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/infinite-scroll.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/infinite-scroll.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/infinite-scroll.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/input.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/input.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/lazy.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/lazy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/lazy.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/list-index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/list-index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/list-index.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/login-screen.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/login-screen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/login-screen.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/messagebar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/messagebar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/messagebar.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/messages.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/messages.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/messages.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/notification.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/notification.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/notification.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/panel.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/panel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/panel.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/photo-browser.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/photo-browser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/photo-browser.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/picker.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/picker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/picker.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/popover.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/popover.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/popover.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/popup.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/popup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/popup.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/preloader.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/preloader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/preloader.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/progressbar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/progressbar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/progressbar.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/pull-to-refresh.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/pull-to-refresh.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/pull-to-refresh.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/radio.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/radio.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/radio.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/range.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/range.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/range.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/searchbar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/searchbar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/searchbar.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/sheet.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/sheet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/sheet.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/smart-select.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/smart-select.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/smart-select.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/sortable.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/sortable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/sortable.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/stepper.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/stepper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/stepper.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/swipeout.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/swipeout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/swipeout.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/swiper.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/swiper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/swiper.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/tabs.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/tabs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/tabs.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/timeline.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/timeline.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/timeline.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/toast.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/toast.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/toast.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/toggle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/toggle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/toggle.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/tooltip.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/tooltip.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/tooltip.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/typography.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/typography.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/typography.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/vi.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/vi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/vi.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/virtual-list.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/virtual-list.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/lazy-components/virtual-list.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/less/colors-ios.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/less/colors-ios.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/less/colors-md.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/less/colors-md.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/less/mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/less/mixins.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/less/plugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/less/plugin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/clicks/clicks.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/clicks/clicks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/component/component-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/component/component-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/device/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/device/device.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/back.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/router/back.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/clear-history.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/clear-previous-history.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/router/clear-previous-history.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/navigate.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/router/navigate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/router-class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/router/router-class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/router/router.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/router/swipe-back.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/router/swipe-back.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/storage/storage.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/storage/storage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/support/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/support/support.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/touch/touch.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/touch/touch.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/modules/touch/touch.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/modules/touch/touch.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/class.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/device.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/request.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/request.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/support.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/support.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/support.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/framework7/utils/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/framework7/utils/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/path-to-regexp/History.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/path-to-regexp/History.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/path-to-regexp/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/path-to-regexp/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/path-to-regexp/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/path-to-regexp/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/path-to-regexp/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/path-to-regexp/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/path-to-regexp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/path-to-regexp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/dist/template7.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/dist/template7.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/dist/template7.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/dist/template7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/dist/template7.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/dist/template7.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/dist/template7.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/dist/template7.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/dist/template7.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/dist/template7.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/gulpfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/template7/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/template7/src/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/css/framework7.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/css/framework7.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/css/framework7.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/js/fantasybaseball.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/fantasybaseball.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/pages/admin/league_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/admin/league_settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/pages/admin/league_settings_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/admin/league_settings_form.html" afterDir="false" />
@@ -451,40 +44,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="536">
-              <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
+            <state relative-caret-position="460">
+              <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
               <folding>
-                <element signature="e#97#128#0" expanded="true" />
+                <element signature="e#114#145#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/index.html">
+        <entry file="file://$PROJECT_DIR$/js/global.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/settings.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="49" />
+            <state relative-caret-position="420">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
               <folding>
-                <element signature="n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="e#0#60#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -493,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/services/route-service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-29">
-              <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+            <state relative-caret-position="298">
+              <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="20" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
                 <element signature="e#176#216#0" expanded="true" />
@@ -504,33 +79,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings.html">
+        <entry file="file://$PROJECT_DIR$/js/controller/admin-controller.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-421">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/css/framework7.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="12" column="96988" selection-start-line="12" selection-start-column="96985" selection-end-line="12" selection-end-column="96988" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/css/framework7.bundle.min.css">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1583">
-              <caret line="377" column="54" selection-start-line="377" selection-start-column="54" selection-end-line="377" selection-end-column="54" />
+            <state relative-caret-position="298">
+              <caret line="52" selection-start-line="52" selection-end-line="52" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -538,8 +93,33 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
+            <state relative-caret-position="331">
               <caret line="37" selection-start-line="37" selection-end-line="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="611">
+              <caret line="354" column="16" selection-start-line="354" selection-start-column="16" selection-end-line="354" selection-end-column="16" />
+              <folding>
+                <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#div#3;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#div#5;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#div#7;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#div#9;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings_form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7560">
+              <caret line="378" column="40" selection-start-line="378" selection-start-column="40" selection-end-line="378" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -555,6 +135,8 @@
       <find>app.methods</find>
       <find>number</find>
       <find>row</find>
+      <find>dialog</find>
+      <find>no-hairlines-md</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -598,16 +180,17 @@
         <option value="$PROJECT_DIR$/www/css/framework7-icons.css" />
         <option value="$PROJECT_DIR$/build.sh" />
         <option value="$PROJECT_DIR$/js/controller/settings-controller.ts" />
-        <option value="$PROJECT_DIR$/js/global.ts" />
         <option value="$PROJECT_DIR$/js/services/league-settings-service.ts" />
+        <option value="$PROJECT_DIR$/js/services/route-service.ts" />
+        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/js/services/stat-download-service.ts" />
         <option value="$PROJECT_DIR$/js/controller/admin-controller.ts" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/js/services/route-service.ts" />
-        <option value="$PROJECT_DIR$/js/index.ts" />
+        <option value="$PROJECT_DIR$/js/global.ts" />
         <option value="$PROJECT_DIR$/www/pages/settings.html" />
-        <option value="$PROJECT_DIR$/www/pages/admin/league_settings.html" />
-        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/js/index.ts" />
         <option value="$PROJECT_DIR$/www/pages/admin/league_settings_form.html" />
+        <option value="$PROJECT_DIR$/www/pages/admin/league_settings.html" />
       </list>
     </option>
   </component>
@@ -640,12 +223,6 @@
               <item name="fantasybaseballleague" type="b2602c69:ProjectViewProjectNode" />
               <item name="fantasybaseballleague" type="462c0819:PsiDirectoryNode" />
               <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fantasybaseballleague" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fantasybaseballleague" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -664,7 +241,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549580656963" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549714990314" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -721,12 +298,12 @@
       <workItem from="1549282633886" duration="6306000" />
       <workItem from="1549323217751" duration="1772000" />
       <workItem from="1549458474163" duration="660000" />
-      <workItem from="1549548604957" duration="11590000" />
+      <workItem from="1549548604957" duration="18793000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93169000" />
+    <option name="totallyTimeSpent" value="100372000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -907,50 +484,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/global.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/services/league-settings-service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/controller/admin-controller.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="74" column="41" selection-start-line="74" selection-start-column="41" selection-end-line="74" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/services/route-service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
-          <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-            <element signature="e#176#216#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -962,13 +501,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.ts">
+    <entry file="file://$PROJECT_DIR$/www/css/framework7.bundle.min.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/framework7.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="536">
-          <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
-          <folding>
-            <element signature="e#97#128#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="270">
+          <caret line="12" column="96988" selection-start-line="12" selection-start-column="96985" selection-end-line="12" selection-end-column="96988" />
         </state>
       </provider>
     </entry>
@@ -979,44 +518,121 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/framework7.min.css">
+    <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="12" column="96988" selection-start-line="12" selection-start-column="96985" selection-end-line="12" selection-end-column="96988" />
+        <state relative-caret-position="117">
+          <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/framework7.bundle.min.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
+    <entry file="file://$PROJECT_DIR$/node_modules/framework7/components/dialog/dialog.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
+        <state relative-caret-position="340">
+          <caret line="114" column="36" lean-forward="true" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+          <folding>
+            <element signature="n#!!block;n#Dialog#0;n#Dialog#0" />
+            <element signature="n#!!block;n#Button#0;n#Dialog#0" />
+            <element signature="n#!!block;n#Parameters#0;n#Dialog#0" />
+            <element signature="n#!!block;n#Events#0;n#Dialog#0" />
+            <element signature="n#!!block;n#DomEvents#0;n#Dialog#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/controller/admin-controller.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/services/route-service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+            <element signature="e#176#216#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/framework7/js/framework7.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="751">
+          <caret line="310" column="15" selection-start-line="310" selection-start-column="15" selection-end-line="310" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#125#163#0" expanded="true" />
+            <element signature="e#287#353#0" expanded="true" />
+            <element signature="e#935#1016#0" expanded="true" />
+            <element signature="e#5730#20836#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
+          <folding>
+            <element signature="e#114#145#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/settings.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="49" />
+        <state relative-caret-position="260">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/global.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
           <folding>
-            <element signature="n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#0#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings.html">
+    <entry file="file://$PROJECT_DIR$/js/services/stat-download-service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-421">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="40">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings_form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1583">
-          <caret line="377" column="54" selection-start-line="377" selection-start-column="54" selection-end-line="377" selection-end-column="54" />
+        <state relative-caret-position="7560">
+          <caret line="378" column="40" selection-start-line="378" selection-start-column="40" selection-end-line="378" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/admin/league_settings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="611">
+          <caret line="354" column="16" selection-start-line="354" selection-start-column="16" selection-end-line="354" selection-end-column="16" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#div#3;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#div#5;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#div#7;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#div#9;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>

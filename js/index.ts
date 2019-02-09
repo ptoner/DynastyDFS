@@ -1,5 +1,7 @@
 const Freedom: any = require('freedom-for-data')
-const Framework7: any = require('framework7')
+const Framework7: any = require('framework7/js/framework7.bundle')
+
+
 
 
 import {Global} from './global'
@@ -16,6 +18,8 @@ import { LeagueSettings, PositionLimits, BattingScoring, PitchingScoring } from 
 import {HomeController}  from '../js/controller/home-controller'
 import {SettingsController}  from '../js/controller/settings-controller'
 import {AdminController}  from '../js/controller/admin-controller'
+
+
 
 
 
@@ -36,22 +40,17 @@ module.exports = async () => {
     const rootUrl = new URL(window.location)
 
     // Framework7 App main instance
-    // @ts-ignore
     Global.app = new Framework7({
         root: '#app', // App root element
         id: 'io.framework7.testapp', // App bundle ID
         name: 'freedom-for-data Demo', // App name
         theme: 'auto', // Automatic theme detection
 
-        on: {
-            init: function () {
-            }
-        },
 
         // App routes
         routes: routeService.getRoutes(rootUrl.pathname)
 
-    });
+    })
 
 
     // Init/Create main view

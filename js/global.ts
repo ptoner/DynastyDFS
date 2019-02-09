@@ -1,11 +1,9 @@
 import {HomeController} from "./controller/home-controller";
 import {AdminController} from "./controller/admin-controller";
 import {SettingsController} from "./controller/settings-controller";
-import {LeagueSettingsService} from "./services/league-settings-service";
-import {PlayerService} from "./services/player-service";
-import {SettingsService} from "./services/settings-service";
-import {RouteService} from "./services/route-service";
+
 import Framework7 from "framework7";
+import {Dialog} from "framework7/components/dialog/dialog";
 
 export namespace Global {
     export var freedom: any
@@ -17,14 +15,15 @@ export namespace Global {
 
 
     export function navigate(url: string) {
-        app.view.main.router.navigate(url);
+        Global.app.view.main.router.navigate(url);
     }
 
     export function showExceptionPopup(ex) {
+
         if (ex.name == "IpfsException") {
-            app.dialog.alert(ex.message, "Problem connecting to IPFS")
+            Global.app.dialog.alert(ex.message, "Problem connecting to IPFS")
         } else {
-            app.dialog.alert(ex.message, "There was an error")
+            Global.app.dialog.alert(ex.message, "There was an error")
         }
     }
 }
