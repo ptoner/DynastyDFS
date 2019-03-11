@@ -10,7 +10,7 @@ import { LeagueSettingsService } from "../js/services/league-settings-service"
 import { PlayerService } from "../js/services/player-service"
 import { SettingsService } from "../js/services/settings-service"
 import { RouteService } from "../js/services/route-service"
-
+import { QueueService } from "../js/services/queue_service"
 
 
 import { LeagueSettings, PositionLimits, BattingScoring, PitchingScoring } from '../js/dto/league-settings'
@@ -29,10 +29,11 @@ module.exports = async () => {
     let routeService = new RouteService(settingsService)
     let leagueSettingsService = new LeagueSettingsService()
     let playerService = new PlayerService()
+    let queueService = new QueueService()
 
     Global.homeController = new HomeController(leagueSettingsService, playerService)
-    Global.settingsController = new SettingsController(settingsService)
-    Global.adminController = new AdminController(leagueSettingsService)
+    Global.settingsController = new SettingsController(settingsService, queueService)
+    Global.adminController = new AdminController(leagueSettingsService, queueService)
 
     //Detect page root
 

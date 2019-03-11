@@ -1,14 +1,20 @@
 import { ModelView } from '../model-view'
-import {SettingsService} from "../services/settings-service";
-import {Global} from "../global";
-import {Dom7} from "framework7";
+import {SettingsService} from "../services/settings-service"
+import {QueueService} from "../services/queue_service"
+import {Global} from "../global"
+import {Dom7} from "framework7"
+import {PromiseView} from "../promise-view"
+
 
 var $$ = Dom7;
 
 
 class SettingsController {
 
-    constructor(private settingsService: SettingsService) {
+    constructor(
+        private settingsService: SettingsService,
+        private queueService: QueueService
+    ) {
         const self = this;
 
         $$(document).on('click', '#settings-save', function(e: Event) {
@@ -26,14 +32,25 @@ class SettingsController {
 
     async saveButtonClicked(e: Event) {
 
-        //Get the form data
-        let settingsData = Global.app.form.convertToData('#settings-form');
+        try {
+            //Get the form data
+            let settingsData = Global.app.form.convertToData('#settings-form')
 
-        //Save it
-        this.settingsService.saveSettings(settingsData)
+            Global.navigate("/?reinit=true");
 
+            await this.queueService.queuePromiseView(
+                new PromiseView(
+                    this.settingsService.saveSettings(settingsData),
+                  "Saving settings",
+                  "gear",
+                  settingsData,
+                  "/settings"
+                )
+              )
 
-        Global.navigate("/?reinit=true");
+        } catch (ex) {
+            Global.showExceptionPopup(ex)
+        }
 
     }
 

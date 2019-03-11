@@ -85,8 +85,8 @@ class RouteService {
   }
 
 
-// @ts-ignore
-  async initialize() {
+
+  async initialize() : Promise<void> {
 
     if (Global.freedom) return
 
@@ -100,7 +100,6 @@ class RouteService {
       ipfsGateway: `https://${settings.ipfsHost}:${settings.ipfsGatewayPort}/ipfs`
     }
 
-
     Global.freedom = await Freedom({
       ipfsConfig: {
         host: settings.ipfsHost,
@@ -109,8 +108,7 @@ class RouteService {
       },
       recordContractAddress: settings.recordContractAddress,
       recordContractTransactionHash: settings.recordContractTransactionHash
-    });
-
+    })
 
   }
 

@@ -5,7 +5,8 @@ const LEAGUE_SETTINGS_REPO = 51
 
 class LeagueSettingsService {
 
-    constructor() {}
+    constructor(
+    ) {}
 
 
     async getLeagueSettings(): Promise<LeagueSettings> {
@@ -24,17 +25,20 @@ class LeagueSettingsService {
         return leagueSettings
     }
 
-    async update(leagueSettings: LeagueSettings): Promise<LeagueSettings> {
+    async update(leagueSettings: LeagueSettings) {
 
         let currentSettings = await this.getLeagueSettings()
 
         if (!currentSettings) {
             //Create them if they don't exist
+
+            // this.queueService.queueSaveEvent(new SaveEvent(
+            //     "Updating "
+            // ))
+
             return Global.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
         } else {
             leagueSettings.id = currentSettings.id
-
-
 
             //Update existing
             return Global.freedom.update(LEAGUE_SETTINGS_REPO, leagueSettings.id, leagueSettings)

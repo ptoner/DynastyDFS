@@ -4,7 +4,7 @@ class SettingsService {
     return JSON.parse(localStorage.getItem("settings"))
   }
 
-  saveSettings(settings: any) {
+  async saveSettings(settings: any) : Promise<void> {
     localStorage.setItem("settings", JSON.stringify(settings))
   }
 

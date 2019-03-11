@@ -3,13 +3,17 @@ import {LeagueSettingsService} from "../services/league-settings-service";
 import {Global} from "../global";
 import {BattingScoring, LeagueSettings, PitchingScoring, PositionLimits} from "../dto/league-settings";
 import {Dom7} from "framework7";
-
+import { QueueService } from '../services/queue_service'
+import {PromiseView} from "../promise-view"
 
 var $$ = Dom7;
 
 class AdminController {
 
-    constructor(private leagueSettingsService: LeagueSettingsService) {
+    constructor(
+        private leagueSettingsService: LeagueSettingsService,
+        private queueService: QueueService
+    ) {
 
         const self = this
 
@@ -54,7 +58,6 @@ class AdminController {
         try {
 
             //Look up existing league settings
-
             console.log(Global.app.$app)
 
             //Get data
@@ -62,11 +65,23 @@ class AdminController {
 
             let leagueSettings = this._translateFromCommandModel(leagueSettingCommandModel)
 
-            //Save
-            leagueSettings = await this.leagueSettingsService.update(leagueSettings)
 
-            //Redirect
-            Global.navigate("/admin")
+
+            //Redirect to home
+            Global.navigate("/")
+
+            await this.queueService.queuePromiseView(
+                new PromiseView(
+                    this.leagueSettingsService.update(leagueSettings),
+                    "Saving league settings",
+                    "gear",
+                    leagueSettings,
+                    "/admin"
+                )
+            )
+
+
+
 
         } catch (ex) {
             Global.showExceptionPopup(ex)

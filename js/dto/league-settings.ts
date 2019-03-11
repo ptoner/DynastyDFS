@@ -1,7 +1,5 @@
 class LeagueSettings {
 
-
-
     constructor(
         public id: Number,
         public leagueName: string,
@@ -40,7 +38,6 @@ class BattingScoring {
         public sb: Number,
         public cs: Number,
 
-            //Garbage stats
         public gidp: Number,
         public cyc: Number,
         public gshr: Number,
