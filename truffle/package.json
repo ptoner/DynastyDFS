@@ -4,13 +4,14 @@
   "description": "Large contracts",
 
   "scripts": {
-    "watch": "watchify --debug -s Tests -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-proposal-class-properties ] ] ./test/tests.ts -p [ tsify  ] -o ./test/tests-runnable.js -v"
+    // "watch": "watchify --debug -s Tests -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-proposal-class-properties ] ] ./test/export-services.ts -p [ tsify  ] -o ./test/services.js -v"
   },
 
 
   "dependencies": {
     "truffle": "5.0.7",
     "truffle-hdwallet-provider": "1.0.3",
+    "ts-node": "8.0.3",
     "dotenv": "6.2.0",
     "loom-truffle-provider": "0.13.0",
     "loom-js": "1.44.1",

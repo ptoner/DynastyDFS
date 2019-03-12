@@ -1,7 +1,6 @@
 class LeagueSettings {
 
     constructor(
-        public id: Number,
         public leagueName: string,
         public rosterSize: Number,
         public totalStarters: Number,

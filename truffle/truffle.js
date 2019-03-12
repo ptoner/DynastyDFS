@@ -3,6 +3,8 @@
 //   // to customize your Truffle configuration!
 // };
 require('dotenv').config()
+require("ts-node/register")
+
 
 const HDWalletProvider = require('truffle-hdwallet-provider')
 

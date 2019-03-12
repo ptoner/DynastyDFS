@@ -9,6 +9,8 @@ import { ModelView } from "../model-view";
 
 var TruffleContract = require('truffle-contract')
 
+const ipfsClient = require('ipfs-http-client')
+
 
 import * as RecordService from '../../truffle/build/contracts/RecordService.json'
 
@@ -75,17 +77,15 @@ class RouteService {
         console.log(ex)
     }
 
-    Global.freedom = await Freedom({
-        ipfsConfig: {
-          host: settings.ipfsHost,
-          port: settings.ipfsApiPort,
-          protocol: 'http'
-        }
-      },
-      //@ts-ignore
-      web3,
-      contract
-    )
+
+    const ipfs = ipfsClient({
+      host: settings.ipfsHost,
+      port: settings.ipfsApiPort,
+      protocol: 'http'
+    })
+
+    //@ts-ignore
+    Global.freedom = await Freedom( ipfs , contract)
 
     Global.leagueSettingsService.freedom = Global.freedom
 

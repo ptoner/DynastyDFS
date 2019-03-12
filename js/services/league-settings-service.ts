@@ -9,7 +9,6 @@ class LeagueSettingsService {
     constructor(
     ) {}
 
-
     async getLeagueSettings(): Promise<LeagueSettings> {
 
         let leagueSettings: LeagueSettings
@@ -20,23 +19,21 @@ class LeagueSettingsService {
             if (ex.name != "Web3Exception") {
                 throw ex
             }
-            console.log(ex)
+            // console.log(ex)
         }
-
         return leagueSettings
     }
 
-    async update(leagueSettings: LeagueSettings) {
+    async update(leagueSettings: LeagueSettings) : Promise<LeagueSettings> {
 
         let currentSettings = await this.getLeagueSettings()
 
         if (!currentSettings) {
             return this.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
         } else {
-            leagueSettings.id = currentSettings.id
 
             //Update existing
-            return this.freedom.update(LEAGUE_SETTINGS_REPO, leagueSettings.id, leagueSettings)
+            return this.freedom.update(LEAGUE_SETTINGS_REPO, 1, leagueSettings)
         }
 
     }
