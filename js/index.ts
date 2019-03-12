@@ -25,15 +25,15 @@ import {AdminController}  from '../js/controller/admin-controller'
 
 module.exports = async () => {
 
-    let settingsService = new SettingsService()
-    let routeService = new RouteService(settingsService)
-    let leagueSettingsService = new LeagueSettingsService()
-    let playerService = new PlayerService()
-    let queueService = new QueueService()
+    Global.settingsService = new SettingsService()
+    Global.routeService = new RouteService(Global.settingsService)
+    Global.leagueSettingsService = new LeagueSettingsService()
+    Global.playerService = new PlayerService()
+    Global.queueService = new QueueService()
 
-    Global.homeController = new HomeController(leagueSettingsService, playerService)
-    Global.settingsController = new SettingsController(settingsService, queueService)
-    Global.adminController = new AdminController(leagueSettingsService, queueService)
+    Global.homeController = new HomeController(Global.leagueSettingsService, Global.playerService)
+    Global.settingsController = new SettingsController(Global.settingsService, Global.queueService)
+    Global.adminController = new AdminController(Global.leagueSettingsService, Global.queueService)
 
     //Detect page root
 
@@ -49,7 +49,7 @@ module.exports = async () => {
 
 
         // App routes
-        routes: routeService.getRoutes(rootUrl.pathname)
+        routes: Global.routeService.getRoutes(rootUrl.pathname)
 
     })
 

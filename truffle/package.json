@@ -9,7 +9,7 @@
 
 
   "dependencies": {
-    "truffle": "5.0.5",
+    "truffle": "5.0.7",
     "truffle-hdwallet-provider": "1.0.3",
     "dotenv": "6.2.0",
     "loom-truffle-provider": "0.13.0",

@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "freedom-for-data": "0.2.0",
+    "truffle-contract": "4.0.8",
 
     "framework7": "4.0.1",
     "framework7-icons": "^0.9.1",

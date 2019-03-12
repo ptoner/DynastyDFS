@@ -1,9 +1,10 @@
 import {LeagueSettings} from "../dto/league-settings";
-import {Global} from "../global";
 
 const LEAGUE_SETTINGS_REPO = 51
 
 class LeagueSettingsService {
+
+    public freedom: any
 
     constructor(
     ) {}
@@ -14,7 +15,7 @@ class LeagueSettingsService {
         let leagueSettings: LeagueSettings
 
         try {
-            leagueSettings = await Global.freedom.readByIndex(LEAGUE_SETTINGS_REPO, 0)
+            leagueSettings = await this.freedom.readByIndex(LEAGUE_SETTINGS_REPO, 0)
         } catch (ex) {
             if (ex.name != "Web3Exception") {
                 throw ex
@@ -30,18 +31,12 @@ class LeagueSettingsService {
         let currentSettings = await this.getLeagueSettings()
 
         if (!currentSettings) {
-            //Create them if they don't exist
-
-            // this.queueService.queueSaveEvent(new SaveEvent(
-            //     "Updating "
-            // ))
-
-            return Global.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
+            return this.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
         } else {
             leagueSettings.id = currentSettings.id
 
             //Update existing
-            return Global.freedom.update(LEAGUE_SETTINGS_REPO, leagueSettings.id, leagueSettings)
+            return this.freedom.update(LEAGUE_SETTINGS_REPO, leagueSettings.id, leagueSettings)
         }
 
     }

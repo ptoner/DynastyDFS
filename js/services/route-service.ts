@@ -1,16 +1,98 @@
-import {SettingsService} from "./settings-service";
-import {Global} from "../global";
+import { SettingsService } from "./settings-service";
+import { Global } from "../global";
 
-import {Template7} from "framework7";
+import { Template7 } from "framework7";
 
 const Freedom: any = require('freedom-for-data')
 
-import {ModelView} from "../model-view";
-import freedom = Global.freedom;
+import { ModelView } from "../model-view";
+
+var TruffleContract = require('truffle-contract')
+
+
+import * as RecordService from '../../truffle/build/contracts/RecordService.json'
+
+
+const promisify = (inner) =>
+  new Promise((resolve, reject) =>
+    inner((err, res) => {
+      if (err) { reject(err) }
+      resolve(res);
+    })
+  );
+
 
 class RouteService {
 
-  constructor(private settingsService: SettingsService) {}
+  constructor(private settingsService: SettingsService) { }
+
+  async initialize(): Promise<void> {
+
+    if (Global.freedom) return
+
+    const settings = this.settingsService.getSettings()
+    if (!settings) {
+      throw 'No settings found'
+    }
+
+    Template7.global = {
+      settings: settings,
+      ipfsGateway: `https://${settings.ipfsHost}:${settings.ipfsGatewayPort}/ipfs`
+    }
+
+
+    // Request account access
+    await window['ethereum'].enable()
+
+    //@ts-ignore
+    window.web3Provider = window.ethereum
+
+    //@ts-ignore
+    web3 = new Web3(window.web3Provider)
+
+//@ts-ignore
+    // console.log(web3)
+
+    //@ts-ignore
+    const accounts = await promisify(cb => web3.eth.getAccounts(cb))
+
+    let account = accounts[0]
+    window['currentAccount'] = account
+
+
+    
+    const truffleContract = TruffleContract(RecordService);
+
+    let contract
+
+    try {
+        //@ts-ignore
+        truffleContract.setProvider(window.web3Provider)
+        truffleContract.defaults({from: account})
+
+        contract = await truffleContract.deployed()
+    } catch (ex) {
+        console.log(ex)
+    }
+
+    Global.freedom = await Freedom({
+        ipfsConfig: {
+          host: settings.ipfsHost,
+          port: settings.ipfsApiPort,
+          protocol: 'http'
+        }
+      },
+      //@ts-ignore
+      web3,
+      contract
+    )
+
+    Global.leagueSettingsService.freedom = Global.freedom
+
+    console.log('init complete')
+
+  }
+
 
 
   getRoutes(baseurl: string) {
@@ -18,7 +100,7 @@ class RouteService {
     const self = this
 
     // @ts-ignore
-    const homeRoute = async function(routeTo, routeFrom, resolve, reject) {
+    const homeRoute = async function (routeTo, routeFrom, resolve, reject) {
 
       let settings = self.settingsService.getSettings()
 
@@ -27,7 +109,7 @@ class RouteService {
         return
       }
 
-      await self.initAndResolve(resolve,function() {
+      await self.initAndResolve(resolve, function () {
         return Global.homeController.showHomePage()
       })
 
@@ -36,13 +118,13 @@ class RouteService {
     let routes = []
 
     if (baseurl != '/') {
-      routes.push(      {
+      routes.push({
         path: baseurl,
         async: homeRoute
       })
     }
 
-    routes.push(      {
+    routes.push({
       path: '/',
       async: homeRoute
     })
@@ -62,7 +144,7 @@ class RouteService {
 
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
-        await self.initAndResolve(resolve,function() {
+        await self.initAndResolve(resolve, function () {
           return Global.adminController.showLeagueSettings()
         })
       }
@@ -73,7 +155,7 @@ class RouteService {
 
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
-        await self.initAndResolve(resolve,function() {
+        await self.initAndResolve(resolve, function () {
           return Global.adminController.showLeagueSettingsForm()
         })
       }
@@ -86,39 +168,13 @@ class RouteService {
 
 
 
-  async initialize() : Promise<void> {
-
-    if (Global.freedom) return
-
-    const settings = this.settingsService.getSettings()
-    if (!settings) {
-      throw 'No settings found'
-    }
-
-    Template7.global = {
-      settings: settings,
-      ipfsGateway: `https://${settings.ipfsHost}:${settings.ipfsGatewayPort}/ipfs`
-    }
-
-    Global.freedom = await Freedom({
-      ipfsConfig: {
-        host: settings.ipfsHost,
-        port: settings.ipfsApiPort,
-        protocol: 'http'
-      },
-      recordContractAddress: settings.recordContractAddress,
-      recordContractTransactionHash: settings.recordContractTransactionHash
-    })
-
-  }
-
 
   // @ts-ignore
   async initAndResolve(resolve, successFunction) {
     try {
       await this.initialize()
       this.resolveController(resolve, successFunction())
-    } catch(ex) {
+    } catch (ex) {
 
       console.log(ex)
 
@@ -142,8 +198,8 @@ class RouteService {
       if (!modelView) return
 
       resolve({
-          componentUrl: modelView.view
-        },
+        componentUrl: modelView.view
+      },
         {
           context: modelView.model
         })
@@ -159,9 +215,264 @@ class RouteService {
   }
 
 
+  // getContractAbi() {
+  //   return [
+  //     {
+  //       "inputs": [],
+  //       "payable": false,
+  //       "stateMutability": "nonpayable",
+  //       "type": "constructor",
+  //       "signature": "constructor"
+  //     },
+  //     {
+  //       "anonymous": false,
+  //       "inputs": [
+  //         {
+  //           "indexed": false,
+  //           "name": "id",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "indexed": false,
+  //           "name": "owner",
+  //           "type": "address"
+  //         },
+  //         {
+  //           "indexed": false,
+  //           "name": "ipfsCid",
+  //           "type": "string"
+  //         },
+  //         {
+  //           "indexed": false,
+  //           "name": "repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "indexed": false,
+  //           "name": "eventType",
+  //           "type": "string"
+  //         }
+  //       ],
+  //       "name": "RecordEvent",
+  //       "type": "event",
+  //       "signature": "0x050a6f24947f7fed7d2d6fe904ff10e1cfbee598adc5c40655e61383e60d2b0d"
+  //     },
+  //     {
+  //       "constant": false,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_ipfsCid",
+  //           "type": "string"
+  //         }
+  //       ],
+  //       "name": "create",
+  //       "outputs": [
+  //         {
+  //           "name": "id",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "payable": false,
+  //       "stateMutability": "nonpayable",
+  //       "type": "function",
+  //       "signature": "0x0118fa49"
+  //     },
+  //     {
+  //       "constant": true,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_id",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "name": "read",
+  //       "outputs": [
+  //         {
+  //           "name": "id",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "owner",
+  //           "type": "address"
+  //         },
+  //         {
+  //           "name": "ipfsCid",
+  //           "type": "string"
+  //         },
+  //         {
+  //           "name": "repoId",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "payable": false,
+  //       "stateMutability": "view",
+  //       "type": "function",
+  //       "signature": "0x75080997"
+  //     },
+  //     {
+  //       "constant": false,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_id",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_ipfsCid",
+  //           "type": "string"
+  //         }
+  //       ],
+  //       "name": "update",
+  //       "outputs": [],
+  //       "payable": false,
+  //       "stateMutability": "nonpayable",
+  //       "type": "function",
+  //       "signature": "0xd753fd25"
+  //     },
+  //     {
+  //       "constant": true,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "name": "count",
+  //       "outputs": [
+  //         {
+  //           "name": "theCount",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "payable": false,
+  //       "stateMutability": "view",
+  //       "type": "function",
+  //       "signature": "0x3b3546c8"
+  //     },
+  //     {
+  //       "constant": true,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_index",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "name": "readByIndex",
+  //       "outputs": [
+  //         {
+  //           "name": "id",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "owner",
+  //           "type": "address"
+  //         },
+  //         {
+  //           "name": "ipfsCid",
+  //           "type": "string"
+  //         },
+  //         {
+  //           "name": "repoId",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "payable": false,
+  //       "stateMutability": "view",
+  //       "type": "function",
+  //       "signature": "0x5a24fb94"
+  //     },
+  //     {
+  //       "constant": true,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_owner",
+  //           "type": "address"
+  //         }
+  //       ],
+  //       "name": "countOwned",
+  //       "outputs": [
+  //         {
+  //           "name": "theCount",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "payable": false,
+  //       "stateMutability": "view",
+  //       "type": "function",
+  //       "signature": "0x0a66e564"
+  //     },
+  //     {
+  //       "constant": true,
+  //       "inputs": [
+  //         {
+  //           "name": "_repoId",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "_owner",
+  //           "type": "address"
+  //         },
+  //         {
+  //           "name": "_index",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "name": "readByOwnedIndex",
+  //       "outputs": [
+  //         {
+  //           "name": "id",
+  //           "type": "uint256"
+  //         },
+  //         {
+  //           "name": "owner",
+  //           "type": "address"
+  //         },
+  //         {
+  //           "name": "ipfsCid",
+  //           "type": "string"
+  //         },
+  //         {
+  //           "name": "repoId",
+  //           "type": "uint256"
+  //         }
+  //       ],
+  //       "payable": false,
+  //       "stateMutability": "view",
+  //       "type": "function",
+  //       "signature": "0xf6c8405e"
+  //     }
+  //   ]
+  // }
+
 
 }
 
-export { RouteService}
+
+
+
+
+
+
+
+export { RouteService }
 
 // module.exports = RouteService

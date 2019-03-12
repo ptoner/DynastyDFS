@@ -1,52 +1,39 @@
-var ipfsClient = require('ipfs-http-client');
-
-var blah = require('./tests-runnable.js')
-
-console.log(blah)
-console.log('here')
+import { LeagueSettingsService } from '../../js/services/league-settings-service.js';
 
 
 const Freedom = require('freedom-for-data')
 
 
-
-
-
 class TestServiceFactory {
 
-    constructor() {
+    async constructor(web3, contract) {
         
-        // this.recordServiceContract = artifacts.require("RecordService");
+        this.freedom = await Freedom({
+            ipfsConfig: {
+              host: settings.ipfsHost,
+              port: settings.ipfsApiPort,
+              protocol: 'http'
+            }
+          },
+            web3,
+            contract
+          )
 
-        // console.log(this.recordServiceContract)
 
-        // // this.freedom = await Freedom({
-        // //     ipfsConfig: {
-        // //       host: settings.ipfsHost,
-        // //       port: settings.ipfsApiPort
-        // //     },
-        // //     recordContractAddress: settings.recordContractAddress,
-        // //     recordContractTransactionHash: settings.recordContractTransactionHash
-        // //   })
+        this.leagueSettingsService = new LeagueSettingsService()
 
-        // this.initialize(recordServiceContract, ipfs);
+        this.leagueSettingsService.freedom = this.freedom
 
     }
 
-    initialize(recordServiceContract, ipfs) {
-        // this.postService = new PostService() 
-    }
+
 
     /**
      * Only giving getters to the actual services to expose
      */
 
-    getPostService() {
-        // return this.postService;
-    }
-
-    getProfileService() {
-        // return this.profileService;
+    getLeagueSettingsService() {
+        return this.leagueSettingsService
     }
 
 }
