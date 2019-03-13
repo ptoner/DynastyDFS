@@ -52,6 +52,7 @@ class PlayerService {
     clearAll() : void {
         this.players = []
         this._write()
+        this.nextId = 1
     }
 
     _findPositionById(id:number) {
@@ -64,9 +65,6 @@ class PlayerService {
             let fileContents: Buffer  = await this.ipfs.files.read(this.path + this.filename)
 
             this.players = JSON.parse(fileContents.toString())
-
-            console.log("Loading")
-            console.log(this.players)
 
             const highestId = this.players.reduce((prev, current) => (prev.id > current.id) ? prev : current)
     
