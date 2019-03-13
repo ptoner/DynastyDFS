@@ -17,6 +17,8 @@ contract('PlayerService', async (accounts) => {
 
     let playerService: PlayerService = new PlayerService(ipfs)
 
+    
+
 
     //@ts-ignore
     it("Test create & get", async () => {
