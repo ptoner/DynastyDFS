@@ -1,15 +1,19 @@
 import { LeagueSettingsService } from "../../js/services/league-settings-service";
-
+import { SharedDirectoryService } from "../../js/services/shared-directory-service"
+import { PlayerService } from "../../js/services/player-service";
 
 const Freedom = require('freedom-for-data')
 
 
 class TestServiceFactory {
 
-    contract: any
-    freedom: any
-    ipfs: any
-    leagueSettingsService: LeagueSettingsService
+    private contract: any
+    private freedom: any
+    private ipfs: any
+
+    public leagueSettingsService: LeagueSettingsService
+    public sharedDirectoryService: SharedDirectoryService
+    public playerService: PlayerService
 
     constructor(ipfs, contract) {
         this.contract = contract
@@ -24,19 +28,12 @@ class TestServiceFactory {
         this.contract
       )
 
-      this.leagueSettingsService = new LeagueSettingsService()
+      this.sharedDirectoryService = new SharedDirectoryService(this.ipfs)
+      this.leagueSettingsService = new LeagueSettingsService(this.ipfs)
+      this.playerService = new PlayerService(this.ipfs)
 
-      this.leagueSettingsService.freedom = this.freedom
+      // this.leagueSettingsService.freedom = this.freedom
 
-    }
-
-
-    /**
-     * Only giving getters to the actual services to expose
-     */
-
-    getLeagueSettingsService() {
-        return this.leagueSettingsService
     }
 
 }

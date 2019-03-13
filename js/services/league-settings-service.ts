@@ -1,41 +1,24 @@
 import {LeagueSettings} from "../dto/league-settings";
+import { Buffer } from "buffer"
 
-const LEAGUE_SETTINGS_REPO = 51
 
 class LeagueSettingsService {
 
-    public freedom: any
-
     constructor(
+        private ipfs: any    
     ) {}
 
     async getLeagueSettings(): Promise<LeagueSettings> {
 
         let leagueSettings: LeagueSettings
+        
+        let result  = await this.ipfs.files.read("/fantasybaseball/leagueSettings.json")
 
-        try {
-            leagueSettings = await this.freedom.readByIndex(LEAGUE_SETTINGS_REPO, 0)
-        } catch (ex) {
-            if (ex.name != "Web3Exception") {
-                throw ex
-            }
-            // console.log(ex)
-        }
-        return leagueSettings
+        return JSON.parse(result)
     }
 
-    async update(leagueSettings: LeagueSettings) : Promise<LeagueSettings> {
-
-        let currentSettings = await this.getLeagueSettings()
-
-        if (!currentSettings) {
-            return this.freedom.create(LEAGUE_SETTINGS_REPO, leagueSettings)
-        } else {
-
-            //Update existing
-            return this.freedom.update(LEAGUE_SETTINGS_REPO, 1, leagueSettings)
-        }
-
+    async update(leagueSettings: LeagueSettings) : Promise<void> {
+         await this.ipfs.files.write('/fantasybaseball/leagueSettings.json', Buffer.from(JSON.stringify(leagueSettings)), {create: true, parents: true, truncate: true})
     }
 
 }

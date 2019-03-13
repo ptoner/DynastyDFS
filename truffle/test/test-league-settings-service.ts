@@ -29,14 +29,13 @@ contract('LeagueSettingsService', async (accounts) => {
 
         await serviceFactory.init()
 
-        leagueSettingsService = serviceFactory.getLeagueSettingsService()
+        leagueSettingsService = serviceFactory.leagueSettingsService
     });
 
     //@ts-ignore
     it("Test update & getLeagueSettings: Save default league settings", async () => {
 
         //Arrange
-
         const positionLimits: PositionLimits[] = []
 
         positionLimits.push(new PositionLimits("P", 1, 1))
@@ -54,10 +53,10 @@ contract('LeagueSettingsService', async (accounts) => {
             battingScoring,
             pitchingScoring
         )
-
+        
         //Act
-        let result = await leagueSettingsService.update(leagueSettings)
-
+        await leagueSettingsService.update(leagueSettings)
+        
         //Assert
         let read: LeagueSettings = await leagueSettingsService.getLeagueSettings()
 
