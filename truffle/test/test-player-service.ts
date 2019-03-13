@@ -1,61 +1,47 @@
-// import TestServiceFactory from './test-service-factory'
-// import { PlayerService } from '../../js/services/player-service';
-// import assert = require('assert');
-// import { Player } from '../../js/dto/player';
+import TestServiceFactory from './test-service-factory'
+import { PlayerService } from '../../js/services/player-service';
+import assert = require('assert');
+import { Player } from '../../js/dto/player';
 
-// const ipfsClient = require('ipfs-http-client')
+const ipfsClient = require('ipfs-http-client')
 
-// const ipfs = ipfsClient({
-//     host: "localhost",
-//     port: 5001,
-//     protocol: 'http'
-//   })
-
-
-// //@ts-ignore
-// contract('PlayerService', async (accounts) => {
+const ipfs = ipfsClient({
+    host: "localhost",
+    port: 5001,
+    protocol: 'http'
+  })
 
 
-//     //@ts-ignore
-//     let contract = artifacts.require("RecordService")
+//@ts-ignore
+contract('PlayerService', async (accounts) => {
 
-//     let playerService: PlayerService
-
-//     //@ts-ignore
-//     before('Setup', async () => {
-        
-//         //@ts-ignore
-//         let serviceFactory = new TestServiceFactory(ipfs, await contract.deployed())
-
-//         await serviceFactory.init()
-
-//         playerService = serviceFactory.playerService
-//     });
-
-//     //@ts-ignore
-//     it("Test create & get", async () => {
-
-//         //Arrange
-//         let player: Player = new Player()
-//         player.name = "Andrew McCutchen"
-//         player.positions = ["CF"]
+    let playerService: PlayerService = new PlayerService(ipfs)
 
 
-//         //Act
-//         let created: Player = playerService.create(player)
+    //@ts-ignore
+    it("Test create & get", async () => {
 
-//         //Assert
-//         assert.equal(created.id, 1)
+        //Arrange
+        let player: Player = new Player()
+        player.name = "Andrew McCutchen"
+        player.positions = ["CF"]
 
-//         let fetched: Player = playerService.read(created.id)
 
-//         assert.equal(fetched.name, "Andrew McCutchen")
-//         assert.equal(fetched.positions, ["CF"])
+        //Act
+        let created: Player = playerService.create(player)
 
-//     })
+        //Assert
+        assert.equal(created.id, 1)
+
+        let fetched: Player = playerService.read(created.id)
+
+        assert.equal(fetched.name, "Andrew McCutchen")
+        assert.equal(fetched.positions, ["CF"])
+
+    })
 
     
 
-// })
+})
 
 

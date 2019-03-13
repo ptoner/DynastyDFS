@@ -4,6 +4,7 @@ import { Player } from "../dto/player";
 class PlayerService {
 
     nextId: number 
+    path: string = "/fantasybaseball/"
     filename: string = "players.json"
 
     players: Player[]
@@ -15,7 +16,9 @@ class PlayerService {
     }
 
     create(player: Player): Player {
-        player.id = this.nextId++
+        player.id = this.nextId
+        this.nextId++
+
         this.players.push(player)
         this._write()
         return player
@@ -46,16 +49,33 @@ class PlayerService {
         return this.players
     }
 
+    clearAll() : void {
+        this.players = []
+        this._write()
+    }
+
     _findPositionById(id:number) {
         return this.players.map(function(x) {return x.id; }).indexOf(id)
     }
 
     async _load() {
-        this.players  = await this.ipfs.files.read("/fantasybaseball/" + this.filename)
 
-        const highestId = this.players.reduce((prev, current) => (prev.id > current.id) ? prev : current)
+        try {
+            let fileContents: Buffer  = await this.ipfs.files.read(this.path + this.filename)
 
-        this.nextId = highestId.id + 1
+            this.players = JSON.parse(fileContents.toString())
+
+            console.log("Loading")
+            console.log(this.players)
+
+            const highestId = this.players.reduce((prev, current) => (prev.id > current.id) ? prev : current)
+    
+            this.nextId = highestId.id + 1
+        } catch(ex) {
+            //File not found
+            this.players = []
+            this.nextId = 1
+        }
 
     }
 

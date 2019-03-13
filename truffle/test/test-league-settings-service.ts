@@ -1,4 +1,3 @@
-import TestServiceFactory from './test-service-factory'
 import { LeagueSettingsService } from '../../js/services/league-settings-service';
 import { LeagueSettings, PositionLimits, BattingScoring, PitchingScoring } from '../../js/dto/league-settings';
 import assert = require('assert');
@@ -16,21 +15,7 @@ const ipfs = ipfsClient({
 contract('LeagueSettingsService', async (accounts) => {
 
 
-    //@ts-ignore
-    let contract = artifacts.require("RecordService")
-
-    let leagueSettingsService: LeagueSettingsService
-
-    //@ts-ignore
-    before('Setup', async () => {
-        
-        //@ts-ignore
-        let serviceFactory = new TestServiceFactory(ipfs, await contract.deployed())
-
-        await serviceFactory.init()
-
-        leagueSettingsService = serviceFactory.leagueSettingsService
-    });
+    let leagueSettingsService: LeagueSettingsService = new LeagueSettingsService(ipfs)
 
     //@ts-ignore
     it("Test update & getLeagueSettings: Save default league settings", async () => {
