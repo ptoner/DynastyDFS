@@ -23,7 +23,7 @@ contract('DownlodService', async (accounts) => {
     let fileService: FileService = new FileService(ipfs)
     let playerService: PlayerService = new PlayerService(ipfs)
     let playerDayService: PlayerDayService = new PlayerDayService(ipfs, fileService)
-    let downloadService: DownloadService = new DownloadService(playerDayService, playerService)
+    let downloadService: DownloadService = new DownloadService(playerDayService, playerService, fileService)
     
     
     //@ts-ignore
@@ -38,7 +38,7 @@ contract('DownlodService', async (accounts) => {
         let date: Date = moment("2018-05-26").toDate()
        
         //Act
-        let games = await downloadService.fetchGamesOnDate(date)
+        let games = await downloadService.fetchGameDirectoriesOnDate(date)
 
         //Assert
         assert.equal(games.length, 15)
@@ -46,14 +46,28 @@ contract('DownlodService', async (accounts) => {
     })
 
     //@ts-ignore
-    it("Test getBoxscoreForGame", async () => {
+    it("Test downloadGameFiles", async () => {
+
+        let directory = "/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1"
 
         //Act
-        let boxscore = await downloadService.getBoxscoreForGame("http://gd2.mlb.com/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/")
+        await downloadService.downloadGameFiles(directory)
 
         //Assert
-        console.log(boxscore)
+        assert.equal(
+            await fileService.fileExists("/fantasybaseball/gameday/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/boxscore.json"), 
+            true
+        )
 
+        assert.equal(
+            await fileService.fileExists("/fantasybaseball/gameday/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/linescore.json"), 
+            true
+        )
+
+        assert.equal(
+            await fileService.fileExists("/fantasybaseball/gameday/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/game_events.json"), 
+            true
+        )
     })
 
 

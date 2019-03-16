@@ -9,13 +9,11 @@ class FileService {
         const buffer: Buffer = Buffer.from(JSON.stringify(data))
 
         for (let path of files) {
-            // console.log(`Writing file: ${path}`)
             await this.ipfs.files.write( path, buffer, {
                 create: true, 
                 parents: true, 
                 truncate: true
             })
-            // console.log(`Complete: ${path}`)
         }
     }
 
@@ -74,7 +72,6 @@ class FileService {
                     // console.log(`Error reading file: ${filename}`)
                     // console.log(ex)
                 }
-
             }
         } catch (ex) {
             // console.log(`Error: ${folderName}`)

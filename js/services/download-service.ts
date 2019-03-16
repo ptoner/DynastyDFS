@@ -1,17 +1,20 @@
 import { PlayerDayService } from "./player-day-service";
 import { PlayerService } from "./player-service";
+import { FileService } from "./file-service";
 
 const fetch = require("node-fetch");
 
 
 class DownloadService {
 
-    host: string = "http://gd2.mlb.com/"
+    host: string = "http://gd2.mlb.com"
+    localFolder: string = "/fantasybaseball/gameday"
 
 
     constructor(
         private playerDayService: PlayerDayService,
-        private playerService: PlayerService
+        private playerService: PlayerService,
+        private fileService: FileService
     ) {}
 
 
@@ -25,7 +28,7 @@ class DownloadService {
 
     async downloadDate(date: Date) : Promise<void> {
 
-        let games = await this.fetchGamesOnDate(date)
+        let games = await this.fetchGameDirectoriesOnDate(date)
 
         for (let game of games) {
 
@@ -34,9 +37,9 @@ class DownloadService {
     }
 
 
-    async fetchGamesOnDate(date: Date) : Promise<any[]> {
+    async fetchGameDirectoriesOnDate(date: Date) : Promise<any[]> {
 
-        let games: any[] = []
+        let gameDirectories: string[] = []
 
         let dayUrl = this._buildDayUrl(date)
 
@@ -46,32 +49,42 @@ class DownloadService {
             const response = await miniScoreboard.json()
 
             for (const game of response.data.games.game) {
-                games.push(game)
+                gameDirectories.push(game.game_data_directory)
             }
         } catch(ex) {
             console.log("Couldn't fetch scoreboard from gameday: ", ex)
         }
 
-        return games
+        return gameDirectories
     }
 
-    async getBoxscoreForGame(gameFolderUrl: string ) : Promise<any> {
+    async downloadGameFiles(gameFolderUrl: string ) : Promise<void> {
+        
+        let prefix: string = this.host + gameFolderUrl
 
-        let boxscore: any
+
+       let localGameFolder: string = this.localFolder + gameFolderUrl
+
 
         try {
-            const response = await fetch(gameFolderUrl + "boxscore.json")
-            boxscore = await response.json()
+            let response = await fetch(prefix + "/boxscore.json")
+            this.fileService.writeToAll(await response.json(), [localGameFolder + "/boxscore.json"])
+
+            response = await fetch(prefix + "/linescore.json")
+            this.fileService.writeToAll(await response.json(), [localGameFolder + "/linescore.json"])
+
+            response = await fetch(prefix + "/game_events.json")
+            this.fileService.writeToAll(await response.json(), [localGameFolder + "/game_events.json"])
 
         } catch(ex) {
-            console.log("Error getting boxscore")
+            console.log("Error saving game files")
             console.log(ex)
         }
-
-        return boxscore
-
     }
 
+    async downloadGamesOnDate(date: Date) : Promise<void> {
+
+    }
 
 
 
@@ -95,7 +108,7 @@ class DownloadService {
             day = `0${day}`
         }
 
-        return this.host + `components/game/mlb/year_${year}/month_${month}/day_${day}/`
+        return this.host + `/components/game/mlb/year_${year}/month_${month}/day_${day}/`
     }
 
 }
