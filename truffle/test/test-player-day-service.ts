@@ -105,6 +105,12 @@ contract('PlayerDayService', async (accounts) => {
         //Make sure we get nothing back
         assert.equal(readAgain, undefined)
 
+        let dateList: PlayerDay[] = await playerDayService.listByDate("2018-05-06")
+        assert.equal(dateList.length, 0)
+
+        let playerList: PlayerDay[] = await playerDayService.listByPlayer(playerDay.player.id)
+        assert.equal(playerList.length, 0)
+
     })
 
     //@ts-ignore
@@ -183,52 +189,6 @@ contract('PlayerDayService', async (accounts) => {
 
     })
 
-
-
-    //     //@ts-ignore
-    // it("Test delete record and check list", async () => {
-
-    //     //Arrange
-    //     let player1: Player = new Player()
-    //     player1.name = "Andrew McCutchen"
-    //     player1.positions = ["CF"]
-
-    //     let player2: Player = new Player()
-    //     player2.name = "Jordy Mercer"
-    //     player2.positions = ["SS"]
-
-    //     let player3: Player = new Player()
-    //     player3.name = "Pedro Alvarez"
-    //     player3.positions = ["3B"]
-
-
-    //     playerService.create(player1)
-    //     playerService.create(player2)
-    //     playerService.create(player3)
-
-
-    //     //Act
-    //     await playerService.delete(player2)
-
-
-    //     let list: Player[] = playerService.list()
-
-
-    //     //Assert
-    //     assert.equal(list[0].name, "Andrew McCutchen")
-    //     assert.equal(list[0].positions[0], "CF")
-
-    //     // assert.equal(list[1].name, "Jordy Mercer")
-    //     // assert.equal(list[1].positions[0], "SS")
-
-    //     assert.equal(list[1].name, "Pedro Alvarez")
-    //     assert.equal(list[1].positions[0], "3B")
-
-    // })
-
-
-    
-    
 
 })
 
