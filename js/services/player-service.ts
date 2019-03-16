@@ -11,11 +11,9 @@ class PlayerService {
 
     constructor(
         private ipfs: any
-    ) {
-        this._load()
-    }
+    ) {    }
 
-    create(player: Player): Player {
+    async create(player: Player): Promise<Player> {
         player.id = this.nextId
         this.nextId++
 
@@ -24,32 +22,33 @@ class PlayerService {
         return player
     }
 
-    read(id: number) {
+    read(id: number) : Player {
         return this.players[this._findPositionById(id)]      
     }
 
-    update(player: Player): void {
+    async update(player: Player): Promise<void> {
         var elementPos = this._findPositionById(player.id)
 
         if (elementPos) {
             this.players[elementPos] = player
         }
 
-        this._write()
+        return this._write()
     }
 
-    delete(player: Player) {
+    async delete(player: Player): Promise<void> {
         var elementPos = this._findPositionById(player.id)
-        delete this.players[elementPos]
 
-        this._write()
+        this.players.splice(elementPos, 1)
+
+        return this._write()
     }
 
     list() : Player[] {
         return this.players
     }
 
-    clearAll() : void {
+    async clearAll() : Promise<void> {
         this.players = []
         this._write()
         this.nextId = 1
