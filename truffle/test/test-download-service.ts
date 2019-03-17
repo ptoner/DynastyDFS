@@ -18,7 +18,7 @@ const ipfs = ipfsClient({
 
 
 //@ts-ignore
-contract('DownlodService', async (accounts) => {
+contract('DownloadService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
     let playerService: PlayerService = new PlayerService(ipfs)
@@ -69,6 +69,16 @@ contract('DownlodService', async (accounts) => {
             true
         )
     })
+
+    //@ts-ignore
+    // it("Test downloadDate", async () => {
+
+    //     //Act
+    //     await downloadService.downloadDate(moment("2018-05-26").toDate())
+
+    //     //Assert
+    //     //todo: something
+    // })
 
 
 })
