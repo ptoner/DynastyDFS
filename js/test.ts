@@ -17,7 +17,7 @@ let playerService: PlayerService = new PlayerService(ipfs)
 let playerDayService: PlayerDayService = new PlayerDayService(ipfs, fileService)
 let downloadService: GamedayDownloadService = new GamedayDownloadService(playerDayService, playerService, fileService)
 
-let start: Date = moment(`2018-03-22`).toDate()
+let start: Date = moment(`2018-03-01`).toDate()
 let end: Date = moment(`2018-11-07`).toDate()
 
 downloadService.downloadRange(start, end)

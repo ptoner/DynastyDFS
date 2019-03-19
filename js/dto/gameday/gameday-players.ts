@@ -3,45 +3,14 @@ import  {DOMParser}  from 'xmldom'
 
 class GamedayPlayers {
     
-    public playerList: GamedayPlayer[]
+    public playerList: GamedayPlayer[] = []
 
-    constructor(rawXml: any) {
-
-        let parser = new DOMParser({
-            /**
-             * locator is always need for error position info
-             */
-            locator:{},
-            /**
-             * you can override the errorHandler for xml parser
-             * @link http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html
-             */
-            errorHandler:{
-                warning:function(w){
-                },
-                error:function(e) {
-                    // console.log(e)
-                },
-                fatalError:function(e) {
-                    // console.log(e)
-                }
-            }
-        })
-
-        let xmlDoc: Document = parser.parseFromString(rawXml, "text/xml")
-
-        let teams = xmlDoc.getElementsByTagName("team")
-
-        console.log(teams)
+    constructor(rawJson: any) {
 
         //@ts-ignore 
-        for(let team of teams) {
-            let players = team.getElementsByTagName("player")
-
-            for(let player of players) {
+        for(let team of rawJson.team) {
+            for(let player of team.player) {
                 let gamedayPlayer: GamedayPlayer = new GamedayPlayer(player)
-                gamedayPlayer.gamedayTeamId = team.id 
-
                 this.playerList.push(gamedayPlayer)
             }
         }
@@ -59,29 +28,28 @@ class GamedayPlayer {
     public position: string 
     public currentPosition: string 
     public teamId: string 
-    public gamedayTeamId: string 
     public battingOrder: number 
     public gamePosition: string 
     public avg: number 
     public hr: number 
     public rbi: number 
 
-    constructor(xmlElement: any) {
-        this.playerId = xmlElement.getAttribute('id') 
-        this.firstName = xmlElement.getAttribute('first') 
-        this.lastName = xmlElement.getAttribute('last') 
+    constructor(rawJson: any) {
+        this.playerId = rawJson._attributes.id 
+        this.firstName = rawJson._attributes.first 
+        this.lastName = rawJson._attributes.last 
 
-        this.playerNumber = xmlElement.getAttribute('num') 
-        this.pitches = xmlElement.getAttribute('rl') 
-        this.bats = xmlElement.getAttribute('bats')
-        this.position = xmlElement.getAttribute('position')
-        this.currentPosition = xmlElement.getAttribute('current_position') 
-        this.teamId = xmlElement.getAttribute('team_id')
-        this.hr = xmlElement.getAttribute('hr')
-        this.battingOrder = xmlElement.getAttribute('bat_order') 
-        this.gamePosition = xmlElement.getAttribute('game_position')
-        this.avg = xmlElement.getAttribute('avg') 
-        this.rbi = xmlElement.getAttribute('rbi') 
+        this.playerNumber = rawJson._attributes.num 
+        this.pitches = rawJson._attributes.rl 
+        this.bats = rawJson._attributes.bats
+        this.position = rawJson._attributes.position
+        this.currentPosition = rawJson._attributes.current_position 
+        this.teamId = rawJson._attributes.team_id
+        this.hr = rawJson._attributes.hr
+        this.battingOrder = rawJson._attributes.bat_order
+        this.gamePosition = rawJson._attributes.game_position
+        this.avg = rawJson._attributes.avg 
+        this.rbi = rawJson._attributes.rbi 
     }
 
 }

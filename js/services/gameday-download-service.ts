@@ -93,10 +93,10 @@ class GamedayDownloadService {
             this.fileService.writeToAll(await response.json(), [localGameFolder + "/game_events.json"])
 
             response = await fetch(prefix + "/players.xml")
-            this.fileService.writeToAll(await response.text(), [localGameFolder + "/players.xml"])
+            this.fileService.writeBufferToAll(await response.buffer(), [localGameFolder + "/players.xml"])
 
             response = await fetch(prefix + "/inning/inning_all.xml")
-            this.fileService.writeToAll(await response.text(), [localGameFolder + "/inning/inning_all.xml"])
+            this.fileService.writeBufferToAll(await response.buffer(), [localGameFolder + "/inning/inning_all.xml"])
 
         } catch(ex) {
             console.log(`Error saving game files: ${gameFolderUrl}`)

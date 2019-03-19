@@ -8,6 +8,11 @@ class FileService {
 
         const buffer: Buffer = Buffer.from(JSON.stringify(data))
 
+        this.writeBufferToAll(buffer, files)
+    }
+
+    async writeBufferToAll(buffer: Buffer, files: string[]) {
+
         for (let path of files) {
             await this.ipfs.files.write( path, buffer, {
                 create: true, 

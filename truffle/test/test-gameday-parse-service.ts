@@ -6,7 +6,8 @@ import { FileService } from '../../js/services/file-service'
 
 import moment = require('moment')
 import { GamedayBoxScore, BattingAppearance, PitchingAppearance } from '../../js/dto/gameday/gameday-boxscore';
-import { GamedayGameEvents } from '../../js/dto/gameday/gameday-game-events';
+import { GamedayAtbats } from '../../js/dto/gameday/gameday-atbats';
+import { GameSummary } from '../../js/dto/gameday/game-summary';
 
 const ipfsClient = require('ipfs-http-client')
 
@@ -34,6 +35,47 @@ contract('GamedayDownloadService', async (accounts) => {
        
         //Act
         let gamedayBoxScore: GamedayBoxScore = await gamedayParseService.parseBoxScore("/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1")
+
+        assertGamedayBoxScore(gamedayBoxScore)
+
+
+    })
+
+    it("Test parseGameEvents", async () => {
+       
+        //Act
+        let gamedayAtbats: GamedayAtbats = await gamedayParseService.parseGameAtbats("/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1")
+
+        assertGamedayAtbats(gamedayAtbats)
+
+    })
+
+    it("Test parsePlayers", async () => {
+       
+        //Act
+        let gamedayPlayers: GamedayPlayers = await gamedayParseService.parsePlayers("/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1")
+
+        //Assert
+        assert.equal(gamedayPlayers.playerList.length, 51)
+
+    })
+
+
+    it("Test parseGame", async () => {
+
+        //Act
+        let gameSummary: GameSummary = await gamedayParseService.parseGame("/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1")
+
+        //Assert
+        assertGamedayBoxScore(gameSummary.boxScore)
+        assertGamedayAtbats(gameSummary.atBats)
+        assert.equal(gameSummary.players.playerList.length, 51)
+
+
+    })
+
+
+    function assertGamedayBoxScore(gamedayBoxScore: GamedayBoxScore) {
 
         //Assert
         assert.equal(gamedayBoxScore.gameId, '2018/05/06/chnmlb-slnmlb-1')
@@ -121,17 +163,11 @@ contract('GamedayDownloadService', async (accounts) => {
         assert.equal(pa.seasonWalks, 17)
         assert.equal(pa.seasonStrikeouts, 31)
         assert.equal(pa.seasonEarnedRuns, 12)
+    }
 
+    function assertGamedayAtbats(gamedayAtbats: GamedayAtbats) {
 
-    })
-
-    it("Test parseGameEvents", async () => {
-       
-        //Act
-        let gamedayGameEvents: GamedayGameEvents = await gamedayParseService.parseGameEvents("/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1")
-
-        //Assert
-        let atBat = gamedayGameEvents.atBats[0]
+        let atBat  = gamedayAtbats.atBats[0]
 
         assert.equal(atBat.pitches.length, 2)
         assert.equal(atBat.batterId, 575929)
@@ -145,26 +181,13 @@ contract('GamedayDownloadService', async (accounts) => {
         assert.equal(atBat.score, false)
         assert.equal(atBat.awayTeamRuns, 0)
         assert.equal(atBat.homeTeamRuns, 0)
-        assert.equal(atBat.baseRunner1Id, 575929)
         assert.equal(atBat.eventNum, 6)
         assert.equal(atBat.rbi, 0)
         assert.equal(atBat.inningNum, 1)
         assert.equal(atBat.inningTop, true)
+    }
 
 
-    })
-
-    // it("Test parsePlayers", async () => {
-
-    //     //Arrange
-    //     let date: Date = moment("2018-05-26").toDate()
-       
-    //     //Act
-    //     let gamedayPlayers: GamedayPlayers = await gamedayParseService.parsePlayers("/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1")
-
-    //     //Assert
-    //     console.log(gamedayPlayers)
-    // })
 
 
 })

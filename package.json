@@ -52,7 +52,7 @@
     "typescript": "3.3.1",
     "@types/node": "10.12.21",
 
-    "xmldom": "0.1.27",
+    "xml-js": "1.6.11",
 
     "@babel/core": "7.2.2",
     "@babel/preset-env": "7.2.3",
