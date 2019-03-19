@@ -1,4 +1,6 @@
 import { Player } from "./player";
+import moment = require('moment');
+
 
 class PlayerDay {
 
@@ -9,6 +11,12 @@ class PlayerDay {
 
     constructor() {
     }
+
+    setDate(date: Date) {
+        this.date = moment(date).format("YYYY-MM-DD")
+    }
+
+
 }
 
 export {

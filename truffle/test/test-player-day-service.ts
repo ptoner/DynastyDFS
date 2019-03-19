@@ -32,11 +32,8 @@ contract('PlayerDayService', async (accounts) => {
     //@ts-ignore
     it("Test create & get", async () => {
         //Arrange
-        let player: Player = createTestPlayer();
-
-        let playerDay: PlayerDay = new PlayerDay()
-        playerDay.player = player 
-        playerDay.date = "2018-05-26"
+        let player = createTestPlayer()
+        let playerDay = createTestPlayerDay(player, "2018-05-26")
 
         
         //Act
@@ -46,19 +43,24 @@ contract('PlayerDayService', async (accounts) => {
         
         //Get it by player/date
         let readPlayer = await playerDayService.read(player.id, playerDay.date)
+
         assert.equal(readPlayer.date, playerDay.date)
         assert.equal(readPlayer.player.id, player.id)
 
         //Check the list for this player
         let playerList: PlayerDay[] = await playerDayService.listByPlayer(player.id)
+
+
+
         assert.equal(playerList[0].date, playerDay.date)
         assert.equal(playerList[0].player.id, player.id)
 
 
         // //Check the list for this date
-        let dateList: PlayerDay[] = await playerDayService.listByDate(playerDay.date)
+        let dateList: PlayerDay[] = await playerDayService.listByDate(moment(playerDay.date).toDate())
         assert.equal(dateList[0].date, playerDay.date)
         assert.equal(dateList[0].player.id, player.id)
+
 
     })
 
@@ -82,6 +84,7 @@ contract('PlayerDayService', async (accounts) => {
 
         assert.equal(readAgain.salary, 40)
 
+
     }) 
 
 
@@ -89,7 +92,7 @@ contract('PlayerDayService', async (accounts) => {
     it("Test delete", async ()  => {
 
         //Arrange
-        let playerDay = createTestPlayerDay(createTestPlayer(), "2018-05-06")
+        let playerDay = createTestPlayerDay(createTestPlayer(), "2018-06-06")
 
         await playerDayService.create(playerDay)
 
@@ -105,22 +108,24 @@ contract('PlayerDayService', async (accounts) => {
         //Make sure we get nothing back
         assert.equal(readAgain, undefined)
 
-        let dateList: PlayerDay[] = await playerDayService.listByDate("2018-05-06")
+        let dateList: PlayerDay[] = await playerDayService.listByDate(moment("2018-06-06").toDate())
         assert.equal(dateList.length, 0)
 
         let playerList: PlayerDay[] = await playerDayService.listByPlayer(playerDay.player.id)
         assert.equal(playerList.length, 0)
 
+
+
     })
 
-    //@ts-ignore
+    // //@ts-ignore
     it("Test listByDate", async () => {
 
         //Arrange
-        let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-05-06")
-        let playerDay2 = createTestPlayerDay(createTestPlayer2(), "2018-05-06")
-        let playerDay3 = createTestPlayerDay(createTestPlayer3(), "2018-05-07")
-        let playerDay4 = createTestPlayerDay(createTestPlayer4(), "2018-05-08")
+        let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-07-06")
+        let playerDay2 = createTestPlayerDay(createTestPlayer2(), "2018-07-06")
+        let playerDay3 = createTestPlayerDay(createTestPlayer3(), "2018-07-07")
+        let playerDay4 = createTestPlayerDay(createTestPlayer4(), "2018-07-08")
 
         await playerDayService.create(playerDay1)
         await playerDayService.create(playerDay2)
@@ -129,41 +134,43 @@ contract('PlayerDayService', async (accounts) => {
 
         
         //Act
-        let list1: PlayerDay[] = await playerDayService.listByDate("2018-05-06")
-        let list2: PlayerDay[] = await playerDayService.listByDate("2018-05-07")
-        let list3: PlayerDay[] = await playerDayService.listByDate("2018-05-08")
+        let list1: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-06").toDate())
+        let list2: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-07").toDate())
+        let list3: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-08").toDate())
 
 
         //Assert
 
         //Check the first day
         assert.equal(list1[0].player.id, 1)
-        assert.equal(list1[0].date, "2018-05-06")
+        assert.equal(list1[0].date, "2018-07-06")
 
         assert.equal(list1[1].player.id, 2)
-        assert.equal(list1[1].date, "2018-05-06")
+        assert.equal(list1[1].date, "2018-07-06")
 
 
         //Check the second day
         assert.equal(list2[0].player.id, 3)
-        assert.equal(list2[0].date, "2018-05-07")
+        assert.equal(list2[0].date, "2018-07-07")
 
 
         //Check the third day
         assert.equal(list3[0].player.id, 4)
-        assert.equal(list3[0].date, "2018-05-08")
+        assert.equal(list3[0].date, "2018-07-08")
+
+
 
     })
 
 
-    //@ts-ignore
+    // //@ts-ignore
     it("Test listByPlayer", async () => {
 
         //Arrange
-        let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-05-05")
-        let playerDay2 = createTestPlayerDay(createTestPlayer(), "2018-05-06")
-        let playerDay3 = createTestPlayerDay(createTestPlayer(), "2018-05-07")
-        let playerDay4 = createTestPlayerDay(createTestPlayer2(), "2018-05-08")
+        let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-08-05")
+        let playerDay2 = createTestPlayerDay(createTestPlayer(), "2018-08-06")
+        let playerDay3 = createTestPlayerDay(createTestPlayer(), "2018-08-07")
+        let playerDay4 = createTestPlayerDay(createTestPlayer2(), "2018-08-08")
 
         await playerDayService.create(playerDay1)
         await playerDayService.create(playerDay2)
@@ -186,6 +193,8 @@ contract('PlayerDayService', async (accounts) => {
         assert.equal(list2.length, 1)
 
         assert.equal(list2[0].player.id, playerDay4.player.id)
+
+
 
     })
 

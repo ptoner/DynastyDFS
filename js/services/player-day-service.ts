@@ -32,9 +32,9 @@ class PlayerDayService {
     }
 
 
-    async listByDate(date: string) : Promise<PlayerDay[]> {
+    async listByDate(date: Date) : Promise<PlayerDay[]> {
         
-        let folderName: string = this.path + this.datesFolder + `/${date}`
+        let folderName: string = this.path + this.datesFolder + `/${this.getFilenameDate(date)}`
 
         let results: PlayerDay[] = await this.fileService.listFromDirectory(folderName)
 
@@ -80,6 +80,10 @@ class PlayerDayService {
         return this.path + `${this.datesFolder}/${date}/${playerId}.json`
     }
 
+
+    getFilenameDate(date: Date) {
+        return moment(date).format("YYYY-MM-DD")
+    }
 
 
     async _load(playerId: number, date: string) : Promise<PlayerDay> {

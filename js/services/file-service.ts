@@ -7,19 +7,27 @@ class FileService {
     async writeToAll(data: any, files: string[]) : Promise<void>  {
 
         const buffer: Buffer = Buffer.from(JSON.stringify(data))
-
-        this.writeBufferToAll(buffer, files)
+        
+        return this.writeBufferToAll(buffer, files)
     }
 
-    async writeBufferToAll(buffer: Buffer, files: string[]) {
+    async writeBufferToAll(buffer: Buffer, files: string[]) : Promise<any> {
+
+        let promises: Promise<void>[] = []
 
         for (let path of files) {
-            await this.ipfs.files.write( path, buffer, {
-                create: true, 
-                parents: true, 
-                truncate: true
-            })
-        }
+            
+            promises.push(
+                this.ipfs.files.write( path, buffer, {
+                    create: true, 
+                    parents: true, 
+                    truncate: true
+                })
+            )
+
+        } 
+
+        return Promise.all(promises)
     }
 
     async deleteAll(files: string[]) {

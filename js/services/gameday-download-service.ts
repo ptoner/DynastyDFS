@@ -103,7 +103,7 @@ class GamedayDownloadService {
         }
     }
 
-
+    
 
     _buildDayUrl(date: Date) : string {
 
