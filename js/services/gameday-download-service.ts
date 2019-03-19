@@ -7,7 +7,7 @@ import moment = require('moment');
 const fetch = require("node-fetch");
 
 
-class DownloadService {
+class GamedayDownloadService {
 
     host: string = "http://gd2.mlb.com"
     localFolder: string = "/fantasybaseball/gameday"
@@ -92,9 +92,11 @@ class DownloadService {
             response = await fetch(prefix + "/game_events.json")
             this.fileService.writeToAll(await response.json(), [localGameFolder + "/game_events.json"])
 
-
             response = await fetch(prefix + "/players.xml")
             this.fileService.writeToAll(await response.text(), [localGameFolder + "/players.xml"])
+
+            response = await fetch(prefix + "/inning/inning_all.xml")
+            this.fileService.writeToAll(await response.text(), [localGameFolder + "/inning/inning_all.xml"])
 
         } catch(ex) {
             console.log(`Error saving game files: ${gameFolderUrl}`)
@@ -105,16 +107,13 @@ class DownloadService {
 
     _buildDayUrl(date: Date) : string {
 
-        // 01, 02, 03, ... 29, 30, 31
-        var dd = (date.getDate() < 10 ? '0' : '') + date.getDate()
-        // 01, 02, 03, ... 10, 11, 12
-        var MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1)
-        // 1970, 1971, ... 2015, 2016, ...
-        var yyyy = date.getFullYear()
+        const dd = (date.getDate() < 10 ? '0' : '') + date.getDate()
+        const MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1)
+        const yyyy = date.getFullYear()
 
         return this.host + `/components/game/mlb/year_${yyyy}/month_${MM}/day_${dd}/`
     }
 
 }
 
-export { DownloadService}
+export { GamedayDownloadService}

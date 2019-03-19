@@ -42,6 +42,18 @@ class FileService {
         return contents
     }
 
+    async loadFileXml(filename: string) : Promise<any> {
+
+        let contents: any 
+
+
+        return contents 
+
+    }
+
+
+
+
     async fileExists(filename: string) : Promise<boolean> {
 
         let exists: boolean = false

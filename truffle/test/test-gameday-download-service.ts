@@ -1,12 +1,12 @@
-import { DownloadService } from '../../js/services/download-service';
-import assert = require('assert');
-import { Player } from '../../js/dto/player';
-import { isMainThread } from 'worker_threads';
-import { FileService } from '../../js/services/file-service';
-import { PlayerDay } from '../../js/dto/player-day';
-import { PlayerService } from '../../js/services/player-service';
-import moment = require('moment');
-import { PlayerDayService } from '../../js/services/player-day-service';
+import { GamedayDownloadService } from '../../js/services/gameday-download-service'
+import assert = require('assert')
+import { Player } from '../../js/dto/player'
+import { isMainThread } from 'worker_threads'
+import { FileService } from '../../js/services/file-service'
+import { PlayerDay } from '../../js/dto/player-day'
+import { PlayerService } from '../../js/services/player-service'
+import moment = require('moment')
+import { PlayerDayService } from '../../js/services/player-day-service'
 
 const ipfsClient = require('ipfs-http-client')
 
@@ -18,12 +18,12 @@ const ipfs = ipfsClient({
 
 
 //@ts-ignore
-contract('DownloadService', async (accounts) => {
+contract('GamedayDownloadService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
     let playerService: PlayerService = new PlayerService(ipfs)
     let playerDayService: PlayerDayService = new PlayerDayService(ipfs, fileService)
-    let downloadService: DownloadService = new DownloadService(playerDayService, playerService, fileService)
+    let downloadService: GamedayDownloadService = new GamedayDownloadService(playerDayService, playerService, fileService)
     
     
     //@ts-ignore
