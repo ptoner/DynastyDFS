@@ -2,15 +2,14 @@ import { Player } from "./player";
 import moment = require('moment');
 
 
-class PlayerDay {
+class HitterDay {
 
     public id: number
     public player: Player 
     public date: string
     public salary: number 
 
-    constructor() {
-    }
+    constructor() {}
 
     setDate(date: Date) {
         this.date = moment(date).format("YYYY-MM-DD")
@@ -20,5 +19,5 @@ class PlayerDay {
 }
 
 export {
-    PlayerDay
+    HitterDay
 }

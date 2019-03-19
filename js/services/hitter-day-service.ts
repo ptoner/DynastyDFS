@@ -1,11 +1,11 @@
 import { Player } from "../dto/player";
-import { PlayerDay } from "../dto/player-day";
+import { HitterDay } from "../dto/hitter-day";
 import * as moment from 'moment';
 import { FileService } from "./file-service";
 
-class PlayerDayService {
+class HitterDayService {
 
-    path: string = "/fantasybaseball/playerDay/"
+    path: string = "/fantasybaseball/HitterDay/"
     playersFolder: string = "players"
     datesFolder: string = "dates"
 
@@ -15,38 +15,38 @@ class PlayerDayService {
         private fileService: FileService
     ) {}
 
-    async create(playerDay: PlayerDay): Promise<void> {
+    async create(playerDay: HitterDay): Promise<void> {
         return this._write(playerDay)
     }
 
-    async read(playerId: number, date: string) : Promise<PlayerDay> {
+    async read(playerId: number, date: string) : Promise<HitterDay> {
         return this._load(playerId, date)
     }
 
-    async update(playerDay: PlayerDay): Promise<void> {
+    async update(playerDay: HitterDay): Promise<void> {
         return this._write(playerDay)
     }
 
-    async delete(playerDay: PlayerDay) : Promise<void> {
+    async delete(playerDay: HitterDay) : Promise<void> {
         return this._delete(playerDay)
     }
 
 
-    async listByDate(date: Date) : Promise<PlayerDay[]> {
+    async listByDate(date: Date) : Promise<HitterDay[]> {
         
         let folderName: string = this.path + this.datesFolder + `/${this.getFilenameDate(date)}`
 
-        let results: PlayerDay[] = await this.fileService.listFromDirectory(folderName)
+        let results: HitterDay[] = await this.fileService.listFromDirectory(folderName)
 
         return results
 
     }
 
-    async listByPlayer(playerId: number) : Promise<PlayerDay[]> {
+    async listByPlayer(playerId: number) : Promise<HitterDay[]> {
 
         let folderName: string = this.path + this.playersFolder + `/${playerId}`
 
-        let results: PlayerDay[] = await this.fileService.listFromDirectory(folderName)
+        let results: HitterDay[] = await this.fileService.listFromDirectory(folderName)
 
         return results
 
@@ -86,12 +86,12 @@ class PlayerDayService {
     }
 
 
-    async _load(playerId: number, date: string) : Promise<PlayerDay> {
+    async _load(playerId: number, date: string) : Promise<HitterDay> {
         return this.fileService.loadFile(this._getFilename(playerId, date))
     }
 
 
-    async _write(playerDay: PlayerDay) : Promise<void> {
+    async _write(playerDay: HitterDay) : Promise<void> {
 
         const files = [
             this._getFilename(playerDay.player.id, playerDay.date),             //Main directory
@@ -99,11 +99,11 @@ class PlayerDayService {
             this._getDateIndexFilename(playerDay.player.id, playerDay.date)     //Date specific
         ]
 
-        await this.fileService.writeToAll(playerDay, files)
+        return this.fileService.writeToAll(playerDay, files)
 
     }
 
-    async _delete(playerDay: PlayerDay) : Promise<void> {
+    async _delete(playerDay: HitterDay) : Promise<void> {
 
         const files = [
             this._getFilename(playerDay.player.id, playerDay.date),             //Main directory
@@ -111,11 +111,11 @@ class PlayerDayService {
             this._getDateIndexFilename(playerDay.player.id, playerDay.date)     //Date specific
         ]
 
-        await this.fileService.deleteAll(files)
+        return this.fileService.deleteAll(files)
 
     }
 
 }
 
-export { PlayerDayService }
+export { HitterDayService }
 

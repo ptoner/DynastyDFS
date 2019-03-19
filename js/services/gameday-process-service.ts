@@ -8,7 +8,16 @@ class GamedayProcessService {
 
     }
 
+    async createPlayerDaysForDate(date: Date) : Promise<void> {
 
+        // this.parseService.parseGame
+
+
+    }
+
+    async processDateRange(date: Date) : Promise<void> {
+
+    }
 
 
 }

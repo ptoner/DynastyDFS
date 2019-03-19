@@ -24,19 +24,22 @@ class FileService {
                     truncate: true
                 })
             )
-
         } 
 
         return Promise.all(promises)
     }
 
-    async deleteAll(files: string[]) {
+    async deleteAll(files: string[]) : Promise<any> {
+
+        let promises: Promise<void>[] = []
 
         for (let path of files) {
             if (this.fileExists(path)) {
-                await this.ipfs.files.rm(path)
+                promises.push(this.ipfs.files.rm(path))
             }
         }
+
+        return Promise.all(promises)
     }
 
 

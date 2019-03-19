@@ -1,5 +1,3 @@
-import { PlayerDayService } from "./player-day-service";
-import { PlayerService } from "./player-service";
 import { FileService } from "./file-service";
 import moment = require('moment');
 
@@ -14,8 +12,6 @@ class GamedayDownloadService {
 
 
     constructor(
-        private playerDayService: PlayerDayService,
-        private playerService: PlayerService,
         private fileService: FileService
     ) {}
 
@@ -43,7 +39,9 @@ class GamedayDownloadService {
     async downloadDate(date: Date) : Promise<void> {
 
         console.log(`Downloading date: ${date}`)
-        let games = await this.fetchGameDirectoriesOnDate(date)
+        await this.downloadMiniScoreboard(date)
+
+        let games = await this.readMiniScoreboard(date)
 
         for (let game of games) {
             console.log(`Downloading files for: ${game} `)
@@ -53,29 +51,44 @@ class GamedayDownloadService {
     }
 
 
-    async fetchGameDirectoriesOnDate(date: Date) : Promise<any[]> {
-
-        let gameDirectories: string[] = []
+    async downloadMiniScoreboard(date: Date) : Promise<void> {
 
         let dayUrl = this._buildDayUrl(date)
 
+        let localDayFolder: string = this.localFolder + dayUrl
+
         try {
-            const miniScoreboard = await fetch(dayUrl + "miniscoreboard.json")
+            const miniScoreboard = await fetch(dayUrl + "/miniscoreboard.json")
 
-            const response = await miniScoreboard.json()
-
-            if (response.data && response.data.games) {
-                for (const game of response.data.games.game) {
-                    gameDirectories.push(game.game_data_directory)
-                }
-            }
+            return this.fileService.writeToAll(await miniScoreboard.json(), [localDayFolder + "/miniscoreboard.json"])
 
         } catch(ex) {
             console.log(`Couldn't fetch scoreboard from gameday: ${date}`, ex)
         }
 
-        return gameDirectories
     }
+
+    async readMiniScoreboard(date: Date) : Promise<string[]> {
+
+        let gameDirectories: string[] = []
+
+        let dayUrl = this._buildDayUrl(date)
+
+        let localDayFolder: string = this.localFolder + dayUrl
+
+        let rawJson = await this.fileService.loadFile(localDayFolder + "/miniscoreboard.json")
+
+        if (rawJson.data && rawJson.data.games) {
+            for (const game of rawJson.data.games.game) {
+                gameDirectories.push(game.game_data_directory)
+            }
+        }
+
+        return gameDirectories
+
+
+    }
+
 
     async downloadGameFiles(gameFolderUrl: string ) : Promise<void> {
 
@@ -111,7 +124,7 @@ class GamedayDownloadService {
         const MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1)
         const yyyy = date.getFullYear()
 
-        return this.host + `/components/game/mlb/year_${yyyy}/month_${MM}/day_${dd}/`
+        return this.host + `/components/game/mlb/year_${yyyy}/month_${MM}/day_${dd}`
     }
 
 }

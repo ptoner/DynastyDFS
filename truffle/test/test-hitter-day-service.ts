@@ -1,9 +1,9 @@
-import { PlayerDayService } from '../../js/services/player-day-service';
+import { HitterDayService } from '../../js/services/hitter-day-service';
 import assert = require('assert');
 import { Player } from '../../js/dto/player';
 import { isMainThread } from 'worker_threads';
 import { FileService } from '../../js/services/file-service';
-import { PlayerDay } from '../../js/dto/player-day';
+import { HitterDay } from '../../js/dto/hitter-day';
 import { PlayerService } from '../../js/services/player-service';
 import moment = require('moment');
 
@@ -17,15 +17,15 @@ const ipfs = ipfsClient({
 
 
 //@ts-ignore
-contract('PlayerDayService', async (accounts) => {
+contract('HitterDayService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
-    let playerDayService: PlayerDayService = new PlayerDayService(ipfs, fileService)
+    let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService)
     
     
     //@ts-ignore
     beforeEach('Setup', async () => {
-       await playerDayService.clearAll()
+       await hitterDayService.clearAll()
     })
 
 
@@ -37,18 +37,18 @@ contract('PlayerDayService', async (accounts) => {
 
         
         //Act
-        await playerDayService.create(playerDay)
+        await hitterDayService.create(playerDay)
 
         //Assert
         
         //Get it by player/date
-        let readPlayer = await playerDayService.read(player.id, playerDay.date)
+        let readPlayer = await hitterDayService.read(player.id, playerDay.date)
 
         assert.equal(readPlayer.date, playerDay.date)
         assert.equal(readPlayer.player.id, player.id)
 
         //Check the list for this player
-        let playerList: PlayerDay[] = await playerDayService.listByPlayer(player.id)
+        let playerList: HitterDay[] = await hitterDayService.listByPlayer(player.id)
 
 
 
@@ -57,7 +57,7 @@ contract('PlayerDayService', async (accounts) => {
 
 
         // //Check the list for this date
-        let dateList: PlayerDay[] = await playerDayService.listByDate(moment(playerDay.date).toDate())
+        let dateList: HitterDay[] = await hitterDayService.listByDate(moment(playerDay.date).toDate())
         assert.equal(dateList[0].date, playerDay.date)
         assert.equal(dateList[0].player.id, player.id)
 
@@ -70,17 +70,17 @@ contract('PlayerDayService', async (accounts) => {
         //Arrange
         let playerDay = createTestPlayerDay(createTestPlayer(), "2018-05-06")
 
-        await playerDayService.create(playerDay)
+        await hitterDayService.create(playerDay)
 
-        let read: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
+        let read: HitterDay = await hitterDayService.read(playerDay.player.id, playerDay.date)
 
         read.salary = 40
 
         //Act
-        await playerDayService.update(read)
+        await hitterDayService.update(read)
 
         //Assert
-        let readAgain: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
+        let readAgain: HitterDay = await hitterDayService.read(playerDay.player.id, playerDay.date)
 
         assert.equal(readAgain.salary, 40)
 
@@ -94,24 +94,24 @@ contract('PlayerDayService', async (accounts) => {
         //Arrange
         let playerDay = createTestPlayerDay(createTestPlayer(), "2018-06-06")
 
-        await playerDayService.create(playerDay)
+        await hitterDayService.create(playerDay)
 
-        let read: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
+        let read: HitterDay = await hitterDayService.read(playerDay.player.id, playerDay.date)
 
 
         //Act
-        await playerDayService.delete(read)
+        await hitterDayService.delete(read)
 
         //Assert
-        let readAgain: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
+        let readAgain: HitterDay = await hitterDayService.read(playerDay.player.id, playerDay.date)
 
         //Make sure we get nothing back
         assert.equal(readAgain, undefined)
 
-        let dateList: PlayerDay[] = await playerDayService.listByDate(moment("2018-06-06").toDate())
+        let dateList: HitterDay[] = await hitterDayService.listByDate(moment("2018-06-06").toDate())
         assert.equal(dateList.length, 0)
 
-        let playerList: PlayerDay[] = await playerDayService.listByPlayer(playerDay.player.id)
+        let playerList: HitterDay[] = await hitterDayService.listByPlayer(playerDay.player.id)
         assert.equal(playerList.length, 0)
 
 
@@ -127,16 +127,16 @@ contract('PlayerDayService', async (accounts) => {
         let playerDay3 = createTestPlayerDay(createTestPlayer3(), "2018-07-07")
         let playerDay4 = createTestPlayerDay(createTestPlayer4(), "2018-07-08")
 
-        await playerDayService.create(playerDay1)
-        await playerDayService.create(playerDay2)
-        await playerDayService.create(playerDay3)
-        await playerDayService.create(playerDay4)
+        await hitterDayService.create(playerDay1)
+        await hitterDayService.create(playerDay2)
+        await hitterDayService.create(playerDay3)
+        await hitterDayService.create(playerDay4)
 
         
         //Act
-        let list1: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-06").toDate())
-        let list2: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-07").toDate())
-        let list3: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-08").toDate())
+        let list1: HitterDay[] = await hitterDayService.listByDate(moment("2018-07-06").toDate())
+        let list2: HitterDay[] = await hitterDayService.listByDate(moment("2018-07-07").toDate())
+        let list3: HitterDay[] = await hitterDayService.listByDate(moment("2018-07-08").toDate())
 
 
         //Assert
@@ -172,15 +172,15 @@ contract('PlayerDayService', async (accounts) => {
         let playerDay3 = createTestPlayerDay(createTestPlayer(), "2018-08-07")
         let playerDay4 = createTestPlayerDay(createTestPlayer2(), "2018-08-08")
 
-        await playerDayService.create(playerDay1)
-        await playerDayService.create(playerDay2)
-        await playerDayService.create(playerDay3)
-        await playerDayService.create(playerDay4)
+        await hitterDayService.create(playerDay1)
+        await hitterDayService.create(playerDay2)
+        await hitterDayService.create(playerDay3)
+        await hitterDayService.create(playerDay4)
 
         
         //Act
-        let list1: PlayerDay[] = await playerDayService.listByPlayer(playerDay1.player.id)
-        let list2: PlayerDay[] = await playerDayService.listByPlayer(playerDay4.player.id)
+        let list1: HitterDay[] = await hitterDayService.listByPlayer(playerDay1.player.id)
+        let list2: HitterDay[] = await hitterDayService.listByPlayer(playerDay4.player.id)
 
 
         //Assert
@@ -238,7 +238,7 @@ function createTestPlayer4() {
 
 function createTestPlayerDay(player: Player, date: string) {
 
-    let playerDay: PlayerDay = new PlayerDay()
+    let playerDay: HitterDay = new HitterDay()
     playerDay.player = player 
     playerDay.date = date
     

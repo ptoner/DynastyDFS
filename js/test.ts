@@ -1,6 +1,6 @@
 import { FileService } from "./services/file-service";
 import { PlayerService } from "./services/player-service";
-import { PlayerDayService } from "./services/player-day-service";
+import { PlayerDayService } from "./services/hitter-day-service";
 import { GamedayDownloadService } from "./services/gameday-download-service";
 import moment = require('moment');
 
