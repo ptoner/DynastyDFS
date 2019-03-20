@@ -23,8 +23,8 @@ class GamedayBoxScore {
     public awayTeamErrors: number
     public homeTeamErrors: number
 
-    public pitching: Pitching[] = []
-    public batting: Batting[] = []
+    public pitching: Pitching
+    public batting: Batting
 
     constructor(rawJson: any) {
 
@@ -40,11 +40,11 @@ class GamedayBoxScore {
 
 
         for (let pitch of rawJson.pitching) {
-            this.pitching.push(new Pitching(pitch))
+            this.pitching = new Pitching(pitch)
         }
 
         for (let bat of rawJson.batting) {
-            this.batting.push(new Batting(bat))
+            this.batting = new Batting(bat)
         }
 
         this.awayTeamRuns = rawJson.linescore.away_team_runs

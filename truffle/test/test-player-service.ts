@@ -23,7 +23,7 @@ contract('PlayerService', async (accounts) => {
 
     //@ts-ignore
     before('Setup', async () => {
-        await playerService._load()
+        await playerService.load()
     })
 
     //@ts-ignore
@@ -37,7 +37,9 @@ contract('PlayerService', async (accounts) => {
 
         //Arrange
         let player: Player = new Player()
-        player.name = "Andrew McCutchen"
+        player.id = 1
+        player.firstName = "Andrew"
+        player.lastName = "McCutchen"
         player.positions = ["CF"]
 
 
@@ -47,9 +49,10 @@ contract('PlayerService', async (accounts) => {
         //Assert
         assert.equal(created.id, 1)
 
-        let fetched: Player = playerService.read(created.id)
+        let fetched: Player = await playerService.read(created.id)
 
-        assert.equal(fetched.name, "Andrew McCutchen")
+        assert.equal(fetched.firstName, "Andrew")
+        assert.equal(fetched.lastName, "McCutchen")
         assert.equal(fetched.positions.length, 1)
         assert.equal(fetched.positions[0], "CF")
 
@@ -60,20 +63,24 @@ contract('PlayerService', async (accounts) => {
 
         //Arrange
         let player: Player = new Player()
-        player.name = "Andrew McCutchen"
+        player.id = 1
+        player.firstName = "Andrew"
+        player.lastName = "McCutchen"
         player.positions = ["CF"]
 
         let created: Player = await playerService.create(player)
 
-        created.name = "Bo Jackson"
+        created.firstName = "Bo"
+        created.lastName = "Jackson"
 
         //Act
         await playerService.update(created)
 
         //Assert
-        let read: Player = playerService.read(created.id)
+        let read: Player = await playerService.read(created.id)
 
-        assert.equal(read.name, "Bo Jackson")
+        assert.equal(read.firstName, "Bo")
+        assert.equal(read.lastName, "Jackson")
 
     }) 
 
@@ -83,7 +90,9 @@ contract('PlayerService', async (accounts) => {
 
         //Arrange
         let player: Player = new Player()
-        player.name = "Andrew McCutchen"
+        player.id = 1
+        player.firstName = "Andrew"
+        player.lastName = "McCutchen"
         player.positions = ["CF"]
 
         let created: Player = await playerService.create(player)
@@ -92,7 +101,7 @@ contract('PlayerService', async (accounts) => {
         await playerService.delete(created)
 
         //Assert
-        let read: Player = playerService.read(created.id)
+        let read: Player = await playerService.read(created.id)
 
         //Make sure we get nothing back
         assert.equal(read, undefined)
@@ -104,15 +113,21 @@ contract('PlayerService', async (accounts) => {
 
         //Arrange
         let player1: Player = new Player()
-        player1.name = "Andrew McCutchen"
+        player1.id = 1
+        player1.firstName = "Andrew"
+        player1.lastName = "McCutchen"
         player1.positions = ["CF"]
 
         let player2: Player = new Player()
-        player2.name = "Jordy Mercer"
+        player2.id = 2
+        player2.firstName = "Jordy"
+        player2.lastName = "Mercer"
         player2.positions = ["SS"]
 
         let player3: Player = new Player()
-        player3.name = "Pedro Alvarez"
+        player3.id = 3
+        player3.firstName = "Pedro"
+        player3.lastName = "Alvarez"
         player3.positions = ["3B"]
 
 
@@ -122,17 +137,22 @@ contract('PlayerService', async (accounts) => {
 
 
         //Act
-        let list: Player[] = playerService.list()
+        let list: Player[] = await playerService.list()
 
 
         //Assert
-        assert.equal(list[0].name, "Andrew McCutchen")
+        assert.equal(list[0].firstName, "Andrew")
+        assert.equal(list[0].lastName, "McCutchen")
+
         assert.equal(list[0].positions[0], "CF")
 
-        assert.equal(list[1].name, "Jordy Mercer")
+        assert.equal(list[1].firstName, "Jordy")
+        assert.equal(list[1].lastName, "Mercer")
+
         assert.equal(list[1].positions[0], "SS")
 
-        assert.equal(list[2].name, "Pedro Alvarez")
+        assert.equal(list[2].firstName, "Pedro")
+        assert.equal(list[2].lastName, "Alvarez")
         assert.equal(list[2].positions[0], "3B")
 
     })
@@ -144,15 +164,21 @@ contract('PlayerService', async (accounts) => {
 
         //Arrange
         let player1: Player = new Player()
-        player1.name = "Andrew McCutchen"
+        player1.id = 1
+        player1.firstName = "Andrew"
+        player1.lastName = "McCutchen"
         player1.positions = ["CF"]
 
         let player2: Player = new Player()
-        player2.name = "Jordy Mercer"
+        player2.id = 2
+        player2.firstName = "Jordy"
+        player2.lastName = "Mercer"
         player2.positions = ["SS"]
 
         let player3: Player = new Player()
-        player3.name = "Pedro Alvarez"
+        player3.id = 3
+        player3.firstName = "Pedro"
+        player3.lastName = "Alvarez"
         player3.positions = ["3B"]
 
 
@@ -165,17 +191,18 @@ contract('PlayerService', async (accounts) => {
         await playerService.delete(player2)
 
 
-        let list: Player[] = playerService.list()
+        let list: Player[] = await playerService.list()
 
 
         //Assert
-        assert.equal(list[0].name, "Andrew McCutchen")
+        assert.equal(list[0].firstName, "Andrew")
+        assert.equal(list[0].lastName, "McCutchen")
         assert.equal(list[0].positions[0], "CF")
 
         // assert.equal(list[1].name, "Jordy Mercer")
         // assert.equal(list[1].positions[0], "SS")
-
-        assert.equal(list[1].name, "Pedro Alvarez")
+        assert.equal(list[1].firstName, "Pedro")
+        assert.equal(list[1].lastName, "Alvarez")
         assert.equal(list[1].positions[0], "3B")
 
     })

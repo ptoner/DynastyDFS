@@ -205,7 +205,8 @@ contract('HitterDayService', async (accounts) => {
 function createTestPlayer() {
     let player: Player = new Player()
     player.id = 1
-    player.name = "Andrew McCutchen"
+    player.firstName = "Andrew"
+    player.lastName = "McCutchen"
     player.positions = ["CF"]
     return player
 }
@@ -213,7 +214,8 @@ function createTestPlayer() {
 function createTestPlayer2() {
     let player: Player = new Player()
     player.id = 2
-    player.name = "Pedro Alvarez"
+    player.firstName = "Pedro"
+    player.lastName = "Alvarez"
     player.positions = ["3B"]
     return player
 }
@@ -221,7 +223,8 @@ function createTestPlayer2() {
 function createTestPlayer3() {
     let player: Player = new Player()
     player.id = 3
-    player.name = "Jordy Mercer"
+    player.firstName = "Jordy"
+    player.lastName = "Mercer"
     player.positions = ["SS"]
     return player
 }
@@ -229,7 +232,8 @@ function createTestPlayer3() {
 function createTestPlayer4() {
     let player: Player = new Player()
     player.id = 4
-    player.name = "Gerrit Cole"
+    player.firstName = "Gerrit"
+    player.lastName = "Cole"
     player.positions = ["P"]
     return player
 }

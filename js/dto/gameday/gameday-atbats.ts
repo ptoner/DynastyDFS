@@ -15,13 +15,14 @@ class GamedayAtbats {
                 this.atBats.push(gamedayAtBat)
             }
 
-            for (let bottomAtBat of inning.bottom.atbat) {
-                let gamedayAtBat: GamedayAtBat = new GamedayAtBat(bottomAtBat)
-                gamedayAtBat.inningNum = inningNum
-                gamedayAtBat.inningTop = true
-                this.atBats.push(gamedayAtBat)
+            if (inning.bottom) {
+                for (let bottomAtBat of inning.bottom.atbat) {
+                    let gamedayAtBat: GamedayAtBat = new GamedayAtBat(bottomAtBat)
+                    gamedayAtBat.inningNum = inningNum
+                    gamedayAtBat.inningTop = true
+                    this.atBats.push(gamedayAtBat)
+                }
             }
-
         }
     }
 }

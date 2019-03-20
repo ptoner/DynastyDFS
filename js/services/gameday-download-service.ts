@@ -44,7 +44,6 @@ class GamedayDownloadService {
         let games = await this.readMiniScoreboard(date)
 
         for (let game of games) {
-            console.log(`Downloading files for: ${game} `)
             await this.downloadGameFiles(game)
         }
         
@@ -91,6 +90,8 @@ class GamedayDownloadService {
 
 
     async downloadGameFiles(gameFolderUrl: string ) : Promise<void> {
+
+        console.log(`Downloading files for: ${gameFolderUrl} `)
 
         let prefix: string = this.host + gameFolderUrl
         let localGameFolder: string = this.localFolder + gameFolderUrl

@@ -35,16 +35,7 @@ class BattingScoring {
         public k: Number,
         public hbp: Number,
         public sb: Number,
-        public cs: Number,
-
-        public gidp: Number,
-        public cyc: Number,
-        public gshr: Number,
-        public putOuts: Number,
-        public assists: Number,
-        public ofAssists: Number,
-        public errors: Number,
-        public dpt: Number,
+        public cs: Number
     ) {}
 }
 

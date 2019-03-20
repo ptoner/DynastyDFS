@@ -1,8 +1,11 @@
 class Player {
 
     public id: number
-    public name: string
-    public positions: string[]
+    public firstName: string
+    public lastName: string
+    public bats: string 
+    public pitches: string 
+    public positions: string[] = []
 
     constructor(
     ) {}

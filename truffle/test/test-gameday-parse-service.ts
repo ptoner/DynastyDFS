@@ -19,7 +19,7 @@ const ipfs = ipfsClient({
 
 
 //@ts-ignore
-contract('GamedayDownloadService', async (accounts) => {
+contract('GamedayParseService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
     let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService)
@@ -94,7 +94,7 @@ contract('GamedayDownloadService', async (accounts) => {
         assert.equal(gamedayBoxScore.homeTeamErrors, 1)
 
 
-        let ba: BattingAppearance = gamedayBoxScore.batting[0].appearances[0]
+        let ba: BattingAppearance = gamedayBoxScore.batting.appearances[0]
 
         assert.equal(ba.playerId, '664056')
         assert.equal(ba.playerName, 'Bader')
@@ -131,7 +131,7 @@ contract('GamedayDownloadService', async (accounts) => {
         assert.equal(ba.seasonRbi, 2)
         assert.equal(ba.seasonHr, 1)
 
-        let pa: PitchingAppearance = gamedayBoxScore.pitching[0].appearances[0]
+        let pa: PitchingAppearance = gamedayBoxScore.pitching.appearances[0]
 
         assert.equal(pa.playerId, '452657')
         assert.equal(pa.playerName, 'Lester')
