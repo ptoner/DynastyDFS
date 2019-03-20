@@ -1,8 +1,11 @@
+import * as moment from 'moment';
+
+
 class GamedayBoxScore {
 
     public gameId: string
     public gamePk: string
-    public date: string
+    public date: Date
     public status: string
     public venueName: string
 
@@ -30,7 +33,7 @@ class GamedayBoxScore {
 
         this.gameId = rawJson.game_id
         this.gamePk = rawJson.game_pk
-        this.date = rawJson.date
+        this.date = moment(rawJson.date, "MMMM DD, YYYY").toDate()
         this.status = rawJson.status_ind
         this.venueName = rawJson.venue_name
 

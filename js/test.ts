@@ -1,8 +1,12 @@
 import { FileService } from "./services/file-service";
 import { PlayerService } from "./services/player-service";
-import { PlayerDayService } from "./services/hitter-day-service";
+import {  HitterDayService } from "./services/hitter-day-service";
 import { GamedayDownloadService } from "./services/gameday-download-service";
 import moment = require('moment');
+import { GamedayParseService } from "./services/gameday-parse-service";
+import { PitcherDayService } from "./services/pitcher-day-service";
+import { GamedayProcessService } from "./services/gameday-process-service";
+import { runInContext } from "vm";
 
 const ipfsClient = require('ipfs-http-client')
 
@@ -12,12 +16,33 @@ const ipfs = ipfsClient({
     protocol: 'http'
   })
 
+
+
+
 let fileService: FileService = new FileService(ipfs)
+let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService)
+let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService)
+let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService)
+let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService)
 let playerService: PlayerService = new PlayerService(ipfs)
-let playerDayService: PlayerDayService = new PlayerDayService(ipfs, fileService)
-let downloadService: GamedayDownloadService = new GamedayDownloadService(playerDayService, playerService, fileService)
+let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayParseService, gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
 
 let start: Date = moment(`2018-03-01`).toDate()
 let end: Date = moment(`2018-11-07`).toDate()
 
-downloadService.downloadRange(start, end)
+async function run() {
+  await gamedayProcessService.processDateRange(start, end)
+}
+
+run()
+
+
+
+
+// let fileService: FileService = new FileService(ipfs)
+// let downloadService: GamedayDownloadService = new GamedayDownloadService(fileService)
+
+// let start: Date = moment(`2018-03-01`).toDate()
+// let end: Date = moment(`2018-11-07`).toDate()
+
+// downloadService.downloadRange(start, end)

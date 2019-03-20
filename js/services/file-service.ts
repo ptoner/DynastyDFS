@@ -4,7 +4,7 @@ class FileService {
         private ipfs: any
     ) {}
 
-    async writeToAll(data: any, files: string[]) : Promise<void>  {
+    async writeToAll(data: any, files: string[]) : Promise<any>  {
 
         const buffer: Buffer = Buffer.from(JSON.stringify(data))
         

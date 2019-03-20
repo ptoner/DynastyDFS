@@ -21,9 +21,22 @@ class GamedayProcessService {
         private playerService: PlayerService,
         private hitterDayService: HitterDayService,
         private pitcherDayService: PitcherDayService
-    ) {
+    ) {}
 
+    
+    async processDateRange(start: Date, end: Date) : Promise<void> {
+
+        let loop: Date = new Date(start)
+        while(loop <= end){
+
+            await this.createPlayerDaysForDate(loop)
+
+           loop.setDate(loop.getDate() + 1)
+        }
+
+        return this.playerService.write()
     }
+
 
     async createPlayerDaysForDate(date: Date) : Promise<void> {
 
@@ -38,8 +51,6 @@ class GamedayProcessService {
 
             let gameSummary: GameSummary = await this.parseService.parseGame(game)
 
-            let gameDate: Date = moment(gameSummary.boxScore.date).toDate()
-
             //Update player list
             await this.insertNewPlayersForGame(gameSummary.players)
 
@@ -51,7 +62,7 @@ class GamedayProcessService {
 
                 let player: Player = await this.playerService.read(battingAppearance.playerId)
 
-                await this.hitterDayService.create(this.buildHitterDay(battingAppearance, atBats, player, gameDate))
+                await this.hitterDayService.create(this.buildHitterDay(battingAppearance, atBats, player, gameSummary.boxScore.date))
             }
 
             for (let pitchingAppearance of gameSummary.boxScore.pitching.appearances) {
@@ -62,11 +73,10 @@ class GamedayProcessService {
 
                 let player: Player = await this.playerService.read(pitchingAppearance.playerId)
 
-                await this.pitcherDayService.create(this.buildPitcherDay(pitchingAppearance, atBats, player, gameDate))
+                await this.pitcherDayService.create(this.buildPitcherDay(pitchingAppearance, atBats, player, gameSummary.boxScore.date))
             }
         }
 
-        await this.playerService.write()
 
 
     }
@@ -134,7 +144,6 @@ class GamedayProcessService {
         hitterDay.sb = battingAppearance.sb
         hitterDay.cs = battingAppearance.cs
 
-
         return hitterDay
 
     }
@@ -160,14 +169,13 @@ class GamedayProcessService {
         pitcherDay.saved = pitchingAppearance.saved 
         pitcherDay.blewSave = pitchingAppearance.blewSave
 
+
         return pitcherDay
     }
 
 
 
-    async processDateRange(date: Date) : Promise<void> {
 
-    }
 
 
 }

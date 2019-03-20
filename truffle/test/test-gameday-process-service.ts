@@ -50,10 +50,49 @@ contract('GamedayProcessService', async (accounts) => {
         //Act
         await gamedayProcessService.createPlayerDaysForDate(moment("2018-05-26").toDate())
 
+        //Assert
+
+        let devinMesoraco = await hitterDayService.read(519023, "2018-05-26")
+
+        assert.equal(devinMesoraco.hits, 2)
+        assert.equal(devinMesoraco.runsScored, 0)
+        assert.equal(devinMesoraco.singles, 2)
+        assert.equal(devinMesoraco.doubles, 0)
+        assert.equal(devinMesoraco.triples, 0)
+        assert.equal(devinMesoraco.homeRuns, 0)
+        assert.equal(devinMesoraco.rbi, 1)
+        assert.equal(devinMesoraco.bb, 0)
+        assert.equal(devinMesoraco.ibb, 0)
+        assert.equal(devinMesoraco.k, 2)
+        assert.equal(devinMesoraco.hbp, 0)
+        assert.equal(devinMesoraco.sb, 0)
+        assert.equal(devinMesoraco.cs,0)
+        assert.equal(devinMesoraco.player.firstName, 'Devin')
+
+        let artieLweicki = await pitcherDayService.read(592499, '2018-05-26')
+
+        assert.equal(artieLweicki.battersFace, 13)
+        assert.equal(artieLweicki.numberOfPitches, 46)
+        assert.equal(artieLweicki.strikes, 32)
+        assert.equal(artieLweicki.hits, 4)
+        assert.equal(artieLweicki.runs, 1)
+        assert.equal(artieLweicki.hr, 0)
+        assert.equal(artieLweicki.so, 3)
+        assert.equal(artieLweicki.bb, 0)
+        assert.equal(artieLweicki.outs, 9)
+        assert.equal(artieLweicki.earnedRuns, 1)
+        assert.equal(artieLweicki.won, false)
+        assert.equal(artieLweicki.lost, false)
+        assert.equal(artieLweicki.saved, false)
+        assert.equal(artieLweicki.blewSave, false)
 
 
 
     })
+
+
+
+
 
 
 })

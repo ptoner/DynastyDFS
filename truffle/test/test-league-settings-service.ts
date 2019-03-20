@@ -25,7 +25,7 @@ contract('LeagueSettingsService', async (accounts) => {
 
         positionLimits.push(new PositionLimits("P", 1, 1))
 
-        const battingScoring = new BattingScoring(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
+        const battingScoring = new BattingScoring(1,1,1,1,1,1,1,1,1,1,1,1,1)
         const pitchingScoring = new PitchingScoring(1,1,1,1,1,1,1,1,1,1,1,1,1,1)
 
         const leagueSettings: LeagueSettings = new LeagueSettings(
@@ -51,22 +51,14 @@ contract('LeagueSettingsService', async (accounts) => {
         assert.equal(read.totalBench, 11)
         assert.equal(read.totalDl, 4)
         assert.equal(read.positionLimits.length, 1)
-        assert.equal(read.battingScoring.assists, 1)
         assert.equal(read.battingScoring.bb, 1)
         assert.equal(read.battingScoring.cs, 1)
-        assert.equal(read.battingScoring.cyc, 1)
         assert.equal(read.battingScoring.doubles, 1)
-        assert.equal(read.battingScoring.dpt, 1)
-        assert.equal(read.battingScoring.errors, 1)
-        assert.equal(read.battingScoring.gidp, 1)
-        assert.equal(read.battingScoring.gshr, 1)
         assert.equal(read.battingScoring.hbp, 1)
         assert.equal(read.battingScoring.hits, 1)
         assert.equal(read.battingScoring.homeRuns, 1)
         assert.equal(read.battingScoring.ibb, 1)
         assert.equal(read.battingScoring.k, 1)
-        assert.equal(read.battingScoring.ofAssists, 1)
-        assert.equal(read.battingScoring.putOuts, 1)
         assert.equal(read.battingScoring.rbi, 1)
         assert.equal(read.battingScoring.runsScored, 1)
         assert.equal(read.battingScoring.sb, 1)
