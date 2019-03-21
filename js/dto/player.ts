@@ -7,9 +7,14 @@ class Player {
     public pitches: string 
     public positions: string[] = []
 
+    public currentStatus: string
+    
+    
+
     constructor(
     ) {}
 }
+
 
 export {
     Player

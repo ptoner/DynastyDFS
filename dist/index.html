@@ -11,16 +11,15 @@
         * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
             * Enable inline JS: add 'unsafe-inline' to default-src
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- Color theme for statusbar -->
     <meta name="theme-color" content="#2196f3">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
     <title>League of Legends</title>
 
-    <link rel="stylesheet" href="css/framework7.min.css">
+    <link rel="stylesheet" href="css/framework7.bundle.min.css">
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/framework7-icons.css">
@@ -28,16 +27,17 @@
 
 
 </head>
-<body class="color-theme-blue">
+<body>
 
 <div id="app">
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar"></div>
 
     <!-- Your main view, should have "view-main" class -->
-    <div class="view view-main ios-edges">
-
+    <div class="view view-main">
     </div>
+
+
 
 </div>
 
