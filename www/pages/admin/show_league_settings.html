@@ -7,308 +7,307 @@
                 <div class="left">
                     <div class="title-name">League of Legends</div>
                 </div>
-                <div class="right">
-                    <a class="link" href="/admin">
-                        <i class="f7-icons">gear</i>
-                    </a>
-                </div>
             </div>
         </div>
         
 
-        <div class="page-content row">
+        <div class="toolbar tabbar toolbar-top">
+            <div class="toolbar-inner">
+                <a href="/" class="tab-link">Home</a>
+                <a href="/player/list" class="tab-link">Players</a>
+                <a href="/admin" class="tab-link tab-link-active"><i class="f7-icons">gear</i></a>
+            </div>
+        </div>
 
-            <div class="col-100 tablet-50 center">
 
-                <a href="/admin/showLeagueSettingsForm" class="right">Edit</a>
+        <div class="page-content">
+            <a href="/admin/showLeagueSettingsForm" class="right">Edit</a>
 
-                <div class="block">
-                    <input type="hidden" name="id" value="{{id}}" />
+            <div class="block">
+                <input type="hidden" name="id" value="{{id}}" />
 
-                    <div class="block-title-medium">Basic Settings</div>
-                    <div class="list">
-                        <ul>
-                            <li>
-                                <div class="item-content item-input">
-                                    <div class="item-inner">
-                                        <div class="item-title item-label">League Name</div>
-                                        <div>{{leagueName}}</div>
-                                    </div>
+                <div class="block-title-medium">Basic Settings</div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">League Name</div>
+                                    <div>{{leagueName}}</div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-
-
-                    <div class="block-title-medium">Roster Limits</div>
-                    <div class="list">
-                        <ul>
-
-                            <li>
-                                <div class="item-content item-input">
-                                    <div class="item-inner">
-                                        <div class="item-title item-label">Roster Size</div>
-                                        <div>{{rosterSize}}</div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content item-input">
-                                    <div class="item-inner">
-                                        <div class="item-title item-label">Total Starters</div>
-                                        <div>{{totalStarters}}</div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content item-input">
-                                    <div class="item-inner">
-                                        <div class="item-title item-label">Total Bench</div>
-                                        <div>{{totalBench}}</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content item-input">
-                                    <div class="item-inner">
-                                        <div class="item-title item-label">Total DL</div>
-                                        <div>{{totalDl}}</div>
-                                    </div>
-                                </div>
-                            </li>
-
-
-                        </ul>
-                    </div>
-
-                    <div class="block-title-medium">Position Limits</div>
-                    <div class="list">
-                        <ul>
-                            <li class="item-content">
-                                <div class="item-inner item-cell">
-                                    <div class="item-row">
-                                        <div class="item-cell"><strong>Position</strong></div>
-                                        <div class="item-cell"><strong>Starters</strong></div>
-                                        <div class="item-cell"><strong>Maximum</strong></div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">C</div>
-                                        <div class="item-cell">{{catcherStarters}}</div>
-                                        <div class="item-cell">{{catcherMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">1B</div>
-                                        <div class="item-cell">{{firstBaseStarters}}</div>
-                                        <div class="item-cell">{{firstBaseMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">2B</div>
-                                        <div class="item-cell">{{secondBaseStarters}}</div>
-                                        <div class="item-cell">{{secondBaseMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">3B</div>
-                                        <div class="item-cell">{{thirdBaseStarters}}</div>
-                                        <div class="item-cell">{{thirdBaseMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">SS</div>
-                                        <div class="item-cell">{{shortstopStarters}}</div>
-                                        <div class="item-cell">{{shortstopMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">IF</div>
-                                        <div class="item-cell">{{infieldStarters}}</div>
-                                        <div class="item-cell">{{infieldMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">OF</div>
-                                        <div class="item-cell">{{ofStarters}}</div>
-                                        <div class="item-cell">{{ofMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">UTIL</div>
-                                        <div class="item-cell">{{utilStarters}}</div>
-                                        <div class="item-cell">{{utilMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">SP</div>
-                                        <div class="item-cell">{{spStarters}}</div>
-                                        <div class="item-cell">{{spMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">RP</div>
-                                        <div class="item-cell">{{rpStarters}}</div>
-                                        <div class="item-cell">{{rpMax}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">P</div>
-                                        <div class="item-cell">{{pStarters}}</div>
-                                        <div class="item-cell">{{pMax}}</div>
-                                    </div>
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-
-
-                    <div class="block-title-medium">Batting Scoring</div>
-                    <div class="list">
-                        <ul>
-                            <li class="item-content">
-                                <div class="item-inner item-cell">
-                                    <div class="item-row">
-                                        <div class="item-cell"><strong>Category</strong></div>
-                                        <div class="item-cell"><strong>Points</strong></div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Hits</div>
-                                        <div class="item-cell">{{hitsBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Runs Scored</div>
-                                        <div class="item-cell">{{runsScoredBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Singles</div>
-                                        <div class="item-cell">{{singlesBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Doubles</div>
-                                        <div class="item-cell">{{doublesBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Triples</div>
-                                        <div class="item-cell">{{triplesBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Home Runs</div>
-                                        <div class="item-cell">{{homeRunsBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">RBI</div>
-                                        <div class="item-cell">{{rbiBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Walks</div>
-                                        <div class="item-cell">{{bbBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Intentional Walk</div>
-                                        <div class="item-cell">{{iBBBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Strikeout</div>
-                                        <div class="item-cell">{{kBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Hit By Pitch</div>
-                                        <div class="item-cell">{{hbpBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Stolen Base</div>
-                                        <div class="item-cell">{{sbBatting}}</div>
-                                    </div>
-
-                                    <div class="item-row">
-                                        <div class="item-cell">Caught Stealing</div>
-                                        <div class="item-cell">{{csBatting}}</div>
-                                    </div>
-
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-
-                    <div class="block-title-medium">Pitching Scoring</div>
-                    <div class="list">
-                        <ul>
-                            <li class="item-content">
-                                <div class="item-inner item-cell">
-                                    <div class="item-row">
-                                        <div class="item-cell"><strong>Category</strong></div>
-                                        <div class="item-cell"><strong>Points</strong></div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Per Out</div>
-                                        <div class="item-cell">{{outPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Hit</div>
-                                        <div class="item-cell">{{hitPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Earned Run</div>
-                                        <div class="item-cell">{{earnedRunPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Home Run</div>
-                                        <div class="item-cell">{{homeRunPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Base on balls</div>
-                                        <div class="item-cell">{{bbPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Hit by Pitch</div>
-                                        <div class="item-cell">{{hbpPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Strikeout</div>
-                                        <div class="item-cell">{{kPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Wild Pitch</div>
-                                        <div class="item-cell">{{wildPitchPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Balk</div>
-                                        <div class="item-cell">{{balkPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Pickoff</div>
-                                        <div class="item-cell">{{poPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Complete Game</div>
-                                        <div class="item-cell">{{cgPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Shut Out</div>
-                                        <div class="item-cell">{{shutoutPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Blown Save</div>
-                                        <div class="item-cell">{{bsPitching}}</div>
-                                    </div>
-                                    <div class="item-row">
-                                        <div class="item-cell">Holds</div>
-                                        <div class="item-cell">{{holdsPitching}}</div>
-                                    </div>
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
+
+                <div class="block-title-medium">Roster Limits</div>
+                <div class="list">
+                    <ul>
+
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Roster Size</div>
+                                    <div>{{rosterSize}}</div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Total Starters</div>
+                                    <div>{{totalStarters}}</div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Total Bench</div>
+                                    <div>{{totalBench}}</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Total DL</div>
+                                    <div>{{totalDl}}</div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+                <div class="block-title-medium">Position Limits</div>
+                <div class="list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-inner item-cell">
+                                <div class="item-row">
+                                    <div class="item-cell"><strong>Position</strong></div>
+                                    <div class="item-cell"><strong>Starters</strong></div>
+                                    <div class="item-cell"><strong>Maximum</strong></div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">C</div>
+                                    <div class="item-cell">{{catcherStarters}}</div>
+                                    <div class="item-cell">{{catcherMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">1B</div>
+                                    <div class="item-cell">{{firstBaseStarters}}</div>
+                                    <div class="item-cell">{{firstBaseMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">2B</div>
+                                    <div class="item-cell">{{secondBaseStarters}}</div>
+                                    <div class="item-cell">{{secondBaseMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">3B</div>
+                                    <div class="item-cell">{{thirdBaseStarters}}</div>
+                                    <div class="item-cell">{{thirdBaseMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">SS</div>
+                                    <div class="item-cell">{{shortstopStarters}}</div>
+                                    <div class="item-cell">{{shortstopMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">IF</div>
+                                    <div class="item-cell">{{infieldStarters}}</div>
+                                    <div class="item-cell">{{infieldMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">OF</div>
+                                    <div class="item-cell">{{ofStarters}}</div>
+                                    <div class="item-cell">{{ofMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">UTIL</div>
+                                    <div class="item-cell">{{utilStarters}}</div>
+                                    <div class="item-cell">{{utilMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">SP</div>
+                                    <div class="item-cell">{{spStarters}}</div>
+                                    <div class="item-cell">{{spMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">RP</div>
+                                    <div class="item-cell">{{rpStarters}}</div>
+                                    <div class="item-cell">{{rpMax}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">P</div>
+                                    <div class="item-cell">{{pStarters}}</div>
+                                    <div class="item-cell">{{pMax}}</div>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+                <div class="block-title-medium">Batting Scoring</div>
+                <div class="list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-inner item-cell">
+                                <div class="item-row">
+                                    <div class="item-cell"><strong>Category</strong></div>
+                                    <div class="item-cell"><strong>Points</strong></div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Hits</div>
+                                    <div class="item-cell">{{hitsBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Runs Scored</div>
+                                    <div class="item-cell">{{runsScoredBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Singles</div>
+                                    <div class="item-cell">{{singlesBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Doubles</div>
+                                    <div class="item-cell">{{doublesBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Triples</div>
+                                    <div class="item-cell">{{triplesBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Home Runs</div>
+                                    <div class="item-cell">{{homeRunsBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">RBI</div>
+                                    <div class="item-cell">{{rbiBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Walks</div>
+                                    <div class="item-cell">{{bbBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Intentional Walk</div>
+                                    <div class="item-cell">{{iBBBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Strikeout</div>
+                                    <div class="item-cell">{{kBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Hit By Pitch</div>
+                                    <div class="item-cell">{{hbpBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Stolen Base</div>
+                                    <div class="item-cell">{{sbBatting}}</div>
+                                </div>
+
+                                <div class="item-row">
+                                    <div class="item-cell">Caught Stealing</div>
+                                    <div class="item-cell">{{csBatting}}</div>
+                                </div>
+
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="block-title-medium">Pitching Scoring</div>
+                <div class="list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-inner item-cell">
+                                <div class="item-row">
+                                    <div class="item-cell"><strong>Category</strong></div>
+                                    <div class="item-cell"><strong>Points</strong></div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Per Out</div>
+                                    <div class="item-cell">{{outPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Hit</div>
+                                    <div class="item-cell">{{hitPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Earned Run</div>
+                                    <div class="item-cell">{{earnedRunPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Home Run</div>
+                                    <div class="item-cell">{{homeRunPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Base on balls</div>
+                                    <div class="item-cell">{{bbPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Hit by Pitch</div>
+                                    <div class="item-cell">{{hbpPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Strikeout</div>
+                                    <div class="item-cell">{{kPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Wild Pitch</div>
+                                    <div class="item-cell">{{wildPitchPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Balk</div>
+                                    <div class="item-cell">{{balkPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Pickoff</div>
+                                    <div class="item-cell">{{poPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Complete Game</div>
+                                    <div class="item-cell">{{cgPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Shut Out</div>
+                                    <div class="item-cell">{{shutoutPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Blown Save</div>
+                                    <div class="item-cell">{{bsPitching}}</div>
+                                </div>
+                                <div class="item-row">
+                                    <div class="item-cell">Holds</div>
+                                    <div class="item-cell">{{holdsPitching}}</div>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
         </div>

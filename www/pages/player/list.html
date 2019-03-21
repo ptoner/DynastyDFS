@@ -7,35 +7,37 @@
                 <div class="left">
                     <div class="title-name">League of Legends</div>
                 </div>
-                <div class="right">
-                    <a class="link" href="/">
-                        <i class="f7-icons">home</i>
-                    </a>
-                </div>
+
             </div>
         </div>
 
-        <div class="page-content row">
+        <div class="toolbar tabbar toolbar-top">
+            <div class="toolbar-inner">
+                <a href="/" class="tab-link">Home</a>
+                <a href="/player/list" class="tab-link  tab-link-active">Players</a>
+                <a href="/admin" class="tab-link"><i class="f7-icons">gear</i></a>
+            </div>
+        </div>
 
-            <div class="col-100 tablet-50 center">
-              
-              <div class="block-title">Players</div>
 
-              <div class="data-table">
-                  <table>
-                      <thead>
-                          <th class="label-cell">Name</th>
-                      </thead>
-                      <tbody>
+        <div class="page-content">
+            <div class="block-title">Players</div>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <th class="label-cell">Name</th>
+                    </thead>
+                    <tbody>
                         {{#each players}}
                             <tr>
                                 <td class="label-cell">{{firstName}} {{lastName}}</td>
                             </tr>
                         {{/each}}
-                      </tbody>
-                  </table>
+                    </tbody>
+                </table>
 
-                  <div class="data-table-footer">
+                <div class="data-table-footer">
                     <div class="data-table-pagination">
                         <span class="data-table-pagination-label">{{page.start}}-{{page.end}} of {{page.count}}</span>
                         <a href="/player/list?offset={{page.previousOffset}}" class="link {{js "this.page.offset ? '' : 'disabled'"}}">
@@ -46,14 +48,8 @@
                         </a>
                     </div>
                 </div>
-
-
-              </div>
-
-              
-      
             </div>
-      
+     
         </div>
 
 

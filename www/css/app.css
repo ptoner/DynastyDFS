@@ -4,29 +4,6 @@ body, .md body {
   font-size: 19px;
 }
 
-@media (min-width:801px)  { 
-  /* tablet, landscape iPad, lo-res laptops ands desktops */ 
-  .navbar .left {
-    margin-left: 25%;
-  }
-  
-  
-  .navbar .right {
-    margin-right: 25%;
-  }
-  
-  .subnavbar {
-    padding-left: 25%;
-    padding-right: 25%;
-  }
-
-  .views .toolbar {
-    margin-left: 25%;
-    margin-right: 25%;
-    width: 50%;
-  }
-}
-
 
 
 

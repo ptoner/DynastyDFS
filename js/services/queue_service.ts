@@ -78,6 +78,7 @@ class QueueService {
         closeButtonText: "View",
         closeTimeout: 5000,
         on: {
+          //@ts-ignore
           toastCloseButtonClick: function() {
             Global.navigate(queueItem.link)
           }

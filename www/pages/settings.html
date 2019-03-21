@@ -6,80 +6,81 @@
                 <div class="left">
                     <div class="title-name">League of Legends</div>
                 </div>
-                <div class="right">
-                    <a class="link" href="/admin">
-                        <i class="f7-icons">gear</i>
-                    </a>
-                </div>
+            </div>
+        </div>
+
+        <div class="toolbar tabbar toolbar-top">
+            <div class="toolbar-inner">
+                <a href="/" class="tab-link">Home</a>
+                <a href="/player/list" class="tab-link">Players</a>
+                <a href="/admin" class="tab-link tab-link-active"><i class="f7-icons">gear</i></a>
             </div>
         </div>
 
 
-        <div class="page-content row">
+        <div class="page-content ">
 
-            <div class="col-100 tablet-50 center">
-                <div class="block-title">Settings</div>
-                <form class="list" id="settings-form">
-                    <ul>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div class="item-title item-label">IPFS Hostname</div>
-                                    <div class="item-input-wrap">
-                                        <input type="text" name="ipfsHost" value="{{ipfsHost}}" placeholder="IPFS Hostname">
-                                    </div>
+            <div class="block-title">Settings</div>
+            <form class="list" id="settings-form">
+                <ul>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">IPFS Hostname</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="ipfsHost" value="{{ipfsHost}}" placeholder="IPFS Hostname">
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div class="item-title item-label">IPFS API Port</div>
-                                    <div class="item-input-wrap">
-                                        <input type="number" name="ipfsApiPort" value="{{ipfsApiPort}}" placeholder="IPFS API Port">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div class="item-title item-label">IPFS Gateway Port</div>
-                                    <div class="item-input-wrap">
-                                        <input type="number" name="ipfsGatewayPort" value="{{ipfsGatewayPort}}" placeholder="IPFS Gateway Port">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div class="item-title item-label">Contract Address</div>
-                                    <div class="item-input-wrap">
-                                        <input type="text" name="recordContractAddress" value="{{recordContractAddress}}"  placeholder="Contract Address">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div class="item-title item-label">Contract Transaction Hash</div>
-                                    <div class="item-input-wrap">
-                                        <input type="text" name="recordContractTransactionHash" value="{{recordContractTransactionHash}}"  placeholder="Contract Transaction Hash">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <div class="block block-strong row">
-                            <div class="col-66"></div>
-                            <div class="col-33">
-                                <a class="button button-fill" id="settings-save">Save</a>
                             </div>
                         </div>
-                    </ul>
-                </form>
-            </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">IPFS API Port</div>
+                                <div class="item-input-wrap">
+                                    <input type="number" name="ipfsApiPort" value="{{ipfsApiPort}}" placeholder="IPFS API Port">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">IPFS Gateway Port</div>
+                                <div class="item-input-wrap">
+                                    <input type="number" name="ipfsGatewayPort" value="{{ipfsGatewayPort}}" placeholder="IPFS Gateway Port">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Contract Address</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="recordContractAddress" value="{{recordContractAddress}}"  placeholder="Contract Address">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Contract Transaction Hash</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="recordContractTransactionHash" value="{{recordContractTransactionHash}}"  placeholder="Contract Transaction Hash">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="block block-strong row">
+                        <div class="col-66"></div>
+                        <div class="col-33">
+                            <a class="button button-fill" id="settings-save">Save</a>
+                        </div>
+                    </div>
+                </ul>
+            </form>
 
         </div>
     </div>
