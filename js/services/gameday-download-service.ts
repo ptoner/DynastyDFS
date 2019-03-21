@@ -8,12 +8,15 @@ const fetch = require("node-fetch");
 class GamedayDownloadService {
 
     host: string = "http://gd2.mlb.com"
-    localFolder: string = "/fantasybaseball/gameday"
+    localFolder: string
 
 
     constructor(
-        private fileService: FileService
-    ) {}
+        private fileService: FileService,
+        private rootFolder: string
+    ) {
+        this.localFolder = rootFolder + "/gameday"
+    }
 
 
     async downloadSeason(season: number) : Promise<void> {

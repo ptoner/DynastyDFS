@@ -2,27 +2,25 @@
 <template>
 
   <div class="page" data-name="home">
+
     <div class="navbar">
-      <div class="navbar-inner sliding">
-        <div class="title">
-          <div class="title-name">League of Legends</div>
+        <div class="navbar-inner sliding">
+          <div class="left">
+            <div class="title-name">League of Legends</div>
+          </div>
+          <div class="right">
+            <a class="link" href="/admin">
+              <i class="f7-icons">gear</i>
+            </a>
+          </div>
         </div>
-        <div class="right">
-
-          <a class="link" href="/admin">
-              <i class="f7-icons">world</i>
-          </a>
-
-          <a class="link" href="/settings">
-            <i class="f7-icons">gear</i>
-          </a>
-        </div>
-      </div>
     </div>
-    <div id="home-page-infinite-scroll" class="page-content infinite-scroll-content row">
+
+
+    <div  class="page-content row">
 
       <div class="col-100 tablet-50 center">
-
+        <a href="/player/list">Players</a>
       </div>
 
     </div>

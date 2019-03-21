@@ -26,15 +26,16 @@ const ipfs = ipfsClient({
 //@ts-ignore
 contract('GamedayProcessService', async (accounts) => {
 
+    let rootFolder = "/fbtest"
     let fileService: FileService = new FileService(ipfs)
-    let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService)
-    let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService)
-    let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService)
-    let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService)
-    let playerService: PlayerService = new PlayerService(ipfs)
+    let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService, rootFolder)
+    let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, rootFolder)
+    let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, rootFolder)
+    let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, rootFolder)
+    let playerService: PlayerService = new PlayerService(ipfs, rootFolder)
     let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayParseService, gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
     
-    
+    //@ts-ignore 
     before('Setup', async () => {
         await playerService.load()
     })
@@ -47,6 +48,9 @@ contract('GamedayProcessService', async (accounts) => {
     //@ts-ignore
     it("Test gamedayProcessService", async () => {
        
+        //Arrange
+        // await gamedayDownloadService.downloadDate(moment("2018-05-26").toDate())
+
         //Act
         await gamedayProcessService.createPlayerDaysForDate(moment("2018-05-26").toDate())
 

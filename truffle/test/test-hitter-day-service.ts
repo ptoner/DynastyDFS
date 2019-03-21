@@ -20,7 +20,7 @@ const ipfs = ipfsClient({
 contract('HitterDayService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
-    let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService)
+    let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, "/fbtest")
     
     
     //@ts-ignore
@@ -118,7 +118,7 @@ contract('HitterDayService', async (accounts) => {
 
     })
 
-    // //@ts-ignore
+    //@ts-ignore
     it("Test listByDate", async () => {
 
         //Arrange
@@ -163,7 +163,7 @@ contract('HitterDayService', async (accounts) => {
     })
 
 
-    // //@ts-ignore
+    //@ts-ignore
     it("Test listByPlayer", async () => {
 
         //Arrange

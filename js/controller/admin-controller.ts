@@ -23,13 +23,19 @@ class AdminController {
         });
     }
 
+    async index() {
+        return new ModelView({}, "pages/admin/index.html")
+
+    }
+
+
     async showLeagueSettings() {
 
         let leagueSettings = await this.leagueSettingsService.getLeagueSettings()
 
         let leagueSettingsViewModel = this._translateToCommandModel(leagueSettings)
 
-        return new ModelView(leagueSettingsViewModel, "pages/admin/league_settings.html")
+        return new ModelView(leagueSettingsViewModel, "pages/admin/show_league_settings.html")
 
     }
 
@@ -107,7 +113,6 @@ class AdminController {
 
 
         const leagueSettings = new LeagueSettings (
-            commandModel.id,
             commandModel.leagueName,
             commandModel.rosterSize,
             commandModel.totalStarters,
@@ -127,17 +132,7 @@ class AdminController {
                 commandModel.kBatting,
                 commandModel.hbpBatting,
                 commandModel.sbBatting,
-                commandModel.csBatting,
-
-                //Garbage stats
-                commandModel.gidpBatting,
-                commandModel.cycBatting,
-                commandModel.grandSlamBatting,
-                commandModel.putOutsBatting,
-                commandModel.assistsBatting,
-                commandModel.ofAssistsBatting,
-                commandModel.errorsBatting,
-                commandModel.doublePlayTurnedBatting
+                commandModel.csBatting
             ),
             new PitchingScoring(
                 commandModel.outPitching,
@@ -197,7 +192,6 @@ class AdminController {
 
 
         const commandModel = {
-            id: leagueSettings.id,
             leagueName: leagueSettings.leagueName,
             rosterSize: leagueSettings.rosterSize,
             totalStarters: leagueSettings.totalStarters,
@@ -234,16 +228,6 @@ class AdminController {
             hbpBatting: leagueSettings.battingScoring.hbp,
             sbBatting: leagueSettings.battingScoring.sb,
             csBatting: leagueSettings.battingScoring.cs,
-
-            //Garbage stats
-            gidpBatting: leagueSettings.battingScoring.gidp,
-            cycBatting: leagueSettings.battingScoring.cyc,
-            grandSlamBatting: leagueSettings.battingScoring.gshr,
-            putOutsBatting: leagueSettings.battingScoring.putOuts,
-            assistsBatting: leagueSettings.battingScoring.assists,
-            ofAssistsBatting: leagueSettings.battingScoring.ofAssists,
-            errorsBatting: leagueSettings.battingScoring.errors,
-            doublePlayTurnedBatting: leagueSettings.battingScoring.dpt,
 
 
             //Define position limits

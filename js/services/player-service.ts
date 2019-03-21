@@ -2,13 +2,13 @@ import { Player } from "../dto/player";
 
 
 class PlayerService {
-    path: string = "/fantasybaseball/"
     filename: string = "players.json"
 
     players: Player[] = []
 
     constructor(
-        private ipfs: any
+        private ipfs: any,
+        private rootFolder: string 
     ) {    }
 
     async create(player: Player): Promise<Player> {
@@ -49,9 +49,22 @@ class PlayerService {
 
     }
 
-    async list() : Promise<Player[]> {
-        return this.players
+    async list(offset: number, limit: number) : Promise<Player[]> {
+        
+        if (!this.players) return
+        if (!offset) offset=0
+        if (!limit) limit = this.players.length
+
+        let list = this.players.slice(offset, offset + limit) 
+        
+        return list
     }
+
+    count() : number {
+        if (!this.players) return 0
+        return this.players.length
+    }
+
 
     async clearAll() : Promise<void> {
         this.players = []
@@ -65,7 +78,7 @@ class PlayerService {
     async load() {
 
         try {
-            let fileContents: Buffer  = await this.ipfs.files.read(this.path + this.filename)
+            let fileContents: Buffer  = await this.ipfs.files.read(this.rootFolder + '/' +  this.filename)
 
             this.players = JSON.parse(fileContents.toString())
 
@@ -77,7 +90,7 @@ class PlayerService {
     }
 
     async write() {
-        await this.ipfs.files.write(this.path + this.filename, Buffer.from(JSON.stringify(this.players)), {create: true, parents: true, truncate: true})
+        await this.ipfs.files.write(this.rootFolder + '/' +  this.filename, Buffer.from(JSON.stringify(this.players)), {create: true, parents: true, truncate: true})
     }
 
 

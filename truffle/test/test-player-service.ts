@@ -16,7 +16,7 @@ const ipfs = ipfsClient({
 contract('PlayerService', async (accounts) => {
 
 
-    let playerService: PlayerService = new PlayerService(ipfs)
+    let playerService: PlayerService = new PlayerService(ipfs, "/fbtest")
     
     // await playerService._load()
 
@@ -137,7 +137,7 @@ contract('PlayerService', async (accounts) => {
 
 
         //Act
-        let list: Player[] = await playerService.list()
+        let list: Player[] = await playerService.list(0,100)
 
 
         //Assert
@@ -191,7 +191,7 @@ contract('PlayerService', async (accounts) => {
         await playerService.delete(player2)
 
 
-        let list: Player[] = await playerService.list()
+        let list: Player[] = await playerService.list(0, 100)
 
 
         //Assert

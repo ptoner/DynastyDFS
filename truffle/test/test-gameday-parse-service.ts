@@ -22,7 +22,7 @@ const ipfs = ipfsClient({
 contract('GamedayParseService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
-    let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService)
+    let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService,"/fbtest")
     
     
     //@ts-ignore
@@ -41,6 +41,7 @@ contract('GamedayParseService', async (accounts) => {
 
     })
 
+    //@ts-ignore
     it("Test parseGameEvents", async () => {
        
         //Act
@@ -50,6 +51,8 @@ contract('GamedayParseService', async (accounts) => {
 
     })
 
+    
+    //@ts-ignore
     it("Test parsePlayers", async () => {
        
         //Act
@@ -61,6 +64,7 @@ contract('GamedayParseService', async (accounts) => {
     })
 
 
+    //@ts-ignore
     it("Test parseGame", async () => {
 
         //Act

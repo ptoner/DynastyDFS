@@ -5,15 +5,20 @@ import { FileService } from "./file-service";
 
 class HitterDayService {
 
-    path: string = "/fantasybaseball/HitterDay/"
+    path: string
     playersFolder: string = "players"
     datesFolder: string = "dates"
 
 
     constructor(
         private ipfs: any,
-        private fileService: FileService
-    ) {}
+        private fileService: FileService,
+        private rootFolder: string
+    ) {
+        this.path = rootFolder + "/HitterDay/"
+
+    }
+
 
     async create(playerDay: HitterDay): Promise<void> {
         return this._write(playerDay)

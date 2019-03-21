@@ -20,11 +20,11 @@ const ipfs = ipfsClient({
 
 
 let fileService: FileService = new FileService(ipfs)
-let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService)
-let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService)
-let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService)
-let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService)
-let playerService: PlayerService = new PlayerService(ipfs)
+let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService, "/fantasybaseball")
+let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, "/fantasybaseball")
+let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, "/fantasybaseball")
+let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, "/fantasybaseball")
+let playerService: PlayerService = new PlayerService(ipfs, "/fantasybaseball")
 let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayParseService, gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
 
 let start: Date = moment(`2018-03-01`).toDate()

@@ -26,14 +26,10 @@ import {AdminController}  from '../js/controller/admin-controller'
 module.exports = async () => {
 
     Global.settingsService = new SettingsService()
-    Global.routeService = new RouteService(Global.settingsService)
-    Global.leagueSettingsService = new LeagueSettingsService()
-    Global.playerService = new PlayerService()
     Global.queueService = new QueueService()
+    Global.routeService = new RouteService(Global.settingsService)
 
-    Global.homeController = new HomeController(Global.leagueSettingsService, Global.playerService)
     Global.settingsController = new SettingsController(Global.settingsService, Global.queueService)
-    Global.adminController = new AdminController(Global.leagueSettingsService, Global.queueService)
 
     //Detect page root
 
@@ -58,8 +54,6 @@ module.exports = async () => {
     const mainView = Global.app.views.create('.view-main', {
         pushState: true
     });
-
-
 
 
 }

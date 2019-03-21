@@ -18,7 +18,7 @@ contract('GamedayDownloadService', async (accounts) => {
 
     let fileService: FileService = new FileService(ipfs)
 
-    let downloadService: GamedayDownloadService = new GamedayDownloadService(fileService)
+    let downloadService: GamedayDownloadService = new GamedayDownloadService(fileService, "/fbtest")
     
     
     //@ts-ignore

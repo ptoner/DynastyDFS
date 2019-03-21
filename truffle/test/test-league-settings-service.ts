@@ -15,7 +15,7 @@ const ipfs = ipfsClient({
 contract('LeagueSettingsService', async (accounts) => {
 
 
-    let leagueSettingsService: LeagueSettingsService = new LeagueSettingsService(ipfs)
+    let leagueSettingsService: LeagueSettingsService = new LeagueSettingsService(ipfs, "/fbtest")
 
     //@ts-ignore
     it("Test update & getLeagueSettings: Save default league settings", async () => {

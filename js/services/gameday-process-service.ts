@@ -42,40 +42,53 @@ class GamedayProcessService {
 
         console.log(`Creating player days for ${date}`)
 
-        //Read scoreboard
-        let games = await this.downloadService.readMiniScoreboard(date)
+        try {
+            //Read scoreboard
+            let games = await this.downloadService.readMiniScoreboard(date)
 
+            //Loop through every game
+            for (let game of games) {
 
-        //Loop through every game
-        for (let game of games) {
-
-            let gameSummary: GameSummary = await this.parseService.parseGame(game)
-
-            //Update player list
-            await this.insertNewPlayersForGame(gameSummary.players)
-
-            for (let battingAppearance of gameSummary.boxScore.batting.appearances) {
-
-                let atBats: GamedayAtBat[] = gameSummary.atBats.atBats.filter(function(el) {
-                    return el.batterId == battingAppearance.playerId
-                })
-
-                let player: Player = await this.playerService.read(battingAppearance.playerId)
-
-                await this.hitterDayService.create(this.buildHitterDay(battingAppearance, atBats, player, gameSummary.boxScore.date))
+                try {
+                    let gameSummary: GameSummary = await this.parseService.parseGame(game)
+    
+                    //Update player list
+                    await this.insertNewPlayersForGame(gameSummary.players)
+    
+                    for (let battingAppearance of gameSummary.boxScore.batting.appearances) {
+    
+                        let atBats: GamedayAtBat[] = gameSummary.atBats.atBats.filter(function(el) {
+                            return el.batterId == battingAppearance.playerId
+                        })
+    
+                        let player: Player = await this.playerService.read(battingAppearance.playerId)
+    
+                        console.log(`Inserting hitter day: ${player.firstName} ${player.lastName} - ${gameSummary.boxScore.date}`)
+    
+                        await this.hitterDayService.create(this.buildHitterDay(battingAppearance, atBats, player, gameSummary.boxScore.date))
+                    }
+    
+                    for (let pitchingAppearance of gameSummary.boxScore.pitching.appearances) {
+    
+                        let atBats: GamedayAtBat[] = gameSummary.atBats.atBats.filter(function(el) {
+                            return el.pitcherId == pitchingAppearance.playerId
+                        })
+    
+                        let player: Player = await this.playerService.read(pitchingAppearance.playerId)
+    
+                        console.log(`Inserting pitcher day: ${player.firstName} ${player.lastName} - ${gameSummary.boxScore.date}`)
+    
+                        await this.pitcherDayService.create(this.buildPitcherDay(pitchingAppearance, atBats, player, gameSummary.boxScore.date))
+                    }
+                } catch(ex) {
+                    console.log(`Problem processing game: ${game}`)
+                }
             }
-
-            for (let pitchingAppearance of gameSummary.boxScore.pitching.appearances) {
-
-                let atBats: GamedayAtBat[] = gameSummary.atBats.atBats.filter(function(el) {
-                    return el.pitcherId == pitchingAppearance.playerId
-                })
-
-                let player: Player = await this.playerService.read(pitchingAppearance.playerId)
-
-                await this.pitcherDayService.create(this.buildPitcherDay(pitchingAppearance, atBats, player, gameSummary.boxScore.date))
-            }
+        } catch(ex) {
+            console.log(ex)
         }
+
+
 
 
 

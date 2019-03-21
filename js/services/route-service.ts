@@ -3,8 +3,6 @@ import { Global } from "../global";
 
 import { Template7 } from "framework7";
 
-const Freedom: any = require('freedom-for-data')
-
 import { ModelView } from "../model-view";
 
 var TruffleContract = require('truffle-contract')
@@ -13,6 +11,19 @@ const ipfsClient = require('ipfs-http-client')
 
 
 import * as RecordService from '../../truffle/build/contracts/RecordService.json'
+import { LeagueSettings } from "../dto/league-settings";
+import { LeagueSettingsService } from "./league-settings-service";
+import { PlayerService } from "./player-service";
+import { FileService } from "./file-service";
+import { GamedayDownloadService } from "./gameday-download-service";
+import { GamedayParseService } from "./gameday-parse-service";
+import { GamedayProcessService } from "./gameday-process-service";
+import { HitterDayService } from "./hitter-day-service";
+import { PitcherDayService } from "./pitcher-day-service";
+import { HomeController } from "../controller/home-controller";
+import { AdminController } from "../controller/admin-controller";
+import { PlayerController } from "../controller/player-controller";
+import { PagingService } from "./paging-service";
 
 
 const promisify = (inner) =>
@@ -23,6 +34,7 @@ const promisify = (inner) =>
     })
   );
 
+let ipfs
 
 class RouteService {
 
@@ -30,7 +42,7 @@ class RouteService {
 
   async initialize(): Promise<void> {
 
-    if (Global.freedom) return
+    if (ipfs) return
 
     const settings = this.settingsService.getSettings()
     if (!settings) {
@@ -52,7 +64,7 @@ class RouteService {
     //@ts-ignore
     web3 = new Web3(window.web3Provider)
 
-//@ts-ignore
+    //@ts-ignore
     // console.log(web3)
 
     //@ts-ignore
@@ -78,16 +90,34 @@ class RouteService {
     }
 
 
-    const ipfs = ipfsClient({
+    ipfs = ipfsClient({
       host: settings.ipfsHost,
       port: settings.ipfsApiPort,
       protocol: 'http'
     })
 
-    //@ts-ignore
-    Global.freedom = await Freedom( ipfs , contract)
+    let rootFolder = "/fantasybaseball"
 
-    Global.leagueSettingsService.freedom = Global.freedom
+    //@ts-ignore
+    Global.leagueSettingsService = new LeagueSettingsService(ipfs, rootFolder)
+    
+    Global.playerService = new PlayerService(ipfs, rootFolder)
+
+    await Global.playerService.load()
+
+    Global.pagingService = new PagingService()
+    Global.fileService = new FileService(ipfs)
+    Global.hitterDayService= new HitterDayService(ipfs, Global.fileService, rootFolder)
+    Global.pitcherDayService = new PitcherDayService(ipfs, Global.fileService, rootFolder)
+    Global.gamedayDownloadService = new GamedayDownloadService(Global.fileService, rootFolder)
+    Global.gamedayParseService = new GamedayParseService(ipfs, Global.fileService, rootFolder)
+    Global.gamedayProcessService = new GamedayProcessService(Global.gamedayParseService, Global.gamedayDownloadService, Global.playerService, Global.hitterDayService, Global.pitcherDayService)
+
+
+    Global.homeController = new HomeController(Global.leagueSettingsService, Global.playerService)
+    Global.adminController = new AdminController(Global.leagueSettingsService, Global.queueService)
+    Global.playerController = new PlayerController(Global.playerService, Global.pagingService)
+
 
     console.log('init complete')
 
@@ -96,7 +126,6 @@ class RouteService {
 
 
   getRoutes(baseurl: string) {
-
     const self = this
 
     // @ts-ignore
@@ -145,6 +174,18 @@ class RouteService {
       // @ts-ignore
       async async(routeTo, routeFrom, resolve, reject) {
         await self.initAndResolve(resolve, function () {
+          return Global.adminController.index()
+        })
+      }
+    })
+
+
+    routes.push({
+      path: '/admin/showLeagueSettings',
+
+      // @ts-ignore
+      async async(routeTo, routeFrom, resolve, reject) {
+        await self.initAndResolve(resolve, function () {
           return Global.adminController.showLeagueSettings()
         })
       }
@@ -162,12 +203,24 @@ class RouteService {
     })
 
 
+    routes.push({
+      path: '/player/list',
+
+      // @ts-ignore
+      async async(routeTo, routeFrom, resolve, reject) {
+        await self.initAndResolve(resolve, function () {
+          return Global.playerController.list(+routeTo.query.offset)
+        })
+      }
+    })
+
 
     return routes
   }
 
 
 
+  
 
   // @ts-ignore
   async initAndResolve(resolve, successFunction) {
@@ -213,255 +266,7 @@ class RouteService {
     }
 
   }
-
-
-  // getContractAbi() {
-  //   return [
-  //     {
-  //       "inputs": [],
-  //       "payable": false,
-  //       "stateMutability": "nonpayable",
-  //       "type": "constructor",
-  //       "signature": "constructor"
-  //     },
-  //     {
-  //       "anonymous": false,
-  //       "inputs": [
-  //         {
-  //           "indexed": false,
-  //           "name": "id",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "indexed": false,
-  //           "name": "owner",
-  //           "type": "address"
-  //         },
-  //         {
-  //           "indexed": false,
-  //           "name": "ipfsCid",
-  //           "type": "string"
-  //         },
-  //         {
-  //           "indexed": false,
-  //           "name": "repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "indexed": false,
-  //           "name": "eventType",
-  //           "type": "string"
-  //         }
-  //       ],
-  //       "name": "RecordEvent",
-  //       "type": "event",
-  //       "signature": "0x050a6f24947f7fed7d2d6fe904ff10e1cfbee598adc5c40655e61383e60d2b0d"
-  //     },
-  //     {
-  //       "constant": false,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_ipfsCid",
-  //           "type": "string"
-  //         }
-  //       ],
-  //       "name": "create",
-  //       "outputs": [
-  //         {
-  //           "name": "id",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "payable": false,
-  //       "stateMutability": "nonpayable",
-  //       "type": "function",
-  //       "signature": "0x0118fa49"
-  //     },
-  //     {
-  //       "constant": true,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_id",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "name": "read",
-  //       "outputs": [
-  //         {
-  //           "name": "id",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "owner",
-  //           "type": "address"
-  //         },
-  //         {
-  //           "name": "ipfsCid",
-  //           "type": "string"
-  //         },
-  //         {
-  //           "name": "repoId",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "payable": false,
-  //       "stateMutability": "view",
-  //       "type": "function",
-  //       "signature": "0x75080997"
-  //     },
-  //     {
-  //       "constant": false,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_id",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_ipfsCid",
-  //           "type": "string"
-  //         }
-  //       ],
-  //       "name": "update",
-  //       "outputs": [],
-  //       "payable": false,
-  //       "stateMutability": "nonpayable",
-  //       "type": "function",
-  //       "signature": "0xd753fd25"
-  //     },
-  //     {
-  //       "constant": true,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "name": "count",
-  //       "outputs": [
-  //         {
-  //           "name": "theCount",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "payable": false,
-  //       "stateMutability": "view",
-  //       "type": "function",
-  //       "signature": "0x3b3546c8"
-  //     },
-  //     {
-  //       "constant": true,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_index",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "name": "readByIndex",
-  //       "outputs": [
-  //         {
-  //           "name": "id",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "owner",
-  //           "type": "address"
-  //         },
-  //         {
-  //           "name": "ipfsCid",
-  //           "type": "string"
-  //         },
-  //         {
-  //           "name": "repoId",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "payable": false,
-  //       "stateMutability": "view",
-  //       "type": "function",
-  //       "signature": "0x5a24fb94"
-  //     },
-  //     {
-  //       "constant": true,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_owner",
-  //           "type": "address"
-  //         }
-  //       ],
-  //       "name": "countOwned",
-  //       "outputs": [
-  //         {
-  //           "name": "theCount",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "payable": false,
-  //       "stateMutability": "view",
-  //       "type": "function",
-  //       "signature": "0x0a66e564"
-  //     },
-  //     {
-  //       "constant": true,
-  //       "inputs": [
-  //         {
-  //           "name": "_repoId",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "_owner",
-  //           "type": "address"
-  //         },
-  //         {
-  //           "name": "_index",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "name": "readByOwnedIndex",
-  //       "outputs": [
-  //         {
-  //           "name": "id",
-  //           "type": "uint256"
-  //         },
-  //         {
-  //           "name": "owner",
-  //           "type": "address"
-  //         },
-  //         {
-  //           "name": "ipfsCid",
-  //           "type": "string"
-  //         },
-  //         {
-  //           "name": "repoId",
-  //           "type": "uint256"
-  //         }
-  //       ],
-  //       "payable": false,
-  //       "stateMutability": "view",
-  //       "type": "function",
-  //       "signature": "0xf6c8405e"
-  //     }
-  //   ]
-  // }
+ 
 
 
 }
