@@ -3,11 +3,11 @@ import {LeagueSettingsService} from "../services/league-settings-service";
 import {Global} from "../global";
 import {BattingScoring, LeagueSettings, PitchingScoring, PositionLimits} from "../dto/league-settings";
 import {Dom7, Template7} from "framework7";
-import { QueueService } from '../services/queue_service'
+import { QueueService } from '../services/util/queue_service'
 import {PromiseView} from "../promise-view"
 import { PlayerService } from '../services/player-service';
 import { Player } from '../dto/player';
-import { PagingService, PagingViewModel } from '../services/paging-service';
+import { PagingService, PagingViewModel } from '../services/util/paging-service';
 
 var $$ = Dom7;
 

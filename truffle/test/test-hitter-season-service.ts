@@ -2,7 +2,7 @@ import { HitterSeasonService } from '../../js/services/hitter-season-service';
 import assert = require('assert');
 import { Player } from '../../js/dto/player';
 import { isMainThread } from 'worker_threads';
-import { FileService } from '../../js/services/file-service';
+import { FileService } from '../../js/services/util/file-service';
 import { HitterDay } from '../../js/dto/hitter-day';
 import { PlayerService } from '../../js/services/player-service';
 import moment = require('moment');

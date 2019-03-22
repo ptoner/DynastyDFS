@@ -1,4 +1,4 @@
-import { PagingService } from '../../js/services/paging-service';
+import { PagingService } from '../../js/services/util/paging-service';
 import assert = require('assert');
 
 

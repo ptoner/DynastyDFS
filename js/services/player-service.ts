@@ -65,7 +65,6 @@ class PlayerService {
         return this.players.length
     }
 
-
     async clearAll() : Promise<void> {
         this.players = []
     }

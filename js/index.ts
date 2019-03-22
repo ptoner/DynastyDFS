@@ -8,9 +8,9 @@ import {Global} from './global'
 
 import { LeagueSettingsService } from "../js/services/league-settings-service"
 import { PlayerService } from "../js/services/player-service"
-import { SettingsService } from "../js/services/settings-service"
-import { RouteService } from "../js/services/route-service"
-import { QueueService } from "../js/services/queue_service"
+import { SettingsService } from "./services/util/settings-service"
+import { RouteService } from "./services/util/route-service"
+import { QueueService } from "./services/util/queue_service"
 
 
 import { LeagueSettings, PositionLimits, BattingScoring, PitchingScoring } from '../js/dto/league-settings'

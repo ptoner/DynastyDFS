@@ -1,7 +1,7 @@
-import { GamedayDownloadService } from '../../js/services/gameday-download-service'
+import { GamedayDownloadService } from '../../js/services/gameday/gameday-download-service'
 import assert = require('assert')
 import { isMainThread } from 'worker_threads'
-import { FileService } from '../../js/services/file-service'
+import { FileService } from '../../js/services/util/file-service'
 import moment = require('moment')
 
 const ipfsClient = require('ipfs-http-client')

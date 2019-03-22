@@ -1,7 +1,7 @@
 import { Player } from "../dto/player";
 import { PitcherDay } from "../dto/pitcher-day";
 import * as moment from 'moment';
-import { FileService } from "./file-service";
+import { FileService } from "./util/file-service";
 
 class PitcherDayService {
 

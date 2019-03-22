@@ -1,7 +1,7 @@
 import { Player } from "../dto/player";
 import { HitterDay } from "../dto/hitter-day";
 import * as moment from 'moment';
-import { FileService } from "./file-service";
+import { FileService } from "./util/file-service";
 
 class HitterDayService {
 
@@ -56,7 +56,6 @@ class HitterDayService {
         return results
 
     }
-
 
 
     async clearAll() : Promise<void> {

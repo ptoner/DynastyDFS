@@ -1,18 +1,19 @@
-import { GamedayProcessService } from '../../js/services/gameday-process-service'
+import { GamedayProcessService } from '../../js/services/gameday/gameday-process-service'
 import assert = require('assert')
 import { GamedayPlayers } from '../../js/dto/gameday/gameday-players'
 import { isMainThread } from 'worker_threads'
-import { FileService } from '../../js/services/file-service'
+import { FileService } from '../../js/services/util/file-service'
 
 import moment = require('moment')
 import { GamedayBoxScore, BattingAppearance, PitchingAppearance } from '../../js/dto/gameday/gameday-boxscore';
 import { GamedayAtbats } from '../../js/dto/gameday/gameday-atbats';
 import { GameSummary } from '../../js/dto/gameday/game-summary';
-import { GamedayParseService } from '../../js/services/gameday-parse-service';
-import { GamedayDownloadService } from '../../js/services/gameday-download-service';
+import { GamedayParseService } from '../../js/services/gameday/gameday-parse-service';
+import { GamedayDownloadService } from '../../js/services/gameday/gameday-download-service';
 import { HitterDayService } from '../../js/services/hitter-day-service';
 import { PitcherDayService } from '../../js/services/pitcher-day-service';
 import { PlayerService } from '../../js/services/player-service';
+import { HitterSeasonService } from '../../js/services/hitter-season-service';
 
 const ipfsClient = require('ipfs-http-client')
 
@@ -31,9 +32,11 @@ contract('GamedayProcessService', async (accounts) => {
     let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService, rootFolder)
     let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, rootFolder)
     let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, rootFolder)
+    let hitterSeasonService: HitterSeasonService = new HitterSeasonService(ipfs, fileService, rootFolder)
+
     let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, rootFolder)
     let playerService: PlayerService = new PlayerService(ipfs, rootFolder)
-    let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayParseService, gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
+    let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayParseService, gamedayDownloadService, playerService, hitterDayService, pitcherDayService, hitterSeasonService)
     
     //@ts-ignore 
     before('Setup', async () => {

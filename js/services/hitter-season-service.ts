@@ -1,7 +1,7 @@
 import { Player } from "../dto/player";
 import { HitterSeason } from "../dto/hitter-season";
 import * as moment from 'moment';
-import { FileService } from "./file-service";
+import { FileService } from "./util/file-service";
 
 class HitterSeasonService {
 

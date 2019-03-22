@@ -1,6 +1,6 @@
 import { ModelView } from '../model-view'
-import {SettingsService} from "../services/settings-service"
-import {QueueService} from "../services/queue_service"
+import {SettingsService} from "../services/util/settings-service"
+import {QueueService} from "../services/util/queue_service"
 import {Global} from "../global"
 import {Dom7} from "framework7"
 import {PromiseView} from "../promise-view"

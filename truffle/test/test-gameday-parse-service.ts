@@ -1,8 +1,8 @@
-import { GamedayParseService } from '../../js/services/gameday-parse-service'
+import { GamedayParseService } from '../../js/services/gameday/gameday-parse-service'
 import assert = require('assert')
 import { GamedayPlayers } from '../../js/dto/gameday/gameday-players'
 import { isMainThread } from 'worker_threads'
-import { FileService } from '../../js/services/file-service'
+import { FileService } from '../../js/services/util/file-service'
 
 import moment = require('moment')
 import { GamedayBoxScore, BattingAppearance, PitchingAppearance } from '../../js/dto/gameday/gameday-boxscore';
