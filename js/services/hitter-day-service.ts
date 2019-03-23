@@ -20,20 +20,20 @@ class HitterDayService {
     }
 
 
-    async create(playerDay: HitterDay): Promise<void> {
-        return this._write(playerDay)
+    async create(hitterDay: HitterDay): Promise<void> {
+        return this._write(hitterDay)
     }
 
-    async read(playerId: number, date: string) : Promise<HitterDay> {
-        return this._load(playerId, date)
+    async read(hitterId: number, date: string) : Promise<HitterDay> {
+        return this._load(hitterId, date)
     }
 
-    async update(playerDay: HitterDay): Promise<void> {
-        return this._write(playerDay)
+    async update(hitterDay: HitterDay): Promise<void> {
+        return this._write(hitterDay)
     }
 
-    async delete(playerDay: HitterDay) : Promise<void> {
-        return this._delete(playerDay)
+    async delete(hitterDay: HitterDay) : Promise<void> {
+        return this._delete(hitterDay)
     }
 
 
