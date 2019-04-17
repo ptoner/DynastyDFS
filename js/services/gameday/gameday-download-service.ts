@@ -44,10 +44,11 @@ class GamedayDownloadService {
         console.log(`Downloading date: ${date}`)
         await this.downloadMiniScoreboard(date)
 
-        let games = await this.readMiniScoreboard(date)
+        let games: any[] = await this.readMiniScoreboard(date)
+
 
         for (let game of games) {
-            await this.downloadGameFiles(game)
+            await this.downloadGameFiles(game.gamePk)
         }
         
     }
@@ -55,16 +56,17 @@ class GamedayDownloadService {
 
     async downloadMiniScoreboard(date: Date) : Promise<void> {
 
-        let dayUrl = this._buildDayUrl(date)
+        let scheduleUrl = 'http://statsapi.mlb.com/api/v1/schedule?sportId=1&date=' + moment(date).format("MM/DD/YYYY")
 
-        let localDayFolder: string = this._buildDayFolder(date)
 
         try {
-            const miniScoreboard = await fetch(dayUrl + "/miniscoreboard.json")
+            const miniScoreboard = await fetch(scheduleUrl)
 
-            let filename: string = localDayFolder + "/miniscoreboard.json"
+            let filename: string =  `${this.localFolder}/scoreboard/${moment(date).format("MM/DD/YYYY")}.json`
 
-            await this.fileService.writeBufferToAll(await miniScoreboard.buffer(), [filename])
+            let buffer = await miniScoreboard.buffer()
+
+            await this.fileService.writeBufferToAll(buffer, [filename])
 
         } catch(ex) {
             console.log(`Couldn't fetch scoreboard from gameday: ${date}`, ex)
@@ -74,76 +76,39 @@ class GamedayDownloadService {
 
     async readMiniScoreboard(date: Date) : Promise<string[]> {
 
-        let gameDirectories: string[] = []
 
-        let localDayFolder: string = this._buildDayFolder(date)
-
-        let rawJson = await this.fileService.loadFile(localDayFolder + "/miniscoreboard.json")
+        let rawJson = await this.fileService.loadFile(`${this.localFolder}/scoreboard/${moment(date).format("MM/DD/YYYY")}.json`)
         
+        let games 
+
         try {
-            if (rawJson && rawJson.data && rawJson.data.games) {
-                for (const game of rawJson.data.games.game) {
-                    gameDirectories.push(game.game_data_directory)
-                }
-            }
+            games = rawJson.dates[0].games
         } catch(ex) {
             console.log(ex)
         }
 
 
-        return gameDirectories
+        return games
 
 
     }
 
 
-    async downloadGameFiles(gameFolderUrl: string ) : Promise<void> {
+    async downloadGameFiles(gamePk: number) : Promise<void> {
 
-        console.log(`Downloading files for: ${gameFolderUrl} `)
+        console.log(`Downloading files for game #${gamePk}`)
 
-        let prefix: string = this.host + gameFolderUrl
-        let localGameFolder: string = this.localFolder + gameFolderUrl
 
         try {
-            let response = await fetch(prefix + "/boxscore.json")
-            await this.fileService.writeToAll(await response.json(), [localGameFolder + "/boxscore.json"])
-
-            response = await fetch(prefix + "/linescore.json")
-            await this.fileService.writeToAll(await response.json(), [localGameFolder + "/linescore.json"])
-
-            response = await fetch(prefix + "/game_events.json")
-            await this.fileService.writeToAll(await response.json(), [localGameFolder + "/game_events.json"])
-
-            response = await fetch(prefix + "/players.xml")
-            await this.fileService.writeBufferToAll(await response.buffer(), [localGameFolder + "/players.xml"])
-
-            response = await fetch(prefix + "/inning/inning_all.xml")
-            await this.fileService.writeBufferToAll(await response.buffer(), [localGameFolder + "/inning/inning_all.xml"])
+            let response = await fetch(`http://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`)
+            await this.fileService.writeToAll(await response.json(), [this.localFolder + `/games/${gamePk}/boxscore.json`])
 
         } catch(ex) {
-            console.log(`Error saving game files: ${gameFolderUrl}`)
+            console.log(`Error saving game #${gamePk}`)
         }
     }
 
-    
 
-    _buildDayUrl(date: Date) : string {
-
-        const dd = (date.getDate() < 10 ? '0' : '') + date.getDate()
-        const MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1)
-        const yyyy = date.getFullYear()
-
-        return this.host + `/components/game/mlb/year_${yyyy}/month_${MM}/day_${dd}`
-    }
-
-    _buildDayFolder(date: Date) : string {
-
-        const dd = (date.getDate() < 10 ? '0' : '') + date.getDate()
-        const MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1)
-        const yyyy = date.getFullYear()
-
-        return this.localFolder + `/components/game/mlb/year_${yyyy}/month_${MM}/day_${dd}`
-    }
 
 }
 

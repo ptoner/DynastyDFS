@@ -42,43 +42,50 @@ contract('GamedayDownloadService', async (accounts) => {
 
     })
 
+
+
+
     //@ts-ignore
     it("Test downloadGameFiles", async () => {
 
-        let directory = "/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1"
 
         //Act
-        await downloadService.downloadGameFiles(directory)
+        await downloadService.downloadGameFiles(530170)
 
         //Assert
-        assert.equal(
-            await fileService.fileExists("/fantasybaseball/gameday/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/boxscore.json"), 
-            true
-        )
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530170/boxscore.json"), true)
 
-        assert.equal(
-            await fileService.fileExists("/fantasybaseball/gameday/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/linescore.json"), 
-            true
-        )
 
-        assert.equal(
-            await fileService.fileExists("/fantasybaseball/gameday/components/game/mlb/year_2018/month_05/day_06/gid_2018_05_06_chnmlb_slnmlb_1/game_events.json"), 
-            true
-        )
+    })
+
+    it("Test downloadDate", async () => {
+
+        //Arrange
+        let date: Date = moment("2018-05-26").toDate()
+
+        //Act
+        await downloadService.downloadDate(date)
+
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530170/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530169/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530175/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530182/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530181/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530171/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530172/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530178/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530183/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530174/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530176/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530180/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530173/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530177/boxscore.json"), true)
+        assert.equal(await fileService.fileExists("/fbtest/gameday/games/530179/boxscore.json"), true)
+
+
     })
 
 
-
-
-    //@ts-ignore
-    // it("Test downloadDate", async () => {
-
-    //     //Act
-    //     await downloadService.downloadDate(moment("2018-05-26").toDate())
-
-    //     //Assert
-    //     //todo: something
-    // })
 
 
 })

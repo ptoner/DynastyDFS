@@ -1,308 +1,371 @@
 import * as moment from 'moment';
 
 
-class GamedayBoxScore {
-
-    public gameId: string
-    public gamePk: string
-    public date: Date
-    public status: string
-    public venueName: string
-
-    public awayId: number
-    public awayTeamCode: string
-    public awayFullName: string
-
-    public homeId: number
-    public homeTeamCode: string
-    public homeFullName: string
-
-    public awayTeamRuns: number
-    public homeTeamRuns: number
-
-    public awayTeamHits: number
-    public homeTeamHits: number
-    
-    public awayTeamErrors: number
-    public homeTeamErrors: number
-
-    public pitching: Pitching
-    public batting: Batting
-
-    constructor(rawJson: any) {
-
-        this.gameId = rawJson.game_id
-        this.gamePk = rawJson.game_pk
-        this.date = moment(rawJson.date, "MMMM DD, YYYY").toDate()
-        this.status = rawJson.status_ind
-        this.venueName = rawJson.venue_name
-
-        this.awayId = rawJson.away_id
-        this.awayTeamCode = rawJson.away_team_code
-        this.awayFullName = rawJson.away_fname
 
 
-        for (let pitch of rawJson.pitching) {
-            this.pitching = new Pitching(pitch)
-        }
 
-        for (let bat of rawJson.batting) {
-            this.batting = new Batting(bat)
-        }
+class Boxscore {
 
-        this.awayTeamRuns = rawJson.linescore.away_team_runs
-        this.homeTeamRuns = rawJson.linescore.home_team_runs
-        this.awayTeamHits = rawJson.linescore.away_team_hits
-        this.homeTeamHits = rawJson.linescore.home_team_hits
-        this.awayTeamErrors = rawJson.linescore.away_team_errors
-        this.homeTeamErrors = rawJson.linescore.home_team_errors
+    public awayTeam: Team 
+    public homeTeam: Team 
 
-
+    constructor(rawJson) {
+        this.awayTeam = new Team(rawJson.away)
+        this.homeTeam = new Team(rawJson.home)
     }
 
 }
 
-class Pitching {
+class Team {
 
-    public teamFlag: string
-    public battersFaced: number
-    public hits: number
-    public runs: number
-    public hr: number
-    public so: number
-    public bb: number
-    public out: number
-    public er: number
-    public era: number
+    public id: number
+    public name: string 
+    public link: string 
+    public season: string 
+    public venue: Venue 
+    public teamCode: string 
+    public fileCode: string 
+    public abbreviation: string 
+    public teamName: string 
+    public locationName: string 
+    public firstYearOfPlay: string
 
-    public appearances: PitchingAppearance[] = []
-    
-    constructor(rawJson: any) {
-        this.teamFlag = rawJson.team_flag
-        this.battersFaced = rawJson.bf
-        this.hits = rawJson.h
-        this.runs = rawJson.r 
-        this.hr = rawJson.hr 
-        this.so = rawJson.so 
-        this.bb = rawJson.bb
-        this.out = rawJson.out 
-        this.er = rawJson.er 
-        this.era = rawJson.era 
+    public league: League
+    public division: Division
+    public sport: Sport 
 
-        //If there's an id we have a single pitcher instead of an array
-        if (rawJson.pitcher && rawJson.pitcher.length > 0) {
-            for(let pitcher of rawJson.pitcher) {
-                this.appearances.push(new PitchingAppearance(pitcher))
-            }
-        } else {
-            this.appearances.push(new PitchingAppearance(rawJson.pitcher))
+    public shortName: string 
+    public record: Record 
+
+    public players: Player[]
+
+    public batters: number[]
+    public pitchers: number[]
+    public bench: number[]
+    public bullpen: number[]
+    public battingOrder: number[]
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+
+        this.venue = new Venue(rawJson.venue)
+        this.league = new League(rawJson.league)
+        this.division = new Division(rawJson.division)
+        this.sport = new Sport(rawJson.sport)
+        this.record = new Record(rawJson.record)
+    }
+
+}
+
+class Venue {
+    public id: number 
+    public name: string 
+    public link: string 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+class League {
+    public id: number 
+    public name: string 
+    public link: string 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+class Division {
+    public id: number 
+    public name: string 
+    public link: string 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+class Sport {
+    public id: number 
+    public name: string 
+    public link: string 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+
+class Record {
+    public gamesPlayed: number 
+    public wildCardGamesBack: number 
+    public leagueGamesBack: number 
+    public springLeagueGamesBack: number 
+    public sportGamesBack: number 
+    public divisionGamesBack: number 
+    public conferenceGamesBack: number 
+    public leagueRecord: LeagueRecord 
+
+    public divisionLeader: boolean
+    public wins: number 
+    public losses: number 
+    public winningPercentage: number 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+
+        this.leagueRecord = new LeagueRecord(rawJson.leagueRecord)
+    }
+}
+
+class LeagueRecord {
+   
+    public wins: number 
+    public losses: number
+    public pct: number 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+
+}
+
+class Player {
+
+    public person: Person 
+    public jerseyNumber: number 
+    public position: Position 
+    public stats: PlayerStats
+    public status: PlayerStatus
+    public parentTeamId: number 
+    public battingOrder: string 
+    public seasonStats: PlayerStats
+    public gameStatus: GameStatus
+    public allPositions: Position[]
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+
+        this.person = new Person(rawJson.person)
+        this.position = new Position(rawJson.position)
+        this.stats = new PlayerStats(rawJson.stats)
+        this.status = new PlayerStatus(rawJson.status)
+        this.seasonStats = new PlayerStats(rawJson.seasonStats)
+        this.gameStatus = new GameStatus(rawJson.gameStatus)
+
+        for (let pos in rawJson.allPositions) {
+            this.allPositions.push(new Position(pos))
         }
-    }
-
-}
-
-class PitchingAppearance {
-
-    public playerId: number
-    public playerName: string
-    public displayName: string
-    public position: string
-
-    public battersFace: number
-    public numberOfPitches: number
-    public strikes: number
-    public hits: number
-    public runs: number
-    public hr: number
-    public so: number
-    public bb: number
-    public outs: number
-    public earnedRuns: number
-
-    public won: boolean
-    public lost: boolean
-    public saved: boolean
-    public blewSave: boolean
-
-    public seasonEra: number
-    public seasonWins: number
-    public seasonLosses: number
-    public seasonHolds:number
-    public seasonSaves:number
-    public seasonBlownSaves:number
-    public seasonInningsPitched:number
-    public seasonHits:number
-    public seasonRuns:number
-    public seasonWalks:number
-    public seasonStrikeouts:number
-    public seasonEarnedRuns:number
-    
-
-    constructor(rawJson: any) {
-        this.playerId = rawJson.id 
-        this.playerName = rawJson.name 
-        this.displayName = rawJson.name_display_first_last 
-        this.position = rawJson.pos 
-        this.battersFace = rawJson.bf 
-        this.numberOfPitches = rawJson.np
-        this.strikes = rawJson.s 
-        this.hits = rawJson.h 
-        this.runs = rawJson.r 
-        this.hr = rawJson.hr 
-        this.so = rawJson.so 
-        this.bb = rawJson.bb 
-        this.outs = rawJson.out 
-        this.earnedRuns = rawJson.er 
-
-        this.won = rawJson.win ? true : false
-        this.lost = rawJson.loss ? true : false
-        this.saved = rawJson.save ? true : false
-        this.blewSave = rawJson.blown_save ? true : false
-
-        this.seasonEra = rawJson.era 
-        this.seasonWins = rawJson.w 
-        this.seasonLosses = rawJson.l 
-        this.seasonHolds = rawJson.hld 
-        this.seasonSaves = rawJson.sv 
-        this.seasonBlownSaves = rawJson.bs 
-        this.seasonInningsPitched = rawJson.s_ip 
-        this.seasonHits = rawJson.s_h 
-        this.seasonRuns = rawJson.s_r 
-        this.seasonWalks = rawJson.s_bb 
-        this.seasonStrikeouts = rawJson.s_so 
-        this.seasonEarnedRuns = rawJson.s_er 
 
     }
 }
 
-class Batting {
+class Person {
 
-    public teamFlag: string 
-    public atBats: number
-    public avg: number 
-    public hits: number
-    public bb: number 
-    public so: number 
-    public r: number 
-    public rbi: number 
-    public lob: number 
-    public doubles: number 
-    public triples: number 
-    public hr: number 
-    public defensiveAvg: number 
-    public putOuts: number 
+    public id: number 
+    public fullName: string 
+    public link: string 
 
-    public appearances: BattingAppearance[] = []
-
-    constructor(rawJson: any) {
-        this.teamFlag = rawJson.team_flag 
-        this.atBats = rawJson.ab 
-        this.avg = rawJson.avg 
-        this.hits = rawJson.h 
-        this.bb = rawJson.bb 
-        this.so = rawJson.so 
-        this.r = rawJson.r 
-        this.rbi = rawJson.rbi 
-        this.lob = rawJson.lob 
-        this.doubles = rawJson.d 
-        this.triples = rawJson.t 
-        this.hr = rawJson.hr 
-        this.defensiveAvg = rawJson.da 
-        this.putOuts = rawJson.po  
-        
-        for (let batter of rawJson.batter) {
-            this.appearances.push(new BattingAppearance(batter))
-        }
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
     }
-
 }
 
-class BattingAppearance {
 
-    public playerId: number 
-    public playerName: string 
-    public displayName: string 
-    public position: string 
+class Position {
 
-    public battingOrder: number 
+    public code: number 
+    public name: string 
+    public type: string 
+    public abbreviation: string
 
-    public avg: number 
-    public fieldingPercentage: number 
-    public atBats: number 
-    public hits: number 
-    public bb: number 
-    public hbp: number 
-    public so: number 
-    public runs: number 
-    public rbi: number 
-    public lob: number 
-    public doubles: number 
-    public triples: number 
-    public hr: number 
-    public sacBunts: number 
-    public sacFlys: number 
-    public groundOuts: number 
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+class PlayerStatus {
+
+    public code: string 
+    public description: string 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+
+class PlayerStats {
+    public batting: BattingStats
+    public pitching: PitchingStats
+    public fielding: FieldingStats
+
+    constructor(rawJson) {
+        this.batting = new BattingStats(rawJson.batting)
+        this.pitching = new PitchingStats(rawJson.pitching)
+        this.fielding = new FieldingStats(rawJson.fielding)
+    }
+}
+
+
+class BattingStats {
+
+    public gamesPlayed: number 
     public flyOuts: number 
-    public gidp: number 
-    public sb: number 
-    public cs: number 
-    public po: number 
+    public groundOuts: number 
+    public runs: number 
+    public doubles: number 
+    public triples: number 
+    public homeRuns: number 
+    public strikeOuts: number 
+    public baseOnBalls: number 
+    public intentionalWalks: number 
+    public hits: number 
+    public hitByPitch: number 
+    public atBats: number 
+    public caughtStealing: number 
+    public stolenBases: number 
+    public groundIntoDoublePlay: number 
+    public groundIntoTriplePlay: number 
+    public totalBases: number 
+    public rbi: number 
+    public leftOnBase: number 
+    public sacBunts: number 
+    public sacFlies: number 
+    public catchersInterference: number 
+    public pickoffs: number 
+
+    //season only
+    public avg: number 
+    public obp: number 
+    public slg: number 
+    public ops: number 
+    public stolenBasePercentage: number 
+
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+
+
+class FieldingStats {
+
     public assists: number 
+    public putOuts: number 
     public errors: number 
-    public seasonHits: number 
-    public seasonWalks: number 
-    public seasonStrikeouts: number 
-    public seasonRuns: number 
-    public seasonRbi: number 
-    public seasonHr: number 
+    public chances: number
+    public fielding: number
+    public caughtStealing: number
+    public passedBall: number
+    public stolenBases: number
+    public stolenBasePercentage: number
+    public pickoffs: number
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
 
 
 
+class PitchingStats {
 
-    constructor(rawJson: any) {
-        this.playerId = rawJson.id 
-        this.playerName = rawJson.name 
-        this.displayName = rawJson.name_display_first_last
-        this.position = rawJson.pos 
-        this.battingOrder = rawJson.bo 
-        this.atBats = rawJson.ab 
-        this.avg = rawJson.avg 
-        this.hits = rawJson.h 
-        this.bb = rawJson.bb 
-        this.hbp = rawJson.hbp 
-        this.so = rawJson.so 
-        this.runs = rawJson.r 
-        this.rbi = rawJson.rbi 
-        this.lob = rawJson.lob 
-        this.doubles = rawJson.d 
-        this.triples = rawJson.t 
-        this.hr = rawJson.hr 
-        this.sacBunts = rawJson.sac 
-        this.sacFlys = rawJson.sf 
-        this.groundOuts = rawJson.go 
-        this.flyOuts = rawJson.ao 
-        this.gidp = rawJson.gidp 
-        this.sb = rawJson.sb 
-        this.cs = rawJson.cs 
-        this.po = rawJson.po
-        this.assists = rawJson.a 
-        this.errors = rawJson.e 
-        this.fieldingPercentage = rawJson.fldg 
+    public gamesPlayed: number 
+    public gamesStarted: number 
+    public groundOuts: number 
+    public runs: number
+    public doubles: number
+    public triples: number
+    public homeRuns: number
+    public strikeOuts: number
+    public baseOnBalls: number
+    public intentionalWalks: number
+    public hits: number
+    public atBats: number
+    public caughtStealing: number
+    public stolenBases: number
+    public numberOfPitches: number
+    public inningsPitched: string 
+    public wins: number
+    public losses: number
+    public saves: number
+    public saveOpportunities: number
+    public holds: number
+    public blownSaves: number
+    public earnedRuns: number
+    public battersFaced: number
+    public outs: number
+    public gamesPitched: number
+    public completeGames: number
+    public shutouts: number
+    public pitchesThrown: number
+    public balls: number
+    public strikes: number
+    public hitBatsmen: number
+    public wildPitches: number
+    public pickoffs: number
+    public airOuts: number
+    public rbi: number
+    public gamesFinished: number
+    public inheritedRunners: number
+    public inheritedRunnersScored: number
+    public catchersInterference: number
+    public sacBunts: number
+    public sacFlies: number
 
-        this.seasonHits = rawJson.s_h 
-        this.seasonWalks = rawJson.s_bb 
-        this.seasonStrikeouts = rawJson.s_so 
-        this.seasonRuns = rawJson.s_r 
-        this.seasonRbi = rawJson.s_rbi 
-        this.seasonHr = rawJson.s_hr 
+
+    //season only
+    public walksPer9Inn: number  
+    public hitsPer9Inn: number  
+    public strikeoutsPer9Inn: number 
+    public strikeoutWalkRatio: number 
+    public winPercentage: number 
+    public stolenBasePercentage: number 
+
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+    }
+}
+
+
+class GameStatus {
+
+    public isCurrentBatter: boolean 
+    public isCurrentPitcher: boolean 
+    public isOnBench: boolean 
+    public isSubstitute: boolean 
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
     }
 
 }
+
+
+
+
+
+
 
 export {
-    GamedayBoxScore,
-    Pitching,
-    PitchingAppearance,
-    Batting,
-    BattingAppearance
+    Boxscore,
+    Team,
+    Venue,
+    League,
+    Division,
+    Sport,
+    Record,
+    Player,
+    Person,
+    Position,
+    PlayerStats,
+    BattingStats,
+    FieldingStats,
+    PitchingStats,
+    GameStatus
 }

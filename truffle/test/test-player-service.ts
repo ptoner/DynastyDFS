@@ -2,23 +2,27 @@ import { PlayerService } from '../../js/services/player-service';
 import assert = require('assert');
 import { Player } from '../../js/dto/player';
 import { isMainThread } from 'worker_threads';
+import OrbitDB = require('orbit-db');
 
-const ipfsClient = require('ipfs-http-client')
+// import * as IPFS from "typestub-ipfs";
+// import IPFS from 'ipfs'
 
-const ipfs = ipfsClient({
-    host: "localhost",
-    port: 5001,
-    protocol: 'http'
-  })
 
 
 //@ts-ignore
 contract('PlayerService', async (accounts) => {
 
 
-    let playerService: PlayerService = new PlayerService(ipfs, "/fbtest")
+
+    // ipfs.on('ready', async () => {
+    //     const orbitdb = await OrbitDB.createInstance(ipfs)
+    //     const db = await orbitdb.keyvalue('first-database')
+    //     console.log(db)
+    //   })
+
+
+    let playerService: PlayerService = new PlayerService({}, "/fbtest")
     
-    // await playerService._load()
 
 
     //@ts-ignore
@@ -83,6 +87,18 @@ contract('PlayerService', async (accounts) => {
         assert.equal(read.lastName, "Jackson")
 
     }) 
+
+    //@ts-ignore
+    it("Test read: invalid key", async ()  => {
+
+        //Act
+        let player: Player = await playerService.read(45)
+
+        //Assert
+        assert.equal(player == undefined, true)
+
+    })
+
 
 
     //@ts-ignore

@@ -36,7 +36,7 @@ class GamedayProcessService {
            loop.setDate(loop.getDate() + 1)
         }
 
-        return this.playerService.write()
+        // return this.playerService.write()
     }
 
 

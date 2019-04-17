@@ -1,8 +1,5 @@
-import { GamedayBoxScore } from "../../dto/gameday/gameday-boxscore"
-import { GamedayAtbats } from "../../dto/gameday/gameday-atbats";
 import { FileService } from "../util/file-service";
-import { GamedayPlayers } from "../../dto/gameday/gameday-players";
-import { GameSummary } from "../../dto/gameday/game-summary";
+import { Boxscore } from "../../dto/gameday/gameday-boxscore";
 
 var convert = require('xml-js');
 
@@ -21,57 +18,15 @@ class GamedayParseService {
 
     }
 
-    async parseBoxScore(gameFolder: string) : Promise<GamedayBoxScore> {
+    async getBoxScore(gamePk: Number) : Promise<Boxscore> {
 
-        let localGameFolder: string = this.localFolder + gameFolder
+        let rawJson = await this.fileService.loadFile(`${this.localFolder}/games/${gamePk}/boxscore.json`)
 
-        let rawJson = await this.fileService.loadFile(localGameFolder + "/boxscore.json")
-
-        let gamedayBoxScore: GamedayBoxScore = new GamedayBoxScore(rawJson.data.boxscore)
+        let gamedayBoxScore: Boxscore = new Boxscore(rawJson)
 
         return gamedayBoxScore
 
     }
-    async parseGameAtbats(gameFolder: string) : Promise<GamedayAtbats> {
-
-        let localGameFolder: string = this.localFolder + gameFolder
-
-        let fileContents: Buffer  = await this.ipfs.files.read(localGameFolder + "/inning/inning_all.xml")
-        let rawXml = fileContents.toString('utf8')
-
-        let rawJson = convert.xml2js(rawXml, {compact: true, spaces: 4});
-        
-        let gamedayGameAtbats: GamedayAtbats = new GamedayAtbats(rawJson.game)
-
-        return gamedayGameAtbats
-
-    }
-    async parsePlayers(gameFolder: string) : Promise<GamedayPlayers> {
-
-        let localGameFolder: string = this.localFolder + gameFolder
-
-        let fileContents: Buffer  = await this.ipfs.files.read(localGameFolder + "/players.xml")
-        let rawXml = fileContents.toString('utf8')
-
-        let rawJson = convert.xml2js(rawXml, {compact: true, spaces: 4})
-        
-
-        let gamedayPlayers: GamedayPlayers = new GamedayPlayers(rawJson.game)
-        
-        return gamedayPlayers
-
-    }
-
-    async parseGame(gameFolder: string) : Promise<GameSummary> {
-
-        return new GameSummary(
-            await this.parseGameAtbats(gameFolder),
-            await this.parseBoxScore(gameFolder),
-            await this.parsePlayers(gameFolder)
-        )
-
-    }
-    
 
 
 }
