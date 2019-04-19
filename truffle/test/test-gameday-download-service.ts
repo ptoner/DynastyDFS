@@ -3,6 +3,8 @@ import assert = require('assert')
 import { isMainThread } from 'worker_threads'
 import { FileService } from '../../js/services/util/file-service'
 import moment = require('moment')
+import { Boxscore, GamedayFullPlayer } from '../../js/dto/gameday/gameday-boxscore';
+import { Player } from '../../js/dto/player';
 
 const ipfsClient = require('ipfs-http-client')
 
@@ -33,10 +35,10 @@ contract('GamedayDownloadService', async (accounts) => {
         let date: Date = moment("2018-05-26").toDate()
        
         //Act
-        await downloadService.downloadMiniScoreboard(date)
+        await downloadService.downloadSchedule(date)
 
         //Assert
-        let games = await downloadService.readMiniScoreboard(date)
+        let games = await downloadService.readSchedule(date)
 
         assert.equal(games.length, 15)
 
@@ -84,6 +86,53 @@ contract('GamedayDownloadService', async (accounts) => {
 
 
     })
+
+
+
+
+
+    //@ts-ignore
+    it("Test parseBoxScore", async () => {
+       
+        //Act
+        await downloadService.downloadBoxScore(529913)
+
+
+        let boxscore: Boxscore = await downloadService.readBoxScore(529913)
+
+        assert.equal(boxscore.awayTeam.teamInfo.id, 112)
+        assert.equal(boxscore.awayTeam.teamInfo.name, "Chicago Cubs")
+        assert.equal(boxscore.awayTeam.teamInfo.link, "/api/v1/teams/112")
+        assert.equal(boxscore.awayTeam.teamInfo.season, 2018)
+        assert.equal(boxscore.awayTeam.teamInfo.venue.id, 17)
+        assert.equal(boxscore.awayTeam.teamInfo.venue.name, "Wrigley Field")
+
+        assert.equal(boxscore.awayTeam.players[0].person.id, 453344)
+        assert.equal(boxscore.awayTeam.players[0].person.fullName, "Brandon Morrow")
+
+        assert.equal(boxscore.awayTeam.players[0].stats.pitching.gamesPlayed, 1)
+        assert.equal(boxscore.awayTeam.players[0].stats.pitching.numberOfPitches, 14)
+
+
+        //TODO: Actually finish this
+
+    })
+
+
+
+    //@ts-ignore
+    it("Test downloadPlayers", async () => {
+       
+        //Act
+        await downloadService.downloadPlayers(529913)
+
+
+        let players: GamedayFullPlayer[] = await downloadService.readPlayers(529913)
+
+        assert.equal(players.length, 49)
+
+    })
+
 
 
 

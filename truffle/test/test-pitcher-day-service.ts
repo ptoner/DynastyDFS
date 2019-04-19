@@ -203,38 +203,34 @@ contract('PitcherDayService', async (accounts) => {
 
 
 function createTestPlayer() {
-    let player: Player = new Player()
+    let player: Player = new Player(undefined)
     player.id = 1
     player.firstName = "Andrew"
     player.lastName = "McCutchen"
-    player.positions = ["CF"]
     return player
 }
 
 function createTestPlayer2() {
-    let player: Player = new Player()
+    let player: Player = new Player(undefined)
     player.id = 2
     player.firstName = "Pedro"
     player.lastName = "Alvarez"
-    player.positions = ["3B"]
     return player
 }
 
 function createTestPlayer3() {
-    let player: Player = new Player()
+    let player: Player = new Player(undefined)
     player.id = 3
     player.firstName = "Jordy"
     player.lastName = "Mercer"
-    player.positions = ["SS"]
     return player
 }
 
 function createTestPlayer4() {
-    let player: Player = new Player()
+    let player: Player = new Player(undefined)
     player.id = 4
     player.firstName = "Gerrit"
     player.lastName = "Cole"
-    player.positions = ["P"]
     return player
 }
 
@@ -242,7 +238,7 @@ function createTestPlayer4() {
 
 function createTestPlayerDay(player: Player, date: string) {
 
-    let playerDay: PitcherDay = new PitcherDay()
+    let playerDay: PitcherDay = new PitcherDay(player,moment(date).toDate(), undefined, undefined, undefined)
     playerDay.player = player 
     playerDay.date = date
     

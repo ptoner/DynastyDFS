@@ -40,11 +40,10 @@ contract('PlayerService', async (accounts) => {
     it("Test create & get", async () => {
 
         //Arrange
-        let player: Player = new Player()
+        let player: Player = new Player(undefined)
         player.id = 1
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
-        player.positions = ["CF"]
 
 
         //Act
@@ -57,8 +56,6 @@ contract('PlayerService', async (accounts) => {
 
         assert.equal(fetched.firstName, "Andrew")
         assert.equal(fetched.lastName, "McCutchen")
-        assert.equal(fetched.positions.length, 1)
-        assert.equal(fetched.positions[0], "CF")
 
     })
 
@@ -66,11 +63,10 @@ contract('PlayerService', async (accounts) => {
     it("Test update", async () => {
 
         //Arrange
-        let player: Player = new Player()
+        let player: Player = new Player(undefined)
         player.id = 1
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
-        player.positions = ["CF"]
 
         let created: Player = await playerService.create(player)
 
@@ -105,11 +101,11 @@ contract('PlayerService', async (accounts) => {
     it("Test delete", async ()  => {
 
         //Arrange
-        let player: Player = new Player()
+        let player: Player = new Player(undefined)
+
         player.id = 1
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
-        player.positions = ["CF"]
 
         let created: Player = await playerService.create(player)
 
@@ -128,23 +124,20 @@ contract('PlayerService', async (accounts) => {
     it("Test list", async () => {
 
         //Arrange
-        let player1: Player = new Player()
+        let player1: Player = new Player(undefined)
         player1.id = 1
         player1.firstName = "Andrew"
         player1.lastName = "McCutchen"
-        player1.positions = ["CF"]
 
-        let player2: Player = new Player()
+        let player2: Player = new Player(undefined)
         player2.id = 2
         player2.firstName = "Jordy"
         player2.lastName = "Mercer"
-        player2.positions = ["SS"]
 
-        let player3: Player = new Player()
+        let player3: Player = new Player(undefined)
         player3.id = 3
         player3.firstName = "Pedro"
         player3.lastName = "Alvarez"
-        player3.positions = ["3B"]
 
 
         playerService.create(player1)
@@ -160,16 +153,13 @@ contract('PlayerService', async (accounts) => {
         assert.equal(list[0].firstName, "Andrew")
         assert.equal(list[0].lastName, "McCutchen")
 
-        assert.equal(list[0].positions[0], "CF")
 
         assert.equal(list[1].firstName, "Jordy")
         assert.equal(list[1].lastName, "Mercer")
 
-        assert.equal(list[1].positions[0], "SS")
 
         assert.equal(list[2].firstName, "Pedro")
         assert.equal(list[2].lastName, "Alvarez")
-        assert.equal(list[2].positions[0], "3B")
 
     })
 
@@ -179,23 +169,20 @@ contract('PlayerService', async (accounts) => {
     it("Test delete record and check list", async () => {
 
         //Arrange
-        let player1: Player = new Player()
+        let player1: Player = new Player(undefined)
         player1.id = 1
         player1.firstName = "Andrew"
         player1.lastName = "McCutchen"
-        player1.positions = ["CF"]
 
-        let player2: Player = new Player()
+        let player2: Player = new Player(undefined)
         player2.id = 2
         player2.firstName = "Jordy"
         player2.lastName = "Mercer"
-        player2.positions = ["SS"]
 
-        let player3: Player = new Player()
+        let player3: Player = new Player(undefined)
         player3.id = 3
         player3.firstName = "Pedro"
         player3.lastName = "Alvarez"
-        player3.positions = ["3B"]
 
 
         playerService.create(player1)
@@ -213,13 +200,11 @@ contract('PlayerService', async (accounts) => {
         //Assert
         assert.equal(list[0].firstName, "Andrew")
         assert.equal(list[0].lastName, "McCutchen")
-        assert.equal(list[0].positions[0], "CF")
 
         // assert.equal(list[1].name, "Jordy Mercer")
         // assert.equal(list[1].positions[0], "SS")
         assert.equal(list[1].firstName, "Pedro")
         assert.equal(list[1].lastName, "Alvarez")
-        assert.equal(list[1].positions[0], "3B")
 
     })
 

@@ -1,5 +1,6 @@
 import { FileService } from "../util/file-service";
 import moment = require('moment');
+import { Boxscore, GamedayPlayer, GamedayFullPlayer } from "../../dto/gameday/gameday-boxscore";
 
 
 const fetch = require("node-fetch");
@@ -42,9 +43,9 @@ class GamedayDownloadService {
     async downloadDate(date: Date) : Promise<void> {
 
         console.log(`Downloading date: ${date}`)
-        await this.downloadMiniScoreboard(date)
+        await this.downloadSchedule(date)
 
-        let games: any[] = await this.readMiniScoreboard(date)
+        let games: any[] = await this.readSchedule(date)
 
 
         for (let game of games) {
@@ -54,7 +55,7 @@ class GamedayDownloadService {
     }
 
 
-    async downloadMiniScoreboard(date: Date) : Promise<void> {
+    async downloadSchedule(date: Date) : Promise<void> {
 
         let scheduleUrl = 'http://statsapi.mlb.com/api/v1/schedule?sportId=1&date=' + moment(date).format("MM/DD/YYYY")
 
@@ -74,7 +75,7 @@ class GamedayDownloadService {
 
     }
 
-    async readMiniScoreboard(date: Date) : Promise<string[]> {
+    async readSchedule(date: Date) : Promise<any[]> {
 
 
         let rawJson = await this.fileService.loadFile(`${this.localFolder}/scoreboard/${moment(date).format("MM/DD/YYYY")}.json`)
@@ -87,9 +88,7 @@ class GamedayDownloadService {
             console.log(ex)
         }
 
-
         return games
-
 
     }
 
@@ -98,17 +97,82 @@ class GamedayDownloadService {
 
         console.log(`Downloading files for game #${gamePk}`)
 
-
         try {
-            let response = await fetch(`http://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`)
-            await this.fileService.writeToAll(await response.json(), [this.localFolder + `/games/${gamePk}/boxscore.json`])
+            await this.downloadBoxScore(gamePk)
+            await this.downloadPlayers(gamePk)
 
+            
         } catch(ex) {
             console.log(`Error saving game #${gamePk}`)
         }
     }
 
 
+    async downloadBoxScore(gamePk: number) : Promise<void> {
+
+        try {
+            let response = await fetch(`http://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`)
+            await this.fileService.writeToAll(await response.json(), [this.localFolder + `/games/${gamePk}/boxscore.json`])
+
+            
+        } catch(ex) {
+            console.log(`Error saving box score #${gamePk}`)
+        }
+
+    }
+
+
+    async downloadPlayers(gamePk: number) : Promise<void> {
+
+        try {
+
+            let boxscore: Boxscore = await this.readBoxScore(gamePk)
+
+            let players: GamedayPlayer[] = boxscore.getPlayers()
+
+            let playerIds: number[] = []
+
+            for (let player of players) {
+                playerIds.push(player.person.id)
+            }
+
+            let playerIdString = playerIds.join(", ")
+            
+            let response = await fetch(`http://statsapi.mlb.com/api/v1/people?personIds=${playerIdString}`)
+            await this.fileService.writeToAll(await response.json(), [this.localFolder + `/games/${gamePk}/players.json`])
+
+        } catch(ex) {
+            console.log(`Error downloading players for game #${gamePk}`)
+        }
+
+    }
+
+
+
+    async readBoxScore(gamePk: Number) : Promise<Boxscore> {
+
+        let rawJson = await this.fileService.loadFile(`${this.localFolder}/games/${gamePk}/boxscore.json`)
+
+        let gamedayBoxScore: Boxscore = new Boxscore(rawJson)
+
+        return gamedayBoxScore
+
+    }
+
+
+    async readPlayers(gamePk: Number) : Promise<GamedayFullPlayer[]> {
+
+        let players: GamedayFullPlayer[] = []
+
+        let rawJson = await this.fileService.loadFile(`${this.localFolder}/games/${gamePk}/players.json`)
+
+        for (let player of rawJson.people) {
+            players.push(new GamedayFullPlayer(player))
+        }
+
+        return players
+
+    }
 
 }
 

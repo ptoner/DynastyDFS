@@ -5,7 +5,7 @@
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-gameday-parse-service.ts"],
+            "args": ["test", "test/test-gameday-process-service.ts"],
             "cwd": "${workspaceRoot}/truffle",
             "outFiles": [
                 "${workspaceRoot}/test/**/*"

@@ -1,22 +1,50 @@
 import * as moment from 'moment';
 
-
-
-
-
 class Boxscore {
 
     public awayTeam: Team 
     public homeTeam: Team 
 
     constructor(rawJson) {
-        this.awayTeam = new Team(rawJson.away)
-        this.homeTeam = new Team(rawJson.home)
+        this.awayTeam = new Team(rawJson.teams.away)
+        this.homeTeam = new Team(rawJson.teams.home)
+    }
+
+    public getPlayers() : GamedayPlayer[] {
+        let awayPlayers = this.awayTeam.players
+        let homePlayers = this.homeTeam.players
+        return awayPlayers.concat(homePlayers)
     }
 
 }
 
 class Team {
+
+    public teamInfo: TeamInfo
+
+    public players: GamedayPlayer[]
+
+    public batters: number[]
+    public pitchers: number[]
+    public bench: number[]
+    public bullpen: number[]
+    public battingOrder: number[]
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+
+        this.teamInfo = new TeamInfo(rawJson.team)
+
+        this.players = []
+        for (let key in rawJson.players) {
+            this.players.push(new GamedayPlayer(rawJson.players[key]))
+        }
+
+    }
+
+}
+
+class TeamInfo {
 
     public id: number
     public name: string 
@@ -37,14 +65,6 @@ class Team {
     public shortName: string 
     public record: Record 
 
-    public players: Player[]
-
-    public batters: number[]
-    public pitchers: number[]
-    public bench: number[]
-    public bullpen: number[]
-    public battingOrder: number[]
-
     constructor(rawJson) {
         Object.assign(this, rawJson)
 
@@ -54,7 +74,6 @@ class Team {
         this.sport = new Sport(rawJson.sport)
         this.record = new Record(rawJson.record)
     }
-
 }
 
 class Venue {
@@ -106,7 +125,6 @@ class Record {
     public sportGamesBack: number 
     public divisionGamesBack: number 
     public conferenceGamesBack: number 
-    public leagueRecord: LeagueRecord 
 
     public divisionLeader: boolean
     public wins: number 
@@ -115,24 +133,70 @@ class Record {
 
     constructor(rawJson) {
         Object.assign(this, rawJson)
-
-        this.leagueRecord = new LeagueRecord(rawJson.leagueRecord)
     }
 }
 
-class LeagueRecord {
-   
-    public wins: number 
-    public losses: number
-    public pct: number 
+
+class GamedayFullPlayer {
+
+    id: number
+    fullName: string
+    link:string
+    firstName:string
+    lastName:string
+    primaryNumber: number
+    birthDate:string
+    currentAge: number
+    birthCity:string
+    birthStateProvince:string
+    birthCountry:string
+    height:string
+    weight: number
+    active: boolean
+    primaryPosition :Position
+    useName:string
+    middleName:string
+    boxscoreName:string
+    nickName:string
+    draftYear: number
+    pronunciation:string
+    lastPlayedDate:string
+    mlbDebutDate:string
+    batSide: Hand
+    pitchHand: Hand
+    nameFirstLast:string
+    nameSlug:string
+    firstLastName:string
+    lastFirstName:string
+    lastInitName:string
+    initLastName:string
+    fullFMLName:string
+    fullLFMName:string
+    strikeZoneTop: number
+    strikeZoneBottom: number
+
+    constructor(rawJson) {
+        Object.assign(this, rawJson)
+
+        this.primaryPosition = new Position(rawJson.primaryPosition)
+        this.batSide = new Hand(rawJson.batSide)
+        this.pitchHand = new Hand(rawJson.pitchHand)
+    }
+
+
+}
+
+class Hand {
+    public code: string 
+    public description: string 
+
 
     constructor(rawJson) {
         Object.assign(this, rawJson)
     }
-
 }
 
-class Player {
+class GamedayPlayer {
 
     public person: Person 
     public jerseyNumber: number 
@@ -155,8 +219,9 @@ class Player {
         this.seasonStats = new PlayerStats(rawJson.seasonStats)
         this.gameStatus = new GameStatus(rawJson.gameStatus)
 
-        for (let pos in rawJson.allPositions) {
-            this.allPositions.push(new Position(pos))
+        this.allPositions = []
+        for (let key in rawJson.allPositions) {
+            this.allPositions.push(new Position(rawJson.allPositions[key]))
         }
 
     }
@@ -236,6 +301,7 @@ class BattingStats {
     public sacFlies: number 
     public catchersInterference: number 
     public pickoffs: number 
+    public note: string 
 
     //season only
     public avg: number 
@@ -316,6 +382,7 @@ class PitchingStats {
     public catchersInterference: number
     public sacBunts: number
     public sacFlies: number
+    public note: string 
 
 
     //season only
@@ -360,12 +427,14 @@ export {
     Division,
     Sport,
     Record,
-    Player,
+    GamedayPlayer,
     Person,
     Position,
     PlayerStats,
     BattingStats,
     FieldingStats,
     PitchingStats,
-    GameStatus
+    GameStatus,
+    GamedayFullPlayer,
+    Hand
 }

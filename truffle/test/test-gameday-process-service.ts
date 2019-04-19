@@ -1,19 +1,15 @@
 import { GamedayProcessService } from '../../js/services/gameday/gameday-process-service'
 import assert = require('assert')
-import { GamedayPlayers } from '../../js/dto/gameday/gameday-players'
 import { isMainThread } from 'worker_threads'
 import { FileService } from '../../js/services/util/file-service'
 
 import moment = require('moment')
-import { GamedayBoxScore, BattingAppearance, PitchingAppearance } from '../../js/dto/gameday/gameday-boxscore';
-import { GamedayAtbats } from '../../js/dto/gameday/gameday-atbats';
-import { GameSummary } from '../../js/dto/gameday/game-summary';
-import { GamedayParseService } from '../../js/services/gameday/gameday-parse-service';
+import { Boxscore, GamedayFullPlayer } from '../../js/dto/gameday/gameday-boxscore';
+
 import { GamedayDownloadService } from '../../js/services/gameday/gameday-download-service';
 import { HitterDayService } from '../../js/services/hitter-day-service';
 import { PitcherDayService } from '../../js/services/pitcher-day-service';
 import { PlayerService } from '../../js/services/player-service';
-import { HitterSeasonService } from '../../js/services/hitter-season-service';
 
 const ipfsClient = require('ipfs-http-client')
 
@@ -29,14 +25,12 @@ contract('GamedayProcessService', async (accounts) => {
 
     let rootFolder = "/fbtest"
     let fileService: FileService = new FileService(ipfs)
-    let gamedayParseService: GamedayParseService = new GamedayParseService(ipfs, fileService, rootFolder)
     let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, rootFolder)
     let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, rootFolder)
-    let hitterSeasonService: HitterSeasonService = new HitterSeasonService(ipfs, fileService, rootFolder)
 
     let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, rootFolder)
     let playerService: PlayerService = new PlayerService(ipfs, rootFolder)
-    let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayParseService, gamedayDownloadService, playerService, hitterDayService, pitcherDayService, hitterSeasonService)
+    let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
     
     //@ts-ignore 
     before('Setup', async () => {
@@ -48,50 +42,114 @@ contract('GamedayProcessService', async (accounts) => {
     })
 
 
+
+    //@ts-ignore
+    it("Test insertNewPlayersForGame", async () => {
+       
+        //Arrange
+        await gamedayDownloadService.downloadGameFiles(530173)
+        let players: GamedayFullPlayer[] = await gamedayDownloadService.readPlayers(530173)
+
+
+        //Act
+        await gamedayProcessService.insertNewPlayersForGame(players)
+
+        //Assert
+
+        //Read the players for the game and m
+
+
+    })
+
+
+
+
     //@ts-ignore
     it("Test gamedayProcessService", async () => {
        
         //Arrange
-        // await gamedayDownloadService.downloadDate(moment("2018-05-26").toDate())
+        await gamedayProcessService.createPlayerDaysForGame(530173, moment("2018-05-26").toDate())
 
         //Act
-        await gamedayProcessService.createPlayerDaysForDate(moment("2018-05-26").toDate())
+        let adamDuvall = await hitterDayService.read(594807, "2018-05-26")
+        let jaredHughes = await pitcherDayService.read(453172, '2018-05-26')
+
 
         //Assert
 
-        let devinMesoraco = await hitterDayService.read(519023, "2018-05-26")
+        assert.deepEqual(adamDuvall.dayStats, {
+            gamesPlayed: 1,
+            flyOuts: 2,
+            groundOuts: 1,
+            runs: 0,
+            doubles: 0,
+            triples: 0,
+            homeRuns: 0,
+            strikeOuts: 1,
+            baseOnBalls: 0,
+            intentionalWalks: 0,
+            hits: 0,
+            hitByPitch: 0,
+            atBats: 4,
+            caughtStealing: 0,
+            stolenBases: 0,
+            groundIntoDoublePlay: 0,
+            groundIntoTriplePlay: 0,
+            totalBases: 0,
+            rbi: 0,
+            leftOnBase: 4,
+            sacBunts: 0,
+            sacFlies: 0,
+            catchersInterference: 0,
+            pickoffs: 0
+        })
 
-        assert.equal(devinMesoraco.hits, 2)
-        assert.equal(devinMesoraco.runsScored, 0)
-        assert.equal(devinMesoraco.singles, 2)
-        assert.equal(devinMesoraco.doubles, 0)
-        assert.equal(devinMesoraco.triples, 0)
-        assert.equal(devinMesoraco.homeRuns, 0)
-        assert.equal(devinMesoraco.rbi, 1)
-        assert.equal(devinMesoraco.bb, 0)
-        assert.equal(devinMesoraco.ibb, 0)
-        assert.equal(devinMesoraco.k, 2)
-        assert.equal(devinMesoraco.hbp, 0)
-        assert.equal(devinMesoraco.sb, 0)
-        assert.equal(devinMesoraco.cs,0)
-        assert.equal(devinMesoraco.player.firstName, 'Devin')
 
-        let artieLweicki = await pitcherDayService.read(592499, '2018-05-26')
-
-        assert.equal(artieLweicki.battersFace, 13)
-        assert.equal(artieLweicki.numberOfPitches, 46)
-        assert.equal(artieLweicki.strikes, 32)
-        assert.equal(artieLweicki.hits, 4)
-        assert.equal(artieLweicki.runs, 1)
-        assert.equal(artieLweicki.hr, 0)
-        assert.equal(artieLweicki.so, 3)
-        assert.equal(artieLweicki.bb, 0)
-        assert.equal(artieLweicki.outs, 9)
-        assert.equal(artieLweicki.earnedRuns, 1)
-        assert.equal(artieLweicki.won, false)
-        assert.equal(artieLweicki.lost, false)
-        assert.equal(artieLweicki.saved, false)
-        assert.equal(artieLweicki.blewSave, false)
+        assert.deepEqual(jaredHughes.dayStats, {
+            gamesPlayed: 1,
+            gamesStarted: 0,
+            groundOuts: 1,
+            runs: 0,
+            doubles: 1,
+            triples: 0,
+            homeRuns: 0,
+            strikeOuts: 0,
+            baseOnBalls: 1,
+            intentionalWalks: 0,
+            hits: 2,
+            atBats: 4,
+            caughtStealing: 0,
+            stolenBases: 0,
+            numberOfPitches: 11,
+            inningsPitched: "1.0",
+            wins: 0,
+            losses : 0,
+            saves : 1,
+            saveOpportunities : 1,
+            holds : 0,
+            blownSaves : 0,
+            earnedRuns : 0,
+            battersFaced : 5,
+            outs : 3,
+            gamesPitched : 1,
+            completeGames : 0,
+            shutouts : 0,
+            pitchesThrown : 11,
+            balls : 5,
+            strikes : 6,
+            hitBatsmen : 0,
+            wildPitches : 0,
+            pickoffs : 0,
+            airOuts : 1,
+            rbi : 0,
+            gamesFinished : 1,
+            inheritedRunners : 0,
+            inheritedRunnersScored : 0,
+            catchersInterference : 0,
+            sacBunts : 0,
+            sacFlies : 0,
+            note: "(S, 3)"
+        })
 
 
 

@@ -2,66 +2,97 @@ import { Player } from "../dto/player";
 
 
 class PlayerService {
-    // filename: string = "players.json"
+    filename: string = "players.json"
 
-    // players: Player[] = []
+    players: Player[] = []
 
     constructor(
-        private orbitDocStore: any,
+        private ipfs: any,
         private rootFolder: string 
     ) {    }
 
     async create(player: Player): Promise<Player> {
-        await this.orbitDocStore.put(player)
+        this.players.push(player)
         return player
     }
 
     async read(id: number) : Promise<Player> {
 
-        let value = this.orbitDocStore.get(id)
+        let player: Player
 
-        if (value) {
-            return value[0]
+        if (!this.players || this.players.length == 0) return
+
+        const pos = this._findPositionById(id)
+
+        if (pos != null) {
+            player = this.players[pos] 
         }
+
+        return player
         
     }
 
     async update(player: Player): Promise<void> {
-        await this.orbitDocStore.put(player)
+
+        var elementPos = this._findPositionById(player.id)
+
+        if (elementPos) {
+            this.players[elementPos] = player
+        }
+
     }
 
     async delete(player: Player): Promise<void> {
-       await this.orbitDocStore.del(player.id)
+        var elementPos = this._findPositionById(player.id)
+
+        this.players.splice(elementPos, 1)
+
     }
 
     async list(offset: number, limit: number) : Promise<Player[]> {
         
-        let fullList =  this.orbitDocStore.get('') //returns all
-
-        if (!fullList) return
+        if (!this.players) return
         if (!offset) offset=0
-        if (!limit) limit = fullList.length
+        if (!limit) limit = this.players.length
 
-        let list = fullList.slice(offset, offset + limit) 
+        let list = this.players.slice(offset, offset + limit) 
         
         return list
     }
 
     count() : number {
-        let fullList =  this.orbitDocStore.get('') //returns all
-        return fullList.length
+        if (!this.players) return 0
+        return this.players.length
     }
 
     async clearAll() : Promise<void> {
+        this.players = []
     }
 
+    _findPositionById(id:number) : number {
+        if (!this.players || this.players.length == 0) return
+        return this.players.map(function(x) {return x.id; }).indexOf(id)
+    }
 
     async load() {
-        this.orbitDocStore.load()
+
+        try {
+            let fileContents: Buffer  = await this.ipfs.files.read(this.rootFolder + '/' +  this.filename)
+
+            this.players = JSON.parse(fileContents.toString())
+
+        } catch(ex) {
+            //File not found
+            this.players = []
+        }
+
+    }
+
+    async write() {
+        await this.ipfs.files.write(this.rootFolder + '/' +  this.filename, Buffer.from(JSON.stringify(this.players)), {create: true, parents: true, truncate: true})
     }
 
 
 }
 
 export { PlayerService}
-

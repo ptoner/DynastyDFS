@@ -1,20 +1,28 @@
-import { Player } from "./player";
-import moment = require('moment');
-import { PitcherLog } from "./pitcher-log";
+import { Player } from "./player"
+import moment = require('moment')
+import { PitchingStats, GamedayFullPlayer } from "./gameday/gameday-boxscore";
 
 
-class PitcherDay extends PitcherLog {
+class PitcherDay  {
 
-    public id: number
-    
     public date: string
-    public salary: number 
-
 
     setDate(date: Date) {
         this.date = moment(date).format("YYYY-MM-DD")
     }
 
+
+    constructor(
+        public player: Player,
+        public dateOf: Date,
+    
+        public dayStats: PitchingStats,
+        public seasonStats: PitchingStats,
+    
+        public salary: number 
+    ){
+        this.setDate(dateOf)
+    }
 
 }
 
