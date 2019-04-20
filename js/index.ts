@@ -1,4 +1,3 @@
-const Freedom: any = require('freedom-for-data')
 const Framework7: any = require('framework7/js/framework7.bundle')
 
 

@@ -47,10 +47,12 @@ class GamedayDownloadService {
 
         let games: any[] = await this.readSchedule(date)
 
-
-        for (let game of games) {
-            await this.downloadGameFiles(game.gamePk)
+        if (games && games.length > 0) {
+            for (let game of games) {
+                await this.downloadGameFiles(game.gamePk)
+            }
         }
+
         
     }
 
@@ -63,7 +65,7 @@ class GamedayDownloadService {
         try {
             const miniScoreboard = await fetch(scheduleUrl)
 
-            let filename: string =  `${this.localFolder}/scoreboard/${moment(date).format("MM/DD/YYYY")}.json`
+            let filename: string =  `${this.localFolder}/scoreboard/${moment(date).format("YYYY-MM-DD")}.json`
 
             let buffer = await miniScoreboard.buffer()
 
@@ -78,12 +80,15 @@ class GamedayDownloadService {
     async readSchedule(date: Date) : Promise<any[]> {
 
 
-        let rawJson = await this.fileService.loadFile(`${this.localFolder}/scoreboard/${moment(date).format("MM/DD/YYYY")}.json`)
+        let rawJson = await this.fileService.loadFile(`${this.localFolder}/scoreboard/${moment(date).format("YYYY-MM-DD")}.json`)
         
         let games 
 
         try {
-            games = rawJson.dates[0].games
+            if (rawJson.dates[0]) {
+                games = rawJson.dates[0].games
+            }
+            
         } catch(ex) {
             console.log(ex)
         }

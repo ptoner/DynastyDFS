@@ -16,7 +16,6 @@ import { LeagueSettingsService } from "../league-settings-service";
 import { PlayerService } from "../player-service";
 import { FileService } from "./file-service";
 import { GamedayDownloadService } from "../gameday/gameday-download-service";
-import { GamedayParseService } from "../gameday/gameday-parse-service";
 import { GamedayProcessService } from "../gameday/gameday-process-service";
 import { HitterDayService } from "../hitter-day-service";
 import { PitcherDayService } from "../pitcher-day-service";
@@ -24,9 +23,11 @@ import { HomeController } from "../../controller/home-controller";
 import { AdminController } from "../../controller/admin-controller";
 import { PlayerController } from "../../controller/player-controller";
 import { PagingService } from "./paging-service";
-import { HitterSeasonService } from "../hitter-season-service";
-import { PitcherSeasonService } from "../pitcher-season-service";
 
+
+// console.log(HomeController)
+// console.log(AdminController)
+// console.log(PlayerController)
 
 const promisify = (inner) =>
   new Promise((resolve, reject) =>
@@ -112,11 +113,9 @@ class RouteService {
     Global.hitterDayService= new HitterDayService(ipfs, Global.fileService, rootFolder)
     Global.pitcherDayService = new PitcherDayService(ipfs, Global.fileService, rootFolder)
     Global.gamedayDownloadService = new GamedayDownloadService(Global.fileService, rootFolder)
-    Global.gamedayParseService = new GamedayParseService(ipfs, Global.fileService, rootFolder)
-    Global.hitterSeasonService = new HitterSeasonService(ipfs, Global.fileService, rootFolder)
-    Global.pitcherSeasonService = new PitcherSeasonService(ipfs, Global.fileService, rootFolder)
 
-    Global.gamedayProcessService = new GamedayProcessService(Global.gamedayParseService, Global.gamedayDownloadService, Global.playerService, Global.hitterDayService, Global.pitcherDayService, Global.hitterSeasonService)
+
+    Global.gamedayProcessService = new GamedayProcessService(Global.gamedayDownloadService, Global.playerService, Global.hitterDayService, Global.pitcherDayService)
 
 
     Global.homeController = new HomeController(Global.leagueSettingsService, Global.playerService)

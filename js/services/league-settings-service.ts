@@ -15,9 +15,14 @@ class LeagueSettingsService {
 
         let leagueSettings: LeagueSettings
         
-        let result  = await this.ipfs.files.read(this.rootFolder + '/' + this.filename)
+        try {
+            let result  = await this.ipfs.files.read(this.rootFolder + '/' + this.filename)
+            leagueSettings = JSON.parse(result)
+        }catch(ex) {
+            console.log(ex)
+        }
 
-        return JSON.parse(result)
+        return leagueSettings
     }
 
     async update(leagueSettings: LeagueSettings) : Promise<void> {

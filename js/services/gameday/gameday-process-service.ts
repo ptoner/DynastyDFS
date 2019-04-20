@@ -115,41 +115,6 @@ class GamedayProcessService {
         }
     }
 
-    async processHitterSeason(year: number) {
-
-
-    }
-
-
-
-
-    // buildPitcherDay(pitchingAppearance: PitchingAppearance, atBats: GamedayAtBat[], player: Player, date: Date) : PitcherDay {
-
-    //     let pitcherDay: PitcherDay = new PitcherDay()
-    //     pitcherDay.player = player 
-    //     pitcherDay.setDate(date)
-
-    //     pitcherDay.battersFace = pitchingAppearance.battersFace
-    //     pitcherDay.numberOfPitches = pitchingAppearance.numberOfPitches
-    //     pitcherDay.strikes = pitchingAppearance.strikes
-    //     pitcherDay.hits = pitchingAppearance.hits 
-    //     pitcherDay.runs = pitchingAppearance.runs
-    //     pitcherDay.hr = pitchingAppearance.hr 
-    //     pitcherDay.so = pitchingAppearance.so
-    //     pitcherDay.bb = pitchingAppearance.bb 
-    //     pitcherDay.outs = pitchingAppearance.outs
-    //     pitcherDay.earnedRuns = pitchingAppearance.earnedRuns
-    //     pitcherDay.won = pitchingAppearance.won
-    //     pitcherDay.lost = pitchingAppearance.lost 
-    //     pitcherDay.saved = pitchingAppearance.saved 
-    //     pitcherDay.blewSave = pitchingAppearance.blewSave
-
-
-    //     return pitcherDay
-    // }
-
-
-
 
 
 

@@ -29,7 +29,7 @@ contract('GamedayProcessService', async (accounts) => {
     let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, rootFolder)
 
     let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, rootFolder)
-    let playerService: PlayerService = new PlayerService(ipfs, rootFolder)
+    let playerService: PlayerService = new PlayerService(ipfs,fileService, rootFolder)
     let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
     
     //@ts-ignore 

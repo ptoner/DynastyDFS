@@ -1,95 +1,101 @@
 import { Player } from "../dto/player";
+import { FileService } from "./util/file-service";
 
 
 class PlayerService {
-    filename: string = "players.json"
 
-    players: Player[] = []
+    path: string
 
     constructor(
         private ipfs: any,
-        private rootFolder: string 
-    ) {    }
+        private fileService: FileService,
+        private rootFolder: string
+    ) {
+        this.path = this.rootFolder + "/Players/"
+    }
 
-    async create(player: Player): Promise<Player> {
-        this.players.push(player)
-        return player
+    async create(player: Player): Promise<void> {
+        return this._write(player)
     }
 
     async read(id: number) : Promise<Player> {
-
-        let player: Player
-
-        if (!this.players || this.players.length == 0) return
-
-        const pos = this._findPositionById(id)
-
-        if (pos != null) {
-            player = this.players[pos] 
-        }
-
-        return player
-        
+        return this._load(id)
     }
 
     async update(player: Player): Promise<void> {
-
-        var elementPos = this._findPositionById(player.id)
-
-        if (elementPos) {
-            this.players[elementPos] = player
-        }
-
+        return this._write(player)
     }
 
     async delete(player: Player): Promise<void> {
-        var elementPos = this._findPositionById(player.id)
-
-        this.players.splice(elementPos, 1)
-
+        return this._delete(player)
     }
 
     async list(offset: number, limit: number) : Promise<Player[]> {
         
-        if (!this.players) return
-        if (!offset) offset=0
-        if (!limit) limit = this.players.length
+        let players: Player[] = await this.listAll()
 
-        let list = this.players.slice(offset, offset + limit) 
+        if (!players) return
+
+        if (!offset) offset=0
+        if (!limit) limit = players.length
+
+        let list = players.slice(offset, offset + limit) 
         
         return list
     }
 
-    count() : number {
-        if (!this.players) return 0
-        return this.players.length
+    async listAll() : Promise<Player[]> {
+        let players: Player[] = await this.fileService.listFromDirectory(this.path)
+        return players
+    }
+
+
+    async count() : Promise<number> {
+
+        let players: Player[] = await this.listAll()
+
+        if (!players) return 0
+        return players.length
     }
 
     async clearAll() : Promise<void> {
-        this.players = []
-    }
 
-    _findPositionById(id:number) : number {
-        if (!this.players || this.players.length == 0) return
-        return this.players.map(function(x) {return x.id; }).indexOf(id)
-    }
+        const fileExists: boolean = await this.fileService.fileExists(this.path)
 
-    async load() {
-
-        try {
-            let fileContents: Buffer  = await this.ipfs.files.read(this.rootFolder + '/' +  this.filename)
-
-            this.players = JSON.parse(fileContents.toString())
-
-        } catch(ex) {
-            //File not found
-            this.players = []
+        if (fileExists) {
+            await this.ipfs.files.rm(this.path, {recursive: true})
         }
+    }
+
+
+    _getFilename(playerId: number) : string {
+        let filename =  this.path + `${playerId}.json`
+        return filename
+    }
+
+    async _load(playerId: number) : Promise<Player> {
+        return this.fileService.loadFile(this._getFilename(playerId))
+    }
+
+
+    async _write(player: Player) : Promise<void> {
+
+        const files = [
+            this._getFilename(player.id),             //Main directory
+        ]
+
+        return this.fileService.writeToAll(player, files)
 
     }
 
-    async write() {
-        await this.ipfs.files.write(this.rootFolder + '/' +  this.filename, Buffer.from(JSON.stringify(this.players)), {create: true, parents: true, truncate: true})
+    async _delete(player: Player) : Promise<void> {
+
+        const files = [
+            this._getFilename(player.id),             //Main directory
+        ]
+
+        return this.fileService.deleteAll(files)
+
     }
 
 

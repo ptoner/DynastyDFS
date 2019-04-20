@@ -15,8 +15,7 @@ class HitterDayService {
         private fileService: FileService,
         private rootFolder: string
     ) {
-        this.path = rootFolder + "/HitterDay/"
-
+        this.path = this.rootFolder + "/HitterDay/"
     }
 
 

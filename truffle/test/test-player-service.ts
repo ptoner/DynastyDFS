@@ -3,10 +3,18 @@ import assert = require('assert');
 import { Player } from '../../js/dto/player';
 import { isMainThread } from 'worker_threads';
 import OrbitDB = require('orbit-db');
+import { FileService } from '../../js/services/util/file-service';
 
 // import * as IPFS from "typestub-ipfs";
 // import IPFS from 'ipfs'
 
+const ipfsClient = require('ipfs-http-client')
+
+const ipfs = ipfsClient({
+    host: "localhost",
+    port: 5001,
+    protocol: 'http'
+  })
 
 
 //@ts-ignore
@@ -21,18 +29,17 @@ contract('PlayerService', async (accounts) => {
     //   })
 
 
-    let playerService: PlayerService = new PlayerService({}, "/fbtest")
-    
+    let rootFolder = "/fbtest"
+    let fileService: FileService = new FileService(ipfs)
+    let playerService: PlayerService = new PlayerService(ipfs,fileService, rootFolder)
+
 
 
     //@ts-ignore
-    before('Setup', async () => {
-        await playerService.load()
-    })
 
     //@ts-ignore
     beforeEach('Setup', async () => {
-        playerService.clearAll()
+        await playerService.clearAll()
     })
 
 
@@ -47,12 +54,10 @@ contract('PlayerService', async (accounts) => {
 
 
         //Act
-        let created: Player = await playerService.create(player)
+        await playerService.create(player)
 
         //Assert
-        assert.equal(created.id, 1)
-
-        let fetched: Player = await playerService.read(created.id)
+        let fetched: Player = await playerService.read(player.id)
 
         assert.equal(fetched.firstName, "Andrew")
         assert.equal(fetched.lastName, "McCutchen")
@@ -68,16 +73,24 @@ contract('PlayerService', async (accounts) => {
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
 
-        let created: Player = await playerService.create(player)
+        await playerService.create(player)
 
-        created.firstName = "Bo"
-        created.lastName = "Jackson"
+        //Verify it's cutch
+        let cutch: Player = await playerService.read(player.id)
+
+        assert.equal(cutch.firstName, "Andrew")
+        assert.equal(cutch.lastName, "McCutchen")
+
+
+        //Change info 
+        player.firstName = "Bo"
+        player.lastName = "Jackson"
 
         //Act
-        await playerService.update(created)
+        await playerService.update(player)
 
         //Assert
-        let read: Player = await playerService.read(created.id)
+        let read: Player = await playerService.read(player.id)
 
         assert.equal(read.firstName, "Bo")
         assert.equal(read.lastName, "Jackson")
@@ -107,13 +120,13 @@ contract('PlayerService', async (accounts) => {
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
 
-        let created: Player = await playerService.create(player)
+        await playerService.create(player)
 
         //Act
-        await playerService.delete(created)
+        await playerService.delete(player)
 
         //Assert
-        let read: Player = await playerService.read(created.id)
+        let read: Player = await playerService.read(player.id)
 
         //Make sure we get nothing back
         assert.equal(read, undefined)
@@ -140,9 +153,9 @@ contract('PlayerService', async (accounts) => {
         player3.lastName = "Alvarez"
 
 
-        playerService.create(player1)
-        playerService.create(player2)
-        playerService.create(player3)
+        await playerService.create(player1)
+        await playerService.create(player2)
+        await playerService.create(player3)
 
 
         //Act
@@ -185,9 +198,9 @@ contract('PlayerService', async (accounts) => {
         player3.lastName = "Alvarez"
 
 
-        playerService.create(player1)
-        playerService.create(player2)
-        playerService.create(player3)
+        await playerService.create(player1)
+        await playerService.create(player2)
+        await playerService.create(player3)
 
 
         //Act
@@ -201,8 +214,6 @@ contract('PlayerService', async (accounts) => {
         assert.equal(list[0].firstName, "Andrew")
         assert.equal(list[0].lastName, "McCutchen")
 
-        // assert.equal(list[1].name, "Jordy Mercer")
-        // assert.equal(list[1].positions[0], "SS")
         assert.equal(list[1].firstName, "Pedro")
         assert.equal(list[1].lastName, "Alvarez")
 
