@@ -73,10 +73,24 @@ class PlayerService {
         return filename
     }
 
+
     async _load(playerId: number) : Promise<Player> {
-        return this.fileService.loadFile(this._getFilename(playerId))
+
+        let loaded: Player = this._translate(
+            await this.fileService.loadFile(this._getFilename(playerId))
+        )
+
+        return loaded
     }
 
+
+    _translate(rawJson) : Player {
+
+        if (!rawJson) return
+
+        return new Player(rawJson)
+
+    }
 
     async _write(player: Player) : Promise<void> {
 

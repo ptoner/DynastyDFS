@@ -22,15 +22,28 @@ let fileService: FileService = new FileService(ipfs)
 let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, "/fantasybaseball")
 let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, "/fantasybaseball")
 let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, "/fantasybaseball")
-let playerService: PlayerService = new PlayerService(ipfs, "/fantasybaseball")
+let playerService: PlayerService = new PlayerService(ipfs, fileService, "/fantasybaseball")
 let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
 
 let start: Date = moment(`2018-03-01`).toDate()
 let end: Date = moment(`2018-11-07`).toDate()
 
 async function run() {
-  await gamedayProcessService.processDateRange(start, end)
+  // await gamedayProcessService.processDateRange(start, end)
   // await gamedayDownloadService.downloadRange(start, end)
+
+  // await gamedayDownloadService.downloadSeason(2010)
+  // await gamedayDownloadService.downloadSeason(2011)
+  // await gamedayDownloadService.downloadSeason(2012)
+  // await gamedayDownloadService.downloadSeason(2013)
+  // await gamedayDownloadService.downloadSeason(2014)
+  // await gamedayDownloadService.downloadSeason(2015)
+  // await gamedayDownloadService.downloadSeason(2016)
+  // await gamedayDownloadService.downloadSeason(2017)
+  // await gamedayDownloadService.downloadSeason(2018)
+
+  await gamedayProcessService.processSeason(2010)
+
 }
 
 run()

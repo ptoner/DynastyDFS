@@ -27,7 +27,7 @@ class PlayerController {
 
         let players: Player[] = await this.playerService.list(offset, limit)
 
-        let page: PagingViewModel = this.pagingService.buildPagingViewModel(offset, limit, this.playerService.count())
+        let page: PagingViewModel = this.pagingService.buildPagingViewModel(offset, limit, await this.playerService.count())
 
         return new ModelView({
                 players: players,

@@ -32,10 +32,6 @@ contract('GamedayProcessService', async (accounts) => {
     let playerService: PlayerService = new PlayerService(ipfs,fileService, rootFolder)
     let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
     
-    //@ts-ignore 
-    before('Setup', async () => {
-        await playerService.load()
-    })
 
     //@ts-ignore
     beforeEach('Setup', async () => {

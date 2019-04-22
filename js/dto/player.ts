@@ -44,7 +44,14 @@ class Player {
     constructor(
         private gamedayFullPlayer:GamedayFullPlayer
     ) {
+
+        if (!gamedayFullPlayer) return
+
         Object.assign(this, gamedayFullPlayer)
+
+        this.primaryPosition = new Position(gamedayFullPlayer.primaryPosition)
+        this.batSide = new Hand(gamedayFullPlayer.batSide)
+        this.pitchHand = new Hand(gamedayFullPlayer.pitchHand)
     }
 }
 

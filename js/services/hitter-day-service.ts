@@ -2,6 +2,7 @@ import { Player } from "../dto/player";
 import { HitterDay } from "../dto/hitter-day";
 import * as moment from 'moment';
 import { FileService } from "./util/file-service";
+import { BattingStats } from "../dto/gameday/gameday-boxscore";
 
 class HitterDayService {
 
@@ -90,9 +91,24 @@ class HitterDayService {
 
 
     async _load(playerId: number, date: string) : Promise<HitterDay> {
-        return this.fileService.loadFile(this._getFilename(playerId, date))
+
+        let loaded: HitterDay = this._translate(
+            await this.fileService.loadFile(this._getFilename(playerId, date))
+        )
+
+        return loaded
     }
 
+    _translate(rawJson) : HitterDay {
+
+        if (!rawJson) return
+
+        let player: Player = new Player(rawJson.player)
+        let dayStats: BattingStats = new BattingStats(rawJson.dayStats)
+        let seasonStats: BattingStats = new BattingStats(rawJson.seasonStats)
+
+        return new HitterDay(player, moment(rawJson.date).toDate(), dayStats, seasonStats, rawJson.salary)
+    }
 
     async _write(playerDay: HitterDay) : Promise<void> {
 

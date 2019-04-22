@@ -103,13 +103,12 @@ class RouteService {
 
     //@ts-ignore
     Global.leagueSettingsService = new LeagueSettingsService(ipfs, rootFolder)
-    
-    Global.playerService = new PlayerService(ipfs, rootFolder)
+    Global.fileService = new FileService(ipfs)
+    Global.playerService = new PlayerService(ipfs,Global.fileService , rootFolder)
 
-    await Global.playerService.load()
 
     Global.pagingService = new PagingService()
-    Global.fileService = new FileService(ipfs)
+    
     Global.hitterDayService= new HitterDayService(ipfs, Global.fileService, rootFolder)
     Global.pitcherDayService = new PitcherDayService(ipfs, Global.fileService, rootFolder)
     Global.gamedayDownloadService = new GamedayDownloadService(Global.fileService, rootFolder)
