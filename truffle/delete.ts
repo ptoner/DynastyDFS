@@ -7,33 +7,34 @@ import OrbitDB = require('orbit-db');
 
 (async () => {
 
-    let node = new IPFS({
+    let ipfs = new IPFS({
         EXPERIMENTAL: {pubsub: true}
     })
 
-    node.on('error', error => console.error(error.message))
+    ipfs.on('error', error => console.error(error.message))
 
-    console.log('waiting node...');
-    await new Promise((resolve, reject) => node.on('ready', resolve));
-    console.log('node is ready.');
-
-
-    const orbitdb = await OrbitDB.createInstance(node)
-    const db = await orbitdb.keyvalue('first-database')
+    console.log('waiting ipfs...');
+    await new Promise((resolve, reject) => ipfs.on('ready', resolve));
+    console.log('ipfs is ready.');
 
 
+    const orbitdb = await OrbitDB.createInstance(ipfs)
+    const db = await orbitdb.docs('profile', { indexBy: 'name' })
 
-    console.log('adding file...');
-    // FIXME first argument cannot be string?
-    let files = await node.files.add(new Buffer('hello'));
-    console.log('added file:', {files});
+    let profile = {
+        name: "Pat",
+        address: "here",
+        followers: 40
+    }
 
-    let hash = files[0].hash;
-    console.log('getting file...');
-    let res = await node.files.get(hash);
-    console.log('got file:', {res});
+    const hash = await db.put(profile)
 
-    console.log('closing node...');
-    await new Promise((resolve, reject) => node.stop(() => resolve))
-    console.log('closed node.');
+    let fetched = await db.get("Pat")
+
+    console.log(fetched)
+
+
+    // console.log('closing ipfs...');
+    // await new Promise((resolve, reject) => ipfs.stop(() => resolve))
+    // console.log('closed ipfs.');
 })();

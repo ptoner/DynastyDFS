@@ -8,7 +8,7 @@
  * https://hal.inria.fr/inria-00555588
  */
 class GSet {
-  constuctor (values) {}
+  constructor (values) {} // eslint-disable-line
   append (value) {}
   merge (set) {}
   get (value) {}

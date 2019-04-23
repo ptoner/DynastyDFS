@@ -520,7 +520,7 @@ class Log extends GSet {
       access: access,
       entries: data.values,
       heads: data.heads,
-      clock: data.clock,
+      clock: new Clock(data.clock.id, data.clock.time),
       sortFn: sortFn
     })
   }

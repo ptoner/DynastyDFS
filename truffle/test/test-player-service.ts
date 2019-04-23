@@ -2,12 +2,11 @@ import { PlayerService } from '../../js/services/player-service';
 import assert = require('assert');
 import { Player } from '../../js/dto/player';
 import { isMainThread } from 'worker_threads';
-import OrbitDB = require('orbit-db');
+
 import { FileService } from '../../js/services/util/file-service';
 
-// import * as IPFS from "typestub-ipfs";
-// import IPFS from 'ipfs'
 
+const OrbitDB = require('orbit-db')
 const ipfsClient = require('ipfs-http-client')
 
 const ipfs = ipfsClient({
@@ -17,16 +16,26 @@ const ipfs = ipfsClient({
   })
 
 
+
+
 //@ts-ignore
-contract('PlayerService', async (accounts) => {
+contract('PlayerService', async (accounts) => {    
 
 
 
-    // ipfs.on('ready', async () => {
-    //     const orbitdb = await OrbitDB.createInstance(ipfs)
-    //     const db = await orbitdb.keyvalue('first-database')
-    //     console.log(db)
-    //   })
+    // const db = await orbitdb.docs('profile', { indexBy: 'name' })
+
+    // let profile = {
+    //     name: "Pat",
+    //     address: "here",
+    //     followers: 40
+    // }
+
+    // const hash = await db.put(profile)
+
+    // let fetched = await db.get("Pat")
+
+    // console.log(fetched)
 
 
     let rootFolder = "/fbtest"
@@ -36,6 +45,16 @@ contract('PlayerService', async (accounts) => {
 
 
     //@ts-ignore
+    before('Main setup', async () => {
+        try {
+            const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
+            console.log(orbitdb)
+            console.log('here')
+        } catch (ex) {
+            console.log(ex)
+        }
+    })
+
 
     //@ts-ignore
     beforeEach('Setup', async () => {

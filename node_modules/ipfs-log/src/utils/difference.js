@@ -6,7 +6,7 @@ function difference (a, b, key) {
   var existing = {}
 
   // Create an index of the first collection
-  var addToIndex = e => existing[key ? e[key] : e] = true
+  var addToIndex = e => (existing[key ? e[key] : e] = true)
   a.forEach(addToIndex)
 
   // Reduce to entries that are not in the first collection
