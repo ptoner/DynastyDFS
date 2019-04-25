@@ -1,11 +1,9 @@
 import { GamedayDownloadService } from "./gameday-download-service";
 import { PlayerService } from "../player-service";
-import { HitterDayService } from "../player-day-service";
-import { PitcherDayService } from "../pitcher-day-service";
+import { PlayerDayService } from "../player-day-service";
 import { Player } from "../../dto/player";
 import { Boxscore, BattingStats, PitchingStats, GamedayPlayer, GamedayFullPlayer } from "../../dto/gameday/gameday-boxscore";
-import { HitterDay } from "../../dto/player-day";
-import { PitcherDay } from "../../dto/pitcher-day";
+import { PlayerDay } from "../../dto/player-day";
 var deepEqual = require('deep-equal')
 
 
@@ -17,8 +15,7 @@ class GamedayProcessService {
     constructor(
         private downloadService: GamedayDownloadService,
         private playerService: PlayerService,
-        private hitterDayService: HitterDayService,
-        private pitcherDayService: PitcherDayService
+        private playerDayService: PlayerDayService
     ) {}
 
 
@@ -80,21 +77,23 @@ class GamedayProcessService {
 
             for (let gamedayPlayer of boxscore.getPlayers()) {
                 
-                let pitchingStats = gamedayPlayer.stats.pitching
-
                 let player: Player = await this.playerService.read(gamedayPlayer.person.id)
-
                 
                 if (!player) {
                     throw "Can't generate player day for empty player"
                 }
 
-                let hitterDay: HitterDay = new HitterDay(player, date, gamedayPlayer.stats.batting, gamedayPlayer.seasonStats.batting, 0)
-                await this.insertOrUpdateHitterDay(hitterDay)
+                let playerDay: PlayerDay = new PlayerDay()
+                playerDay.player = player
+                playerDay.setDate(date)
+                playerDay.dayBatting = gamedayPlayer.stats.batting
+                playerDay.dayPitching =  gamedayPlayer.stats.pitching
 
+                playerDay.seasonBatting = gamedayPlayer.seasonStats.batting
+                playerDay.seasonPitching = gamedayPlayer.seasonStats.pitching
 
-                let pitcherDay: PitcherDay = new PitcherDay(player, date, gamedayPlayer.stats.pitching, gamedayPlayer.seasonStats.pitching, 0)
-                await this.insertOrUpdatePitcherDay(pitcherDay)
+                await this.insertOrUpdatePlayerDay(playerDay)
+
             }
 
 
@@ -104,49 +103,15 @@ class GamedayProcessService {
     }
 
 
-    async insertOrUpdateHitterDay(hitterDay: HitterDay) : Promise<void> {
+    async insertOrUpdatePlayerDay(hitterDay: PlayerDay) : Promise<void> {
 
         if (!hitterDay || !hitterDay.date || !hitterDay.player) {
             console.log("Invalid record. Skipping.")
             return
         }
 
-
-        let existing: HitterDay = await this.hitterDayService.read(hitterDay.player.id, hitterDay.date)
-
-        if (!existing) {
-            console.log(`Inserting hitter day: ${hitterDay.player.firstName} ${hitterDay.player.lastName} - ${hitterDay.date}`)
-            await this.hitterDayService.create(hitterDay)
-        } else {
-            if (!deepEqual(existing, hitterDay)) {
-                console.log(`Updating hitter day: ${hitterDay.player.firstName} ${hitterDay.player.lastName} - ${hitterDay.date}`)
-                await this.hitterDayService.update(hitterDay)
-            }
-        }
-
-    }
-
-
-    async insertOrUpdatePitcherDay(pitcherDay: PitcherDay) : Promise<void> {
-
-        if (!pitcherDay || !pitcherDay.date || !pitcherDay.player) {
-            console.log("Invalid record. Skipping.")
-            return
-        }
-
-
-        let existing: PitcherDay = await this.pitcherDayService.read(pitcherDay.player.id, pitcherDay.date)
-
-        if (!existing) {
-            console.log(`Inserting pitcher day: ${pitcherDay.player.firstName} ${pitcherDay.player.lastName} - ${pitcherDay.date}`)
-            await this.pitcherDayService.create(pitcherDay)
-        } else {
-            if (!deepEqual(existing, pitcherDay)) {
-                console.log(`Updating pitcher day: ${pitcherDay.player.firstName} ${pitcherDay.player.lastName} - ${pitcherDay.date}`)
-                await this.pitcherDayService.update(pitcherDay)
-            }
-        }
-
+        console.log(`Inserting hitter day: ${hitterDay.player.firstName} ${hitterDay.player.lastName} - ${hitterDay.date}`)
+        await this.playerDayService.save(hitterDay)
     }
 
 
@@ -161,7 +126,8 @@ class GamedayProcessService {
                 //Check if it already exists
                 let existing: Player =  await this.playerService.read(gamedayPlayer.id)
     
-                let newPlayer: Player = new Player(gamedayPlayer)
+                let newPlayer: Player = new Player()
+                Object.assign(newPlayer, gamedayPlayer)
 
             
                 if (existing) {

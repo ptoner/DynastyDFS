@@ -10,6 +10,9 @@ import { GamedayDownloadService } from '../../js/services/gameday/gameday-downlo
 import { PlayerDayService } from '../../js/services/player-day-service';
 import { PlayerService } from '../../js/services/player-service';
 
+
+
+const OrbitDB = require('orbit-db')
 const ipfsClient = require('ipfs-http-client')
 
 const ipfs = ipfsClient({
@@ -19,17 +22,35 @@ const ipfs = ipfsClient({
   })
 
 
+
 //@ts-ignore
 contract('GamedayProcessService', async (accounts) => {
 
     let rootFolder = "/fbtest"
     let fileService: FileService = new FileService(ipfs)
     let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, rootFolder)
-    let hitterDayService: PlayerDayService = new PlayerDayService(ipfs, fileService, rootFolder)
 
-    let playerService: PlayerService = new PlayerService(ipfs,fileService, rootFolder)
-    let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
+    let playerService: PlayerService
+    let playerDayService: PlayerDayService
+    let gamedayProcessService: GamedayProcessService
+
     
+    
+
+    //@ts-ignore
+    before('Main setup', async () => {
+
+        const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
+
+        const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
+        const playerDayDb = await orbitdb.docs('test-player-day', { indexBy: 'id' })
+
+        playerService = new PlayerService(playerDb)
+        playerDayService = new PlayerDayService(playerDayDb, playerService)
+        gamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, playerDayService)
+
+    })
+
 
     //@ts-ignore
     beforeEach('Setup', async () => {
@@ -65,13 +86,13 @@ contract('GamedayProcessService', async (accounts) => {
         await gamedayProcessService.createPlayerDaysForGame(530173, moment("2018-05-26").toDate())
 
         //Act
-        let adamDuvall = await hitterDayService.read(594807, "2018-05-26")
-        let jaredHughes = await pitcherDayService.read(453172, '2018-05-26')
+        let adamDuvall = await playerDayService.read(594807, "2018-05-26")
+        let jaredHughes = await playerDayService.read(453172, '2018-05-26')
 
 
         //Assert
 
-        assert.deepEqual(adamDuvall.dayStats, {
+        assert.deepEqual(adamDuvall.dayBatting, {
             gamesPlayed: 1,
             flyOuts: 2,
             groundOuts: 1,
@@ -99,7 +120,7 @@ contract('GamedayProcessService', async (accounts) => {
         })
 
 
-        assert.deepEqual(jaredHughes.dayStats, {
+        assert.deepEqual(jaredHughes.dayPitching, {
             gamesPlayed: 1,
             gamesStarted: 0,
             groundOuts: 1,
