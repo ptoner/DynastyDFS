@@ -1,7 +1,9 @@
 import { LeagueSettingsService } from '../../js/services/league-settings-service';
 import { LeagueSettings, PositionLimits, BattingScoring, PitchingScoring } from '../../js/dto/league-settings';
 import assert = require('assert');
+import { platform } from 'os';
 
+const OrbitDB = require('orbit-db')
 const ipfsClient = require('ipfs-http-client')
 
 const ipfs = ipfsClient({
@@ -11,11 +13,24 @@ const ipfs = ipfsClient({
   })
 
 
+
 //@ts-ignore
 contract('LeagueSettingsService', async (accounts) => {
 
 
-    let leagueSettingsService: LeagueSettingsService = new LeagueSettingsService(ipfs, "/fbtest")
+    let leagueSettingsService: LeagueSettingsService 
+
+
+    //@ts-ignore
+    before('Main setup', async () => {
+
+        const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
+
+        const db = await orbitdb.docs('test-league-settings', { indexBy: 'id' })
+
+        leagueSettingsService = new LeagueSettingsService(db)
+
+    })
 
     //@ts-ignore
     it("Test update & getLeagueSettings: Save default league settings", async () => {
@@ -23,21 +38,58 @@ contract('LeagueSettingsService', async (accounts) => {
         //Arrange
         const positionLimits: PositionLimits[] = []
 
-        positionLimits.push(new PositionLimits("P", 1, 1))
+        let pLimit = new PositionLimits()
+        pLimit.position = "P"
+        pLimit.starters = 1
+        pLimit.maximums = 1
 
-        const battingScoring = new BattingScoring(1,1,1,1,1,1,1,1,1,1,1,1,1)
-        const pitchingScoring = new PitchingScoring(1,1,1,1,1,1,1,1,1,1,1,1,1,1)
+        positionLimits.push(pLimit)
 
-        const leagueSettings: LeagueSettings = new LeagueSettings(
-            "League of Legends",
-            32,
-            21,
-            11,
-            4,
-            positionLimits,
-            battingScoring,
-            pitchingScoring
-        )
+        let battingScoring = new BattingScoring()
+        battingScoring.hits = 1
+        battingScoring.runsScored = 1
+        battingScoring.singles = 1
+        battingScoring.doubles = 1
+        battingScoring.triples = 1
+        battingScoring.homeRuns = 1
+        battingScoring.rbi = 1
+        battingScoring.bb = 1
+        battingScoring.ibb = 1
+        battingScoring.k = 1
+        battingScoring.hbp = 1
+        battingScoring.sb = 1
+        battingScoring.cs = 1
+
+
+        let pitchingScoring = new PitchingScoring()
+
+        pitchingScoring.ip = 1
+        pitchingScoring.h = 1
+        pitchingScoring.er = 1
+        pitchingScoring.hr = 1
+        pitchingScoring.bb = 1
+        pitchingScoring.hbp = 1
+        pitchingScoring.k = 1
+        pitchingScoring.wp = 1
+        pitchingScoring.balks = 1
+        pitchingScoring.pickOffs = 1
+        pitchingScoring.completeGame = 1
+        pitchingScoring.shutOut = 1
+        pitchingScoring.blownSave = 1
+        pitchingScoring.holds = 1
+
+
+
+        const leagueSettings: LeagueSettings = new LeagueSettings()
+        leagueSettings.leagueName = "League of Legends"
+        leagueSettings.rosterSize = 32
+        leagueSettings.totalStarters =  21
+        leagueSettings.totalBench = 11
+        leagueSettings.totalDl = 4
+        leagueSettings.pitchingScoring = pitchingScoring
+        leagueSettings.battingScoring = battingScoring
+        leagueSettings.positionLimits = positionLimits
+
         
         //Act
         await leagueSettingsService.update(leagueSettings)
@@ -45,41 +97,7 @@ contract('LeagueSettingsService', async (accounts) => {
         //Assert
         let read: LeagueSettings = await leagueSettingsService.getLeagueSettings()
 
-        assert.equal(read.leagueName, "League of Legends")
-        assert.equal(read.rosterSize, 32)
-        assert.equal(read.totalStarters, 21)
-        assert.equal(read.totalBench, 11)
-        assert.equal(read.totalDl, 4)
-        assert.equal(read.positionLimits.length, 1)
-        assert.equal(read.battingScoring.bb, 1)
-        assert.equal(read.battingScoring.cs, 1)
-        assert.equal(read.battingScoring.doubles, 1)
-        assert.equal(read.battingScoring.hbp, 1)
-        assert.equal(read.battingScoring.hits, 1)
-        assert.equal(read.battingScoring.homeRuns, 1)
-        assert.equal(read.battingScoring.ibb, 1)
-        assert.equal(read.battingScoring.k, 1)
-        assert.equal(read.battingScoring.rbi, 1)
-        assert.equal(read.battingScoring.runsScored, 1)
-        assert.equal(read.battingScoring.sb, 1)
-        assert.equal(read.battingScoring.singles, 1)
-        assert.equal(read.battingScoring.triples, 1)
-
-        assert.equal(read.pitchingScoring.balks, 1)
-        assert.equal(read.pitchingScoring.bb, 1)
-        assert.equal(read.pitchingScoring.blownSave, 1)
-        assert.equal(read.pitchingScoring.completeGame, 1)
-        assert.equal(read.pitchingScoring.er, 1)
-        assert.equal(read.pitchingScoring.h, 1)
-        assert.equal(read.pitchingScoring.hbp, 1)
-        assert.equal(read.pitchingScoring.holds, 1)
-        assert.equal(read.pitchingScoring.hr, 1)
-        assert.equal(read.pitchingScoring.ip, 1)
-        assert.equal(read.pitchingScoring.k, 1)
-        assert.equal(read.pitchingScoring.pickOffs, 1)
-        assert.equal(read.pitchingScoring.shutOut, 1)
-        assert.equal(read.pitchingScoring.wp, 1)
-
+        assert.deepEqual(read, leagueSettings)
 
 
 

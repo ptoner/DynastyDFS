@@ -30,7 +30,6 @@ contract('PlayerService', async (accounts) => {
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
         const db = await orbitdb.docs('test-player', { indexBy: 'id' })
-        await db.load()
 
         playerService = new PlayerService(db)
 
@@ -217,7 +216,58 @@ contract('PlayerService', async (accounts) => {
 
     })
 
+    //@ts-ignore
+    it('Test listBySeason', async () => {
+        
+        //Arrange
+        let player1: Player = new Player()
+        player1.id = 1
+        player1.firstName = "Pedro"
+        player1.lastName = "Alvarez"
+        player1.seasons.add(2018)
+        player1.seasons.add(2019)
 
+        let player2: Player = new Player()
+        player2.id = 2
+        player2.firstName = "Andrew"
+        player2.lastName = "McCutchen"
+        player2.seasons.add(2018)
+        player2.seasons.add(2020)
+
+        let player3: Player = new Player()
+        player3.id = 3
+        player3.firstName = "Dino"
+        player3.lastName = "Jenkins"
+        player3.seasons.add(2018)
+
+        let player4: Player = new Player()
+        player4.id = 4
+        player4.firstName = "Rube"
+        player4.lastName = "Waddell"
+        player4.seasons.add(2018)
+        player4.seasons.add(2019)
+
+
+        await playerService.create(player1)
+        await playerService.create(player2)
+        await playerService.create(player3)
+        await playerService.create(player4)
+
+
+        //Act
+        let players2018:Player[] = await playerService.listBySeason(2018)
+        let players2019:Player[] = await playerService.listBySeason(2019)
+        let players2020:Player[] = await playerService.listBySeason(2020)
+
+
+        //Assert
+        assert.equal(players2018.length, 4)
+        assert.equal(players2019.length, 2)
+        assert.equal(players2020.length, 1)
+
+
+
+    })
     
     
 

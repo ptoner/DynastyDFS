@@ -45,7 +45,7 @@ class PlayerService {
 
 
     async list(offset: number, limit: number) : Promise<Player[]> {
-        let players: Player[] = await this.db.query( (doc) => true) 
+        let players: Player[] = await this.db.query( player => true) 
 
         if (!players) return
 
@@ -59,6 +59,10 @@ class PlayerService {
 
     async listAll() : Promise<Player[]> {
         return this.db.get('all')
+    }
+
+    async listBySeason(season: number) : Promise<Player[]> {
+        return await this.db.query( player => player.seasons.has(season) )
     }
 
 

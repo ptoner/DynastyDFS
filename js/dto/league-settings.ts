@@ -1,61 +1,72 @@
 class LeagueSettings {
 
+    id: number
+    leagueName: string
+    rosterSize: number
+    totalStarters: number
+    totalBench: number
+    totalDl: number
+    positionLimits: PositionLimits[]
+    battingScoring: BattingScoring
+    pitchingScoring: PitchingScoring
+
     constructor(
-        public leagueName: string,
-        public rosterSize: Number,
-        public totalStarters: Number,
-        public totalBench: Number,
-        public totalDl: Number,
-        public positionLimits: PositionLimits[],
-        public battingScoring: BattingScoring,
-        public pitchingScoring: PitchingScoring
-    ) {}
+
+    ) { }
 }
 
 class PositionLimits {
+
+    position: string
+    starters: Number
+    maximums: Number
+
     constructor(
-        public position: string,
-        public starters: Number,
-        public maximums: Number
-    ) {}
+    ) { }
 }
 
 
 class BattingScoring {
+
+    hits: Number
+    runsScored: Number
+    singles: Number
+    doubles: Number
+    triples: Number
+    homeRuns: Number
+    rbi: Number
+    bb: Number
+    ibb: Number
+    k: Number
+    hbp: Number
+    sb: Number
+    cs: Number
+
     constructor(
-        public hits: Number,
-        public runsScored: Number,
-        public singles: Number,
-        public doubles: Number,
-        public triples: Number,
-        public homeRuns: Number,
-        public rbi: Number,
-        public bb : Number,
-        public ibb: Number,
-        public k: Number,
-        public hbp: Number,
-        public sb: Number,
-        public cs: Number
-    ) {}
+
+    ) { }
 }
 
 class PitchingScoring {
+
+    ip: Number
+    h: Number
+    er: Number
+    hr: Number
+    bb: Number
+    hbp: Number
+    k: Number
+    wp: Number
+    balks: Number
+    pickOffs: Number
+    completeGame: Number
+    shutOut: Number
+    blownSave: Number
+    holds: Number
+
     constructor(
-        public ip: Number,
-        public h: Number,
-        public er: Number,
-        public hr: Number,
-        public bb : Number,
-        public hbp: Number,
-        public k: Number,
-        public wp: Number,
-        public balks: Number,
-        public pickOffs: Number,
-        public completeGame: Number,
-        public shutOut: Number,
-        public blownSave: Number,
-        public holds: Number
-    ) {}
+
+    ) { }
 }
 
 

@@ -3,6 +3,7 @@ import { Hand, Position, GamedayFullPlayer } from "./gameday/gameday-boxscore"
 
 class Player {
 
+    // From gameday
     id: number
     fullName: string
     link:string
@@ -38,21 +39,11 @@ class Player {
     fullLFMName:string
     strikeZoneTop: number
     strikeZoneBottom: number
+    //end gameday
 
-    public positions: Position[] = []
+    positions: Position[] = []
+    seasons: Set<number> = new Set<number>()
 
-    // constructor(
-    //     private gamedayFullPlayer:GamedayFullPlayer
-    // ) {
-
-    //     if (!gamedayFullPlayer) return
-
-    //     Object.assign(this, gamedayFullPlayer)
-
-    //     this.primaryPosition = new Position(gamedayFullPlayer.primaryPosition)
-    //     this.batSide = new Hand(gamedayFullPlayer.batSide)
-    //     this.pitchHand = new Hand(gamedayFullPlayer.pitchHand)
-    // }
 }
 
 

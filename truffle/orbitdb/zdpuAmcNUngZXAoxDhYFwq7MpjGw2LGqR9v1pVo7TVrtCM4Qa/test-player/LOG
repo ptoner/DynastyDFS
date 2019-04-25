@@ -1,0 +1,5 @@
+2019/04/25-09:29:55.600155 7fcaa3fff700 Recovering log #9
+2019/04/25-09:29:55.600271 7fcaa3fff700 Level-0 table #11: started
+2019/04/25-09:29:55.604520 7fcaa3fff700 Level-0 table #11: 18823 bytes OK
+2019/04/25-09:29:55.625068 7fcaa3fff700 Delete type=0 #9
+2019/04/25-09:29:55.625114 7fcaa3fff700 Delete type=3 #7
