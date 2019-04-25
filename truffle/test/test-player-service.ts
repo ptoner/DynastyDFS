@@ -21,61 +21,40 @@ const ipfs = ipfsClient({
 //@ts-ignore
 contract('PlayerService', async (accounts) => {    
 
-
-
-    // const db = await orbitdb.docs('profile', { indexBy: 'name' })
-
-    // let profile = {
-    //     name: "Pat",
-    //     address: "here",
-    //     followers: 40
-    // }
-
-    // const hash = await db.put(profile)
-
-    // let fetched = await db.get("Pat")
-
-    // console.log(fetched)
-
-
-    let rootFolder = "/fbtest"
-    let fileService: FileService = new FileService(ipfs)
-    let playerService: PlayerService = new PlayerService(ipfs,fileService, rootFolder)
-
+    let playerService: PlayerService 
 
 
     //@ts-ignore
     before('Main setup', async () => {
-        try {
-            const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
-            console.log(orbitdb)
-            console.log('here')
-        } catch (ex) {
-            console.log(ex)
-        }
+
+        const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
+
+        const db = await orbitdb.docs('test-player', { indexBy: 'id' })
+        await db.load()
+
+        playerService = new PlayerService(db)
+
     })
 
-
-    //@ts-ignore
-    beforeEach('Setup', async () => {
+    beforeEach('Before each', async () => {
         await playerService.clearAll()
     })
 
-
     //@ts-ignore
-    it("Test create & get", async () => {
+    it("Test create & read", async () => {
 
-        //Arrange
-        let player: Player = new Player(undefined)
-        player.id = 1
+        // //Arrange
+
+        let player: Player = new Player()
+        player.id = 3
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
 
 
-        //Act
-        await playerService.create(player)
+        // //Act
+        let hash = await playerService.create(player)
 
-        //Assert
+        // // //Assert
         let fetched: Player = await playerService.read(player.id)
 
         assert.equal(fetched.firstName, "Andrew")
@@ -87,7 +66,7 @@ contract('PlayerService', async (accounts) => {
     it("Test update", async () => {
 
         //Arrange
-        let player: Player = new Player(undefined)
+        let player: Player = new Player()
         player.id = 1
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
@@ -133,7 +112,7 @@ contract('PlayerService', async (accounts) => {
     it("Test delete", async ()  => {
 
         //Arrange
-        let player: Player = new Player(undefined)
+        let player: Player = new Player()
 
         player.id = 1
         player.firstName = "Andrew"
@@ -156,17 +135,17 @@ contract('PlayerService', async (accounts) => {
     it("Test list", async () => {
 
         //Arrange
-        let player1: Player = new Player(undefined)
+        let player1: Player = new Player()
         player1.id = 1
         player1.firstName = "Andrew"
         player1.lastName = "McCutchen"
 
-        let player2: Player = new Player(undefined)
+        let player2: Player = new Player()
         player2.id = 2
         player2.firstName = "Jordy"
         player2.lastName = "Mercer"
 
-        let player3: Player = new Player(undefined)
+        let player3: Player = new Player()
         player3.id = 3
         player3.firstName = "Pedro"
         player3.lastName = "Alvarez"
@@ -197,21 +176,21 @@ contract('PlayerService', async (accounts) => {
 
 
 
-        //@ts-ignore
+    //@ts-ignore
     it("Test delete record and check list", async () => {
 
         //Arrange
-        let player1: Player = new Player(undefined)
+        let player1: Player = new Player()
         player1.id = 1
         player1.firstName = "Andrew"
         player1.lastName = "McCutchen"
 
-        let player2: Player = new Player(undefined)
+        let player2: Player = new Player()
         player2.id = 2
         player2.firstName = "Jordy"
         player2.lastName = "Mercer"
 
-        let player3: Player = new Player(undefined)
+        let player3: Player = new Player()
         player3.id = 3
         player3.firstName = "Pedro"
         player3.lastName = "Alvarez"

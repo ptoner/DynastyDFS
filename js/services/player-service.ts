@@ -1,38 +1,51 @@
 import { Player } from "../dto/player";
 import { FileService } from "./util/file-service";
+import { Hand, Position } from "../dto/gameday/gameday-boxscore";
 
 
 class PlayerService {
 
-    path: string
-
     constructor(
-        private ipfs: any,
-        private fileService: FileService,
-        private rootFolder: string
-    ) {
-        this.path = this.rootFolder + "/Players/"
-    }
+        private db: any
+    ) {}
 
     async create(player: Player): Promise<void> {
-        return this._write(player)
+
+        let existing: Player = await this.read(player.id)
+
+        if (existing) {
+            throw new Error("Player already exists")
+        }
+
+        return this.db.put(player)
+
     }
 
     async read(id: number) : Promise<Player> {
-        return this._load(id)
+        
+        let player: Player
+
+        let results : Player[] = await this.db.get(id)
+
+        if (results && results.length >0) {
+            player = this.translate(results[0])
+        }
+
+        return player
+
     }
 
     async update(player: Player): Promise<void> {
-        return this._write(player)
+        return this.db.put(player)
     }
 
     async delete(player: Player): Promise<void> {
-        return this._delete(player)
+        return this.db.del(player.id)
     }
 
+
     async list(offset: number, limit: number) : Promise<Player[]> {
-        
-        let players: Player[] = await this.listAll()
+        let players: Player[] = await this.db.query( (doc) => true) 
 
         if (!players) return
 
@@ -45,72 +58,39 @@ class PlayerService {
     }
 
     async listAll() : Promise<Player[]> {
-        let players: Player[] = await this.fileService.listFromDirectory(this.path)
-        return players
+        return this.db.get('all')
     }
 
 
     async count() : Promise<number> {
-
-        let players: Player[] = await this.listAll()
-
-        if (!players) return 0
-        return players.length
+        return (await this.listAll()).length
     }
 
     async clearAll() : Promise<void> {
+        let all = await this.db.query((player)=> player.id != null )
 
-        const fileExists: boolean = await this.fileService.fileExists(this.path)
-
-        if (fileExists) {
-            await this.ipfs.files.rm(this.path, {recursive: true})
+        for (let player of all) {
+            await this.delete(player)
         }
+
     }
 
-
-    _getFilename(playerId: number) : string {
-        let filename =  this.path + `${playerId}.json`
-        return filename
-    }
-
-
-    async _load(playerId: number) : Promise<Player> {
-
-        let loaded: Player = this._translate(
-            await this.fileService.loadFile(this._getFilename(playerId))
-        )
-
-        return loaded
-    }
-
-
-    _translate(rawJson) : Player {
+    public translate(rawJson) : Player {
 
         if (!rawJson) return
 
-        return new Player(rawJson)
+        let player: Player = new Player()
+
+        Object.assign(player, rawJson)
+
+        player.primaryPosition = new Position(rawJson.primaryPosition)
+        player.batSide = new Hand(rawJson.batSide)
+        player.pitchHand = new Hand(rawJson.pitchHand)
+
+        return player
 
     }
 
-    async _write(player: Player) : Promise<void> {
-
-        const files = [
-            this._getFilename(player.id),             //Main directory
-        ]
-
-        return this.fileService.writeToAll(player, files)
-
-    }
-
-    async _delete(player: Player) : Promise<void> {
-
-        const files = [
-            this._getFilename(player.id),             //Main directory
-        ]
-
-        return this.fileService.deleteAll(files)
-
-    }
 
 
 }
