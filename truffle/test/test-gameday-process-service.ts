@@ -7,8 +7,7 @@ import moment = require('moment')
 import { Boxscore, GamedayFullPlayer } from '../../js/dto/gameday/gameday-boxscore';
 
 import { GamedayDownloadService } from '../../js/services/gameday/gameday-download-service';
-import { HitterDayService } from '../../js/services/hitter-day-service';
-import { PitcherDayService } from '../../js/services/pitcher-day-service';
+import { PlayerDayService } from '../../js/services/player-day-service';
 import { PlayerService } from '../../js/services/player-service';
 
 const ipfsClient = require('ipfs-http-client')
@@ -26,9 +25,8 @@ contract('GamedayProcessService', async (accounts) => {
     let rootFolder = "/fbtest"
     let fileService: FileService = new FileService(ipfs)
     let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, rootFolder)
-    let hitterDayService: HitterDayService = new HitterDayService(ipfs, fileService, rootFolder)
+    let hitterDayService: PlayerDayService = new PlayerDayService(ipfs, fileService, rootFolder)
 
-    let pitcherDayService: PitcherDayService = new PitcherDayService(ipfs, fileService, rootFolder)
     let playerService: PlayerService = new PlayerService(ipfs,fileService, rootFolder)
     let gamedayProcessService: GamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, hitterDayService, pitcherDayService)
     

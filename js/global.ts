@@ -13,9 +13,8 @@ import {Dialog} from "framework7/components/dialog/dialog";
 import { FileService } from "./services/util/file-service";
 import { GamedayDownloadService } from "./services/gameday/gameday-download-service";
 import { GamedayProcessService } from "./services/gameday/gameday-process-service";
-import { HitterDayService } from "./services/hitter-day-service";
-import { PitcherDay } from "./dto/pitcher-day";
-import { PitcherDayService } from "./services/pitcher-day-service";
+import { PlayerDayService } from "./services/player-day-service";
+
 import { PlayerController } from "./controller/player-controller";
 import { PagingService } from "./services/util/paging-service";
 
@@ -36,8 +35,7 @@ export namespace Global {
     export var fileService: FileService
     export var gamedayDownloadService: GamedayDownloadService
     export var gamedayProcessService: GamedayProcessService
-    export var hitterDayService: HitterDayService
-    export var pitcherDayService: PitcherDayService
+    export var playerDayService: PlayerDayService
     export var pagingService: PagingService
 
 

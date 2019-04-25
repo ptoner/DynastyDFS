@@ -1,10 +1,10 @@
 import { GamedayDownloadService } from "./gameday-download-service";
 import { PlayerService } from "../player-service";
-import { HitterDayService } from "../hitter-day-service";
+import { HitterDayService } from "../player-day-service";
 import { PitcherDayService } from "../pitcher-day-service";
 import { Player } from "../../dto/player";
 import { Boxscore, BattingStats, PitchingStats, GamedayPlayer, GamedayFullPlayer } from "../../dto/gameday/gameday-boxscore";
-import { HitterDay } from "../../dto/hitter-day";
+import { HitterDay } from "../../dto/player-day";
 import { PitcherDay } from "../../dto/pitcher-day";
 var deepEqual = require('deep-equal')
 
