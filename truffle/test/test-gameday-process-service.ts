@@ -26,9 +26,8 @@ const ipfs = ipfsClient({
 //@ts-ignore
 contract('GamedayProcessService', async (accounts) => {
 
-    let rootFolder = "/fbtest"
-    let fileService: FileService = new FileService(ipfs)
-    let gamedayDownloadService: GamedayDownloadService = new GamedayDownloadService(fileService, rootFolder)
+
+    let gamedayDownloadService: GamedayDownloadService 
 
     let playerService: PlayerService
     let playerDayService: PlayerDayService
@@ -42,11 +41,15 @@ contract('GamedayProcessService', async (accounts) => {
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
+        const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id'})
+        const boxscoreDb = await orbitdb.docs('test-boxscore', { indexBy: 'id' })
+
         const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
         const playerDayDb = await orbitdb.docs('test-player-day', { indexBy: 'id' })
 
         playerService = new PlayerService(playerDb)
         playerDayService = new PlayerDayService(playerDayDb, playerService)
+        gamedayDownloadService = new GamedayDownloadService(scoreboardDb, boxscoreDb)
         gamedayProcessService = new GamedayProcessService(gamedayDownloadService, playerService, playerDayService)
 
     })
@@ -63,11 +66,11 @@ contract('GamedayProcessService', async (accounts) => {
        
         //Arrange
         await gamedayDownloadService.downloadGameFiles(530173)
-        let players: GamedayFullPlayer[] = await gamedayDownloadService.readPlayers(530173)
+        let boxscore: Boxscore = await gamedayDownloadService.readBoxScore(530173)
 
 
         //Act
-        await gamedayProcessService.insertNewPlayersForGame(players)
+        await gamedayProcessService.insertNewPlayersForGame(boxscore.fullPlayers)
 
         //Assert
 

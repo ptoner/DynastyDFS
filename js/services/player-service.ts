@@ -87,9 +87,15 @@ class PlayerService {
 
         Object.assign(player, rawJson)
 
-        player.primaryPosition = new Position(rawJson.primaryPosition)
-        player.batSide = new Hand(rawJson.batSide)
-        player.pitchHand = new Hand(rawJson.pitchHand)
+        player.primaryPosition = new Position()
+        Object.assign(player.primaryPosition, rawJson.primaryPosition)
+
+        player.batSide = new Hand()
+        Object.assign(player.batSide, rawJson.batSide)
+
+        player.pitchHand = new Hand()
+        Object.assign(player.pitchHand, rawJson.pitchHand)
+
 
         return player
 

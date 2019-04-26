@@ -69,10 +69,9 @@ class GamedayProcessService {
         
         try {
             let boxscore: Boxscore = await this.downloadService.readBoxScore(gamePk)
-            let players: GamedayFullPlayer[] = await this.downloadService.readPlayers(gamePk)
 
             //Update player list
-            await this.insertNewPlayersForGame(players)
+            await this.insertNewPlayersForGame(boxscore.fullPlayers)
 
 
             for (let gamedayPlayer of boxscore.getPlayers()) {

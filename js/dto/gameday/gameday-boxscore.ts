@@ -1,18 +1,45 @@
 import * as moment from 'moment';
 
+
+class GamedayScoreboard {
+    copyright: string
+    totalItems: number
+    totalEvents: number
+    totalGames: number
+    totalGamesInProgress : number
+    dates: any[]
+
+    get id():string {
+        if (this.dates && this.dates.length > 0) {
+            return this.dates[0].date
+        }
+        return null
+    }
+}
+
+
+
+
 class Boxscore {
 
-    public awayTeam: Team 
-    public homeTeam: Team 
+    id: number
+    teams: {
+        away: Team 
+        home: Team
+    }
 
-    constructor(rawJson) {
-        this.awayTeam = new Team(rawJson.teams.away)
-        this.homeTeam = new Team(rawJson.teams.home)
+    fullPlayers: GamedayFullPlayer[]
+
+    constructor() {
+        this.teams = {
+            away: undefined,
+            home: undefined
+        }
     }
 
     public getPlayers() : GamedayPlayer[] {
-        let awayPlayers = this.awayTeam.players
-        let homePlayers = this.homeTeam.players
+        let awayPlayers = this.teams.away.players
+        let homePlayers = this.teams.home.players
         return awayPlayers.concat(homePlayers)
     }
 
@@ -30,17 +57,6 @@ class Team {
     public bullpen: number[]
     public battingOrder: number[]
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-
-        this.teamInfo = new TeamInfo(rawJson.team)
-
-        this.players = []
-        for (let key in rawJson.players) {
-            this.players.push(new GamedayPlayer(rawJson.players[key]))
-        }
-
-    }
 
 }
 
@@ -65,25 +81,13 @@ class TeamInfo {
     public shortName: string 
     public record: Record 
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
 
-        this.venue = new Venue(rawJson.venue)
-        this.league = new League(rawJson.league)
-        this.division = new Division(rawJson.division)
-        this.sport = new Sport(rawJson.sport)
-        this.record = new Record(rawJson.record)
-    }
 }
 
 class Venue {
     public id: number 
     public name: string 
     public link: string 
-
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 class League {
@@ -91,29 +95,18 @@ class League {
     public name: string 
     public link: string 
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 class Division {
     public id: number 
     public name: string 
     public link: string 
-
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 class Sport {
     public id: number 
     public name: string 
     public link: string 
-
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -130,10 +123,6 @@ class Record {
     public wins: number 
     public losses: number 
     public winningPercentage: number 
-
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -175,25 +164,12 @@ class GamedayFullPlayer {
     strikeZoneTop: number
     strikeZoneBottom: number
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-
-        this.primaryPosition = new Position(rawJson.primaryPosition)
-        this.batSide = new Hand(rawJson.batSide)
-        this.pitchHand = new Hand(rawJson.pitchHand)
-    }
-
-
 }
 
 class Hand {
     public code: string 
     public description: string 
 
-
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 class GamedayPlayer {
@@ -209,22 +185,7 @@ class GamedayPlayer {
     public gameStatus: GameStatus
     public allPositions: Position[]
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
 
-        this.person = new Person(rawJson.person)
-        this.position = new Position(rawJson.position)
-        this.stats = new PlayerStats(rawJson.stats)
-        this.status = new PlayerStatus(rawJson.status)
-        this.seasonStats = new PlayerStats(rawJson.seasonStats)
-        this.gameStatus = new GameStatus(rawJson.gameStatus)
-
-        this.allPositions = []
-        for (let key in rawJson.allPositions) {
-            this.allPositions.push(new Position(rawJson.allPositions[key]))
-        }
-
-    }
 }
 
 class Person {
@@ -233,9 +194,6 @@ class Person {
     public fullName: string 
     public link: string 
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -246,9 +204,6 @@ class Position {
     public type: string 
     public abbreviation: string
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 class PlayerStatus {
@@ -256,9 +211,6 @@ class PlayerStatus {
     public code: string 
     public description: string 
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -267,11 +219,6 @@ class PlayerStats {
     public pitching: PitchingStats
     public fielding: FieldingStats
 
-    constructor(rawJson) {
-        this.batting = new BattingStats(rawJson.batting)
-        this.pitching = new PitchingStats(rawJson.pitching)
-        this.fielding = new FieldingStats(rawJson.fielding)
-    }
 }
 
 
@@ -310,10 +257,6 @@ class BattingStats {
     public ops: number 
     public stolenBasePercentage: number 
 
-
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -331,9 +274,6 @@ class FieldingStats {
     public stolenBasePercentage: number
     public pickoffs: number
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -394,9 +334,6 @@ class PitchingStats {
     public stolenBasePercentage: number 
 
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 }
 
 
@@ -407,9 +344,6 @@ class GameStatus {
     public isOnBench: boolean 
     public isSubstitute: boolean 
 
-    constructor(rawJson) {
-        Object.assign(this, rawJson)
-    }
 
 }
 
@@ -422,6 +356,7 @@ class GameStatus {
 export {
     Boxscore,
     Team,
+    TeamInfo,
     Venue,
     League,
     Division,
@@ -431,10 +366,12 @@ export {
     Person,
     Position,
     PlayerStats,
+    PlayerStatus,
     BattingStats,
     FieldingStats,
     PitchingStats,
     GameStatus,
     GamedayFullPlayer,
-    Hand
+    Hand,
+    GamedayScoreboard
 }

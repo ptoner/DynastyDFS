@@ -45,6 +45,17 @@
             ],
           },
           {
+            "name": "Test Gameday Download Service",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
+            "args": ["test", "test/test-gameday-download-service.ts"],
+            "cwd": "${workspaceRoot}/truffle",
+            "outFiles": [
+                "${workspaceRoot}/test/**/*"
+            ],
+          },
+          {
             "name": "Launch test.ts",
             "type": "node",
             "request": "launch",

@@ -65,11 +65,18 @@ class PlayerDayService {
         Object.assign(playerDay, rawJson)
         
         playerDay.player = this.playerService.translate(rawJson.player)
-        playerDay.dayBatting = new BattingStats(rawJson.dayBatting)
-        playerDay.seasonBatting = new BattingStats(rawJson.seasonBatting)
 
-        playerDay.dayPitching = new PitchingStats(rawJson.dayPitching)
-        playerDay.seasonPitching = new PitchingStats(rawJson.seasonStats)
+        playerDay.dayBatting = new BattingStats()
+        Object.assign(playerDay.dayBatting, rawJson.dayBatting)
+
+        playerDay.seasonBatting = new BattingStats()
+        Object.assign(playerDay.seasonBatting, rawJson.seasonBatting)
+
+        playerDay.dayPitching = new PitchingStats()
+        Object.assign(playerDay.dayPitching, rawJson.dayPitching)
+
+        playerDay.seasonPitching = new PitchingStats()
+        Object.assign(playerDay.seasonPitching, rawJson.seasonPitching)
 
         return playerDay
     }
