@@ -11,8 +11,7 @@ import { QueueService } from "./services/util/queue_service"
 import Framework7 from "framework7";
 import {Dialog} from "framework7/components/dialog/dialog";
 import { FileService } from "./services/util/file-service";
-import { GamedayDownloadService } from "./services/gameday/gameday-download-service";
-import { GamedayProcessService } from "./services/gameday/gameday-process-service";
+import { GamedayService } from "./services/gameday/gameday-service";
 import { PlayerDayService } from "./services/player-day-service";
 
 import { PlayerController } from "./controller/player-controller";
@@ -33,8 +32,7 @@ export namespace Global {
     export var routeService: RouteService
     export var queueService: QueueService
     export var fileService: FileService
-    export var gamedayDownloadService: GamedayDownloadService
-    export var gamedayProcessService: GamedayProcessService
+    export var GamedayService: GamedayService
     export var playerDayService: PlayerDayService
     export var pagingService: PagingService
 

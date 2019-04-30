@@ -1,85 +1,219 @@
 import { Player } from "../dto/player";
 import { PlayerDay } from "../dto/player-day";
 import * as moment from 'moment';
-import { BattingStats, PitchingStats } from "../dto/gameday/gameday-boxscore";
+import { BattingStats, PitchingStats, Boxscore, GamedayPlayer, PlayerStats, FieldingStats } from "../dto/gameday/gameday-boxscore";
 import { PlayerService } from "./player-service";
+import { GamedayService } from "./gameday/gameday-service";
+import { TranslateService } from "./util/translate-service";
+import { PlayerBoxscoreMap } from "../dto/gameday/player-boxscore-map";
+import { PlayerBoxscoreMapService } from "./gameday/playerboxscoremap-service";
+
+const _cliProgress = require('cli-progress');
+const bar = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic);
 
 class PlayerDayService {
 
+
     constructor(
         private db: any,
-        private playerService: PlayerService
+        private mapService: PlayerBoxscoreMapService,
+        private gamedayService: GamedayService,
+        private translateService: TranslateService
     ) {}
 
-    async save(playerDay: PlayerDay): Promise<void> {
-        return this.db.put(playerDay)
-    }
-
-    async read(playerId: number, date: string) : Promise<PlayerDay> {
+    async read(playerId: number, date: Date) : Promise<PlayerDay> {
         
-        let playerDay: PlayerDay
+        let playerDay: PlayerDay = new PlayerDay()
+        playerDay.setDate(date)
 
-        let results : PlayerDay[] = await this.db.get(`${playerId}-${date}`)
+        //Get player-boxscore map 
+        let map: PlayerBoxscoreMap = await this.mapService.read(date)
 
-        if (results && results.length >0) {
-            playerDay = this.translate(results[0])
+        let boxscoreIds: number[] = map.playerBoxscore[playerId]
+
+
+        //Add all the GamedayPlayer games together
+        let players: GamedayPlayer[] = []
+        for (let boxscoreId of boxscoreIds) {
+            let boxscore: Boxscore = await this.gamedayService.readBoxScore(boxscoreId)
+            for (let player of boxscore.getPlayers()) {
+                if (player.id == playerId) {
+                    players.push(this.translateService.translateGamedayPlayer(player))                    
+                }
+            }
         }
+
+        
+        playerDay.player = this._combineGamedayPlayer(players)
+
 
         return playerDay
         
     }
 
-    async delete(playerDay: PlayerDay) : Promise<void> {
-        return this.db.del(playerDay.id)
+
+    _combineGamedayPlayer(players: GamedayPlayer[]) : GamedayPlayer {
+
+        if (!players || players.length == 0) return null
+
+        let player: GamedayPlayer = new GamedayPlayer()
+        Object.assign(player, players[players.length-1]) //grab defaults from the last one
+
+        player.stats = new PlayerStats()
+
+        let batting: BattingStats[] = []
+        let pitching: PitchingStats[] = []
+        let fielding: FieldingStats[] = []
+
+        for (let thePlayer of players) {
+            batting.push(thePlayer.stats.batting)
+            pitching.push(thePlayer.stats.pitching)
+            fielding.push(thePlayer.stats.fielding)
+        }
+
+        player.stats.batting = this.addBattingStats(batting)
+        player.stats.pitching = this.addPitchingStats(pitching)
+        player.stats.fielding = this.addFieldingStats(fielding)
+
+
+        //Combine day stats
+
+        return player
+
+
+    }
+
+    addBattingStats(stats: BattingStats[]) : BattingStats {
+
+        let b: BattingStats = new BattingStats()
+
+        b = this.sum(stats, [
+            "gamesPlayed",
+            "flyOuts",
+            "groundOuts",
+            "runs",
+            "gamesPlayed",
+            "flyOuts",
+            "groundOuts",
+            "runs",
+            "doubles",
+            "triples",
+            "homeRuns",
+            "strikeOuts",
+            "baseOnBalls",
+            "intentionalWalks",
+            "hits",
+            "hitByPitch",
+            "atBats",
+            "caughtStealing",
+            "stolenBases",
+            "groundIntoDoublePlay",
+            "groundIntoTriplePlay",
+            "totalBases",
+            "rbi",
+            "leftOnBase",
+            "sacBunts",
+            "sacFlies",
+            "catchersInterference",
+            "pickoffs"
+        ])
+
+
+        return b
     }
 
 
-    async listByDate(date: Date) : Promise<PlayerDay[]> {
-        return this.db.query( playerDay => {
-            let theDate = playerDay.getDate()
-            let result = (theDate.getTime() == date.getTime() )
-            return result
+    addPitchingStats(stats: PitchingStats[]) : PitchingStats {
+
+        let p: PitchingStats = new PitchingStats()
+
+        p = this.sum(stats, [
+            "gamesPlayed",
+            "gamesStarted",
+            "groundOuts",
+            "runs",
+            "doubles",
+            "triples",
+            "homeRuns",
+            "runs",
+            "doubles",
+            "triples",
+            "homeRuns",
+            "strikeOuts",
+            "baseOnBalls",
+            "intentionalWalks",
+            "hits",
+            "atBats",
+            "caughtStealing",
+            "stolenBases",
+            "numberOfPitches",
+            "inningsPitched",
+            "wins",
+            "losses",
+            "saves",
+            "saveOpportunities",
+            "holds",
+            "blownSaves",
+            "earnedRuns",
+            "battersFaced",
+            "outs",
+            "gamesPitched",
+            "completeGames",
+            "shutouts",
+            "pitchesThrown",
+            "balls",
+            "strikes",
+            "hitBatsmen",
+            "wildPitches",
+            "pickoffs",
+            "airOuts",
+            "rbi",
+            "inheritedRunners",
+            "inheritedRunnersScored",
+            "catchersInterference",
+            "sacBunts",
+            "sacFlies"
+        ])
+
+
+        return p
+    }
+
+
+    addFieldingStats(stats: FieldingStats[]) : FieldingStats  {
+
+        let f: FieldingStats = new FieldingStats()
+
+        f = this.sum(stats, [
+            "assists",
+            "putOuts",
+            "errors",
+            "chances",
+            "fielding",
+            "caughtStealing",
+            "passedBall",
+            "stolenBases",
+            "stolenBasePercentage",
+            "pickoffs"
+            
+        ])
+
+        return f
+    }
+
+
+
+
+
+    sum(data, keys) { 
+        return data.reduce(function (a, b) {
+            for (let key of keys) {
+                a[key] = a[key] + b[key]
+            }
+            return a;
         })
-    }
+    };
 
-    async listByPlayer(playerId: number) : Promise<PlayerDay[]> {
-        return this.db.query( playerDay => playerDay.player.id == playerId )
-    }
-
-
-    async clearAll() : Promise<void> {
-        let all = await this.db.query(playerDay => playerDay.id != null )
-
-        for (let playerDay of all) {
-            await this.delete(playerDay)
-        }
-    }
-
-
-    translate(rawJson) : PlayerDay {
-
-        if (!rawJson) return
-
-        let playerDay:PlayerDay = new PlayerDay()
-        
-        Object.assign(playerDay, rawJson)
-        
-        playerDay.player = this.playerService.translate(rawJson.player)
-
-        playerDay.dayBatting = new BattingStats()
-        Object.assign(playerDay.dayBatting, rawJson.dayBatting)
-
-        playerDay.seasonBatting = new BattingStats()
-        Object.assign(playerDay.seasonBatting, rawJson.seasonBatting)
-
-        playerDay.dayPitching = new PitchingStats()
-        Object.assign(playerDay.dayPitching, rawJson.dayPitching)
-
-        playerDay.seasonPitching = new PitchingStats()
-        Object.assign(playerDay.seasonPitching, rawJson.seasonPitching)
-
-        return playerDay
-    }
 
 }
 

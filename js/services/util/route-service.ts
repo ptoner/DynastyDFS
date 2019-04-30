@@ -15,7 +15,7 @@ import { LeagueSettings } from "../../dto/league-settings";
 import { LeagueSettingsService } from "../league-settings-service";
 import { PlayerService } from "../player-service";
 import { FileService } from "./file-service";
-import { GamedayDownloadService } from "../gameday/gameday-download-service";
+import { GamedayDownloadService } from "../gameday/gameday-service";
 import { GamedayProcessService } from "../gameday/gameday-process-service";
 import { PlayerDayService } from "../player-day-service";
 import { HomeController } from "../../controller/home-controller";
@@ -108,8 +108,8 @@ class RouteService {
 
     Global.pagingService = new PagingService()
     
-    Global.hitterDayService= new HitterDayService(ipfs, Global.fileService, rootFolder)
-    Global.pitcherDayService = new PitcherDayService(ipfs, Global.fileService, rootFolder)
+    Global.playerDayService = new PlayerDayService(playerDayDb, playerService)
+
     Global.gamedayDownloadService = new GamedayDownloadService(Global.fileService, rootFolder)
 
 

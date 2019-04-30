@@ -6,6 +6,11 @@ import { FileService } from '../../js/services/util/file-service';
 import { PlayerDay } from '../../js/dto/player-day';
 import { PlayerService } from '../../js/services/player-service';
 import moment = require('moment');
+import { GamedayService } from '../../js/services/gameday/gameday-service';
+import { Boxscore, GamedayPlayer, Person } from '../../js/dto/gameday/gameday-boxscore';
+import { TranslateService } from '../../js/services/util/translate-service';
+import { PlayerBoxscoreMapService } from '../../js/services/gameday/playerboxscoremap-service';
+import { read } from 'fs';
 
 const OrbitDB = require('orbit-db')
 const ipfsClient = require('ipfs-http-client')
@@ -20,234 +25,307 @@ const ipfs = ipfsClient({
 //@ts-ignore
 contract('PlayerDayService', async (accounts) => {
 
+    let gamedayService: GamedayService
     let playerDayService: PlayerDayService
+    let playerService: PlayerService 
+    let translateService: TranslateService
+    let mapService: PlayerBoxscoreMapService
+
     
     //@ts-ignore
     before('Main setup', async () => {
-
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const db = await orbitdb.docs('test-player-day', { indexBy: 'id' })
+        const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id' })
+        const boxscoreDb = await orbitdb.docs('test-boxscore', { indexBy: 'id' })
+        const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
+        const playerDayDb = await orbitdb.docs('test-player-day', { indexBy: 'id' })
+        const playerBoxscoreMapDb = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
 
-        playerDayService = new PlayerDayService(db, new PlayerService(db))
+
+        translateService = new TranslateService()
+        playerService = new PlayerService(playerDb, translateService)
+        mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)
+
+        gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService, translateService)
+        playerDayService = new PlayerDayService(playerDayDb, mapService, gamedayService, translateService)
+
 
     })
     
     
-    //@ts-ignore
-    beforeEach('Setup', async () => {
-       await playerDayService.clearAll()
-    })
+    // //@ts-ignore
+    // beforeEach('Setup', async () => {
+    //    await playerDayService.clearAll()
+    // })
 
 
     //@ts-ignore
-    it("Test create & get", async () => {
+    it("Test read", async () => {
         //Arrange
-        let player = createTestPlayer()
-        let playerDay = createTestPlayerDay(player, "2018-05-26")
-
+        // let player = createTestPlayer()
+        // let playerDay = createTestPlayerDay(player, "2018-05-26")
+        await gamedayService.downloadDate(moment("2018-05-26").toDate())
         
         //Act
-        await playerDayService.save(playerDay)
+        let readPlayer1: PlayerDay = await playerDayService.read(112526, moment("2018-05-26").toDate())
+        let readPlayer2: PlayerDay = await playerDayService.read(282332, moment("2018-05-26").toDate())
 
         //Assert
-        
-        //Get it by player/date
-        let readPlayer = await playerDayService.read(player.id, playerDay.date)
 
-        assert.equal(readPlayer.date, playerDay.date)
-        assert.equal(readPlayer.player.id, player.id)
+        assert.equal(readPlayer1.date, "2018-05-26")
+        assert.equal(readPlayer1.player.id, 112526)
+        assert.equal(readPlayer1.player.stats.pitching != undefined, true)
+
+        assert.equal(readPlayer2.date, "2018-05-26")
+        assert.equal(readPlayer2.player.id, 282332)
+        assert.equal(readPlayer2.player.stats.pitching != undefined, true)
+
+
+        //Get it by player/date
+        // assert.equal(readPlayer.date, playerDay.date)
+        // assert.equal(readPlayer.player.id, player.id)
 
         //Check the list for this player
-        let playerList: PlayerDay[] = await playerDayService.listByPlayer(player.id)
+        // let playerList: PlayerDay[] = await playerDayService.listByPlayer(player.id)
 
 
 
-        assert.equal(playerList[0].date, playerDay.date)
-        assert.equal(playerList[0].player.id, player.id)
+        // assert.equal(playerList[0].date, playerDay.date)
+        // assert.equal(playerList[0].player.id, player.id)
 
 
         // //Check the list for this date
-        let dateList: PlayerDay[] = await playerDayService.listByDate(moment(playerDay.date).toDate())
-        assert.equal(dateList[0].date, playerDay.date)
-        assert.equal(dateList[0].player.id, player.id)
+        // let dateList: PlayerDay[] = await playerDayService.listByDate(moment(playerDay.date).toDate())
+        // assert.equal(dateList[0].date, playerDay.date)
+        // assert.equal(dateList[0].player.id, player.id)
 
 
     })
 
-    //@ts-ignore
-    it("Test update", async () => {
-
-        //Arrange
-        let playerDay = createTestPlayerDay(createTestPlayer(), "2018-05-06")
-
-        await playerDayService.save(playerDay)
-
-        let read: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
-
-        read.salary = 40
-
-        //Act
-        await playerDayService.save(read)
-
-        //Assert
-        let readAgain: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
-
-        assert.equal(readAgain.salary, 40)
-
-
-    }) 
 
 
     //@ts-ignore
-    it("Test delete", async ()  => {
+    // it("Test listByDate", async () => {
 
-        //Arrange
-        let playerDay = createTestPlayerDay(createTestPlayer(), "2018-06-06")
+    //     //Arrange
+    //     // let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-07-06")
+    //     // let playerDay2 = createTestPlayerDay(createTestPlayer2(), "2018-07-06")
+    //     // let playerDay3 = createTestPlayerDay(createTestPlayer3(), "2018-07-07")
+    //     // let playerDay4 = createTestPlayerDay(createTestPlayer4(), "2018-07-08")
 
-        await playerDayService.save(playerDay)
-
-        let read: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
-
-
-        //Act
-        await playerDayService.delete(read)
-
-        //Assert
-        let readAgain: PlayerDay = await playerDayService.read(playerDay.player.id, playerDay.date)
-
-        //Make sure we get nothing back
-        assert.equal(readAgain, undefined)
-
-        let dateList: PlayerDay[] = await playerDayService.listByDate(moment("2018-06-06").toDate())
-        assert.equal(dateList.length, 0)
-
-        let playerList: PlayerDay[] = await playerDayService.listByPlayer(playerDay.player.id)
-        assert.equal(playerList.length, 0)
-
-
-
-    })
-
-    //@ts-ignore
-    it("Test listByDate", async () => {
-
-        //Arrange
-        let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-07-06")
-        let playerDay2 = createTestPlayerDay(createTestPlayer2(), "2018-07-06")
-        let playerDay3 = createTestPlayerDay(createTestPlayer3(), "2018-07-07")
-        let playerDay4 = createTestPlayerDay(createTestPlayer4(), "2018-07-08")
-
-        await playerDayService.save(playerDay1)
-        await playerDayService.save(playerDay2)
-        await playerDayService.save(playerDay3)
-        await playerDayService.save(playerDay4)
+    //     // await playerDayService.save(playerDay1)
+    //     // await playerDayService.save(playerDay2)
+    //     // await playerDayService.save(playerDay3)
+    //     // await playerDayService.save(playerDay4)
 
         
-        //Act
-        let list1: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-06").toDate())
-        let list2: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-07").toDate())
-        let list3: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-08").toDate())
+    //     //Act
+    //     let list1: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-06").toDate())
+    //     let list2: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-07").toDate())
+    //     let list3: PlayerDay[] = await playerDayService.listByDate(moment("2018-07-08").toDate())
 
 
-        //Assert
+    //     //Assert
 
-        //Check the first day
-        assert.equal(list1[0].player.id, 1)
-        assert.equal(list1[0].date, "2018-07-06")
+    //     //Check the first day
+    //     assert.equal(list1[0].player.id, 1)
+    //     assert.equal(list1[0].date, "2018-07-06")
 
-        assert.equal(list1[1].player.id, 2)
-        assert.equal(list1[1].date, "2018-07-06")
-
-
-        //Check the second day
-        assert.equal(list2[0].player.id, 3)
-        assert.equal(list2[0].date, "2018-07-07")
+    //     assert.equal(list1[1].player.id, 2)
+    //     assert.equal(list1[1].date, "2018-07-06")
 
 
-        //Check the third day
-        assert.equal(list3[0].player.id, 4)
-        assert.equal(list3[0].date, "2018-07-08")
+    //     //Check the second day
+    //     assert.equal(list2[0].player.id, 3)
+    //     assert.equal(list2[0].date, "2018-07-07")
+
+
+    //     //Check the third day
+    //     assert.equal(list3[0].player.id, 4)
+    //     assert.equal(list3[0].date, "2018-07-08")
 
 
 
-    })
+    // })
+
+
+    // //@ts-ignore
+    // it("Test listByPlayer", async () => {
+
+    //     //Arrange
+    //     let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-08-05")
+    //     let playerDay2 = createTestPlayerDay(createTestPlayer(), "2018-08-06")
+    //     let playerDay3 = createTestPlayerDay(createTestPlayer(), "2018-08-07")
+    //     let playerDay4 = createTestPlayerDay(createTestPlayer2(), "2018-08-08")
+
+    //     await playerDayService.save(playerDay1)
+    //     await playerDayService.save(playerDay2)
+    //     await playerDayService.save(playerDay3)
+    //     await playerDayService.save(playerDay4)
+
+        
+    //     //Act
+    //     let list1: PlayerDay[] = await playerDayService.listByPlayer(playerDay1.player.id)
+    //     let list2: PlayerDay[] = await playerDayService.listByPlayer(playerDay4.player.id)
+
+
+    //     //Assert
+    //     assert.equal(list1.length, 3)
+
+    //     for (let playerDay of list1) {
+    //         assert.equal(playerDay.player.id, playerDay1.player.id)
+    //     }
+
+    //     assert.equal(list2.length, 1)
+
+    //     assert.equal(list2[0].player.id, playerDay4.player.id)
+
+
+
+    // })
 
 
     //@ts-ignore
-    it("Test listByPlayer", async () => {
-
-        //Arrange
-        let playerDay1 = createTestPlayerDay(createTestPlayer(), "2018-08-05")
-        let playerDay2 = createTestPlayerDay(createTestPlayer(), "2018-08-06")
-        let playerDay3 = createTestPlayerDay(createTestPlayer(), "2018-08-07")
-        let playerDay4 = createTestPlayerDay(createTestPlayer2(), "2018-08-08")
-
-        await playerDayService.save(playerDay1)
-        await playerDayService.save(playerDay2)
-        await playerDayService.save(playerDay3)
-        await playerDayService.save(playerDay4)
-
+    it("Test read", async () => {
         
+        //Arrange
+
+        await gamedayService.downloadDate(moment("2018-05-26").toDate())
+
+
+
         //Act
-        let list1: PlayerDay[] = await playerDayService.listByPlayer(playerDay1.player.id)
-        let list2: PlayerDay[] = await playerDayService.listByPlayer(playerDay4.player.id)
+        let adamDuvall = await playerDayService.read(594807, moment("2018-05-26").toDate())
+        let jaredHughes = await playerDayService.read(453172, moment("2018-05-26").toDate())
 
 
         //Assert
-        assert.equal(list1.length, 3)
 
-        for (let playerDay of list1) {
-            assert.equal(playerDay.player.id, playerDay1.player.id)
-        }
+        assert.deepEqual(adamDuvall.player.stats.batting, {
+            gamesPlayed: 1,
+            flyOuts: 2,
+            groundOuts: 1,
+            runs: 0,
+            doubles: 0,
+            triples: 0,
+            homeRuns: 0,
+            strikeOuts: 1,
+            baseOnBalls: 0,
+            intentionalWalks: 0,
+            hits: 0,
+            hitByPitch: 0,
+            atBats: 4,
+            caughtStealing: 0,
+            stolenBases: 0,
+            groundIntoDoublePlay: 0,
+            groundIntoTriplePlay: 0,
+            totalBases: 0,
+            rbi: 0,
+            leftOnBase: 4,
+            sacBunts: 0,
+            sacFlies: 0,
+            catchersInterference: 0,
+            pickoffs: 0
+        })
 
-        assert.equal(list2.length, 1)
 
-        assert.equal(list2[0].player.id, playerDay4.player.id)
+        assert.deepEqual(jaredHughes.player.stats.pitching, {
+            gamesPlayed: 1,
+            gamesStarted: 0,
+            groundOuts: 1,
+            runs: 0,
+            doubles: 1,
+            triples: 0,
+            homeRuns: 0,
+            strikeOuts: 0,
+            baseOnBalls: 1,
+            intentionalWalks: 0,
+            hits: 2,
+            atBats: 4,
+            caughtStealing: 0,
+            stolenBases: 0,
+            numberOfPitches: 11,
+            inningsPitched: "1.0",
+            wins: 0,
+            losses : 0,
+            saves : 1,
+            saveOpportunities : 1,
+            holds : 0,
+            blownSaves : 0,
+            earnedRuns : 0,
+            battersFaced : 5,
+            outs : 3,
+            gamesPitched : 1,
+            completeGames : 0,
+            shutouts : 0,
+            pitchesThrown : 11,
+            balls : 5,
+            strikes : 6,
+            hitBatsmen : 0,
+            wildPitches : 0,
+            pickoffs : 0,
+            airOuts : 1,
+            rbi : 0,
+            gamesFinished : 1,
+            inheritedRunners : 0,
+            inheritedRunnersScored : 0,
+            catchersInterference : 0,
+            sacBunts : 0,
+            sacFlies : 0,
+            note: "(S, 3)"
+        })
 
 
 
     })
+
 
 
 })
 
 
+
+
+
+
+
 function createTestPlayer() {
-    let player: Player = new Player()
-    player.id = 1
-    player.firstName = "Andrew"
-    player.lastName = "McCutchen"
+    let player: GamedayPlayer = new GamedayPlayer()
+    player.person = new Person()
+
+    player.person.id = 1
+    player.person.fullName = "Andrew McCutchen"
     return player
 }
 
 function createTestPlayer2() {
-    let player: Player = new Player()
-    player.id = 2
-    player.firstName = "Pedro"
-    player.lastName = "Alvarez"
+    let player: GamedayPlayer = new GamedayPlayer()
+    player.person = new Person()
+    player.person.id = 2
+    player.person.fullName = "Pedro Alvarez"
     return player
 }
 
 function createTestPlayer3() {
-    let player: Player = new Player()
-    player.id = 3
-    player.firstName = "Jordy"
-    player.lastName = "Mercer"
+    let player: GamedayPlayer = new GamedayPlayer()
+    player.person = new Person()
+    player.person.id = 3
+    player.person.fullName = "Jordy Mercer"
     return player
 }
 
 function createTestPlayer4() {
-    let player: Player = new Player()
-    player.id = 4
-    player.firstName = "Gerrit"
-    player.lastName = "Cole"
+    let player: GamedayPlayer = new GamedayPlayer()
+    player.person = new Person()
+    player.person.id = 4
+    player.person.fullName = "Gerrit Cole"
     return player
 }
 
 
 
-function createTestPlayerDay(player: Player, date: string) {
+function createTestPlayerDay(player: GamedayPlayer, date: string) {
 
     let playerDay: PlayerDay = new PlayerDay()
     playerDay.player = player 

@@ -42,7 +42,7 @@ class Player {
     //end gameday
 
     positions: Position[] = []
-    seasons: Set<number> = new Set<number>()
+    seasons: number[] = []
 
 }
 

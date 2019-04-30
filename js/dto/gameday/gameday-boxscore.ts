@@ -28,8 +28,6 @@ class Boxscore {
         home: Team
     }
 
-    fullPlayers: GamedayFullPlayer[]
-
     constructor() {
         this.teams = {
             away: undefined,
@@ -185,6 +183,9 @@ class GamedayPlayer {
     public gameStatus: GameStatus
     public allPositions: Position[]
 
+    get id():number {
+        return this.person.id
+    }
 
 }
 
@@ -224,38 +225,38 @@ class PlayerStats {
 
 class BattingStats {
 
-    public gamesPlayed: number 
-    public flyOuts: number 
-    public groundOuts: number 
-    public runs: number 
-    public doubles: number 
-    public triples: number 
-    public homeRuns: number 
-    public strikeOuts: number 
-    public baseOnBalls: number 
-    public intentionalWalks: number 
-    public hits: number 
-    public hitByPitch: number 
-    public atBats: number 
-    public caughtStealing: number 
-    public stolenBases: number 
-    public groundIntoDoublePlay: number 
-    public groundIntoTriplePlay: number 
-    public totalBases: number 
-    public rbi: number 
-    public leftOnBase: number 
-    public sacBunts: number 
-    public sacFlies: number 
-    public catchersInterference: number 
-    public pickoffs: number 
-    public note: string 
+    gamesPlayed: number 
+    flyOuts: number 
+    groundOuts: number 
+    runs: number 
+    doubles: number 
+    triples: number 
+    homeRuns: number 
+    strikeOuts: number 
+    baseOnBalls: number 
+    intentionalWalks: number 
+    hits: number 
+    hitByPitch: number 
+    atBats: number 
+    caughtStealing: number 
+    stolenBases: number 
+    groundIntoDoublePlay: number 
+    groundIntoTriplePlay: number 
+    totalBases: number 
+    rbi: number 
+    leftOnBase: number 
+    sacBunts: number 
+    sacFlies: number 
+    catchersInterference: number 
+    pickoffs: number 
+    note: string 
 
     //season only
-    public avg: number 
-    public obp: number 
-    public slg: number 
-    public ops: number 
-    public stolenBasePercentage: number 
+    avg: number 
+    obp: number 
+    slg: number 
+    ops: number 
+    stolenBasePercentage: number 
 
 }
 
@@ -263,16 +264,16 @@ class BattingStats {
 
 class FieldingStats {
 
-    public assists: number 
-    public putOuts: number 
-    public errors: number 
-    public chances: number
-    public fielding: number
-    public caughtStealing: number
-    public passedBall: number
-    public stolenBases: number
-    public stolenBasePercentage: number
-    public pickoffs: number
+    assists: number 
+    putOuts: number 
+    errors: number 
+    chances: number
+    fielding: number
+    caughtStealing: number
+    passedBall: number
+    stolenBases: number
+    stolenBasePercentage: number
+    pickoffs: number
 
 }
 
@@ -280,58 +281,58 @@ class FieldingStats {
 
 class PitchingStats {
 
-    public gamesPlayed: number 
-    public gamesStarted: number 
-    public groundOuts: number 
-    public runs: number
-    public doubles: number
-    public triples: number
-    public homeRuns: number
-    public strikeOuts: number
-    public baseOnBalls: number
-    public intentionalWalks: number
-    public hits: number
-    public atBats: number
-    public caughtStealing: number
-    public stolenBases: number
-    public numberOfPitches: number
-    public inningsPitched: string 
-    public wins: number
-    public losses: number
-    public saves: number
-    public saveOpportunities: number
-    public holds: number
-    public blownSaves: number
-    public earnedRuns: number
-    public battersFaced: number
-    public outs: number
-    public gamesPitched: number
-    public completeGames: number
-    public shutouts: number
-    public pitchesThrown: number
-    public balls: number
-    public strikes: number
-    public hitBatsmen: number
-    public wildPitches: number
-    public pickoffs: number
-    public airOuts: number
-    public rbi: number
-    public gamesFinished: number
-    public inheritedRunners: number
-    public inheritedRunnersScored: number
-    public catchersInterference: number
-    public sacBunts: number
-    public sacFlies: number
-    public note: string 
+    gamesPlayed: number 
+    gamesStarted: number 
+    groundOuts: number 
+    runs: number
+    doubles: number
+    triples: number
+    homeRuns: number
+    strikeOuts: number
+    baseOnBalls: number
+    intentionalWalks: number
+    hits: number
+    atBats: number
+    caughtStealing: number
+    stolenBases: number
+    numberOfPitches: number
+    inningsPitched: string 
+    wins: number
+    losses: number
+    saves: number
+    saveOpportunities: number
+    holds: number
+    blownSaves: number
+    earnedRuns: number
+    battersFaced: number
+    outs: number
+    gamesPitched: number
+    completeGames: number
+    shutouts: number
+    pitchesThrown: number
+    balls: number
+    strikes: number
+    hitBatsmen: number
+    wildPitches: number
+    pickoffs: number
+    airOuts: number
+    rbi: number
+    gamesFinished: number
+    inheritedRunners: number
+    inheritedRunnersScored: number
+    catchersInterference: number
+    sacBunts: number
+    sacFlies: number
+    note: string 
 
 
     //season only
-    public walksPer9Inn: number  
-    public hitsPer9Inn: number  
-    public strikeoutsPer9Inn: number 
-    public strikeoutWalkRatio: number 
-    public winPercentage: number 
-    public stolenBasePercentage: number 
+    walksPer9Inn: number  
+    hitsPer9Inn: number  
+    strikeoutsPer9Inn: number 
+    strikeoutWalkRatio: number 
+    winPercentage: number 
+    stolenBasePercentage: number 
 
 
 }

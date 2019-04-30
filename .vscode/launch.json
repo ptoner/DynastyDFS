@@ -34,22 +34,22 @@
             ],
           },
           {
-            "name": "Test Gameday Process Service",
+            "name": "Test PlayerBoxscoreMap Service",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-gameday-process-service.ts"],
+            "args": ["test", "test/test-playerboxscoremap-service.ts"],
             "cwd": "${workspaceRoot}/truffle",
             "outFiles": [
                 "${workspaceRoot}/test/**/*"
             ],
           },
           {
-            "name": "Test Gameday Download Service",
+            "name": "Test Gameday Service",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-gameday-download-service.ts"],
+            "args": ["test", "test/test-gameday-service.ts"],
             "cwd": "${workspaceRoot}/truffle",
             "outFiles": [
                 "${workspaceRoot}/test/**/*"

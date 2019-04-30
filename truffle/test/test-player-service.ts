@@ -4,6 +4,7 @@ import { Player } from '../../js/dto/player';
 import { isMainThread } from 'worker_threads';
 
 import { FileService } from '../../js/services/util/file-service';
+import { TranslateService } from '../../js/services/util/translate-service';
 
 
 const OrbitDB = require('orbit-db')
@@ -22,6 +23,7 @@ const ipfs = ipfsClient({
 contract('PlayerService', async (accounts) => {    
 
     let playerService: PlayerService 
+    let translateService: TranslateService
 
 
     //@ts-ignore
@@ -31,10 +33,12 @@ contract('PlayerService', async (accounts) => {
 
         const db = await orbitdb.docs('test-player', { indexBy: 'id' })
 
-        playerService = new PlayerService(db)
+        translateService = new TranslateService()
+        playerService = new PlayerService(db, translateService)
 
     })
 
+    //@ts-ignore
     beforeEach('Before each', async () => {
         await playerService.clearAll()
     })

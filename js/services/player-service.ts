@@ -1,12 +1,14 @@
 import { Player } from "../dto/player";
 import { FileService } from "./util/file-service";
 import { Hand, Position } from "../dto/gameday/gameday-boxscore";
+import { TranslateService } from "./util/translate-service";
 
 
 class PlayerService {
 
     constructor(
-        private db: any
+        private db: any,
+        private translateService: TranslateService
     ) {}
 
     async create(player: Player): Promise<void> {
@@ -28,7 +30,7 @@ class PlayerService {
         let results : Player[] = await this.db.get(id)
 
         if (results && results.length >0) {
-            player = this.translate(results[0])
+            player = this.translateService.translatePlayer(results[0])
         }
 
         return player
@@ -79,27 +81,6 @@ class PlayerService {
 
     }
 
-    public translate(rawJson) : Player {
-
-        if (!rawJson) return
-
-        let player: Player = new Player()
-
-        Object.assign(player, rawJson)
-
-        player.primaryPosition = new Position()
-        Object.assign(player.primaryPosition, rawJson.primaryPosition)
-
-        player.batSide = new Hand()
-        Object.assign(player.batSide, rawJson.batSide)
-
-        player.pitchHand = new Hand()
-        Object.assign(player.pitchHand, rawJson.pitchHand)
-
-
-        return player
-
-    }
 
 
 
