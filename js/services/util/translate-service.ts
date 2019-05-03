@@ -23,7 +23,12 @@ class TranslateService {
 
         Object.assign(team, rawJson)
 
-        team.teamInfo = this.translateTeamInfo(rawJson.team)
+        team.team = this.translateTeamInfo( rawJson.team )
+
+        //@ts-ignore
+        delete team.info 
+        //@ts-ignore
+        delete team.teamStats
 
         team.players = []
         for (let key in rawJson.players) {
@@ -41,20 +46,20 @@ class TranslateService {
 
         Object.assign(teamInfo, rawJson)
 
-        teamInfo.venue = new Venue()
-        Object.assign(teamInfo.venue, rawJson.venue)
+        // teamInfo.venue = new Venue()
+        // Object.assign(teamInfo.venue, rawJson.venue)
 
-        teamInfo.league = new League()
-        Object.assign(teamInfo.league, rawJson.league)
+        // teamInfo.league = new League()
+        // Object.assign(teamInfo.league, rawJson.league)
 
-        teamInfo.division = new Division()
-        Object.assign(teamInfo.division, rawJson.division)
+        // teamInfo.division = new Division()
+        // Object.assign(teamInfo.division, rawJson.division)
 
-        teamInfo.sport = new Sport()
-        Object.assign(teamInfo.sport, rawJson.sport)
+        // teamInfo.sport = new Sport()
+        // Object.assign(teamInfo.sport, rawJson.sport)
 
-        teamInfo.record = new Record()
-        Object.assign(teamInfo.record, rawJson.record)
+        // teamInfo.record = new Record()
+        // Object.assign(teamInfo.record, rawJson.record)
 
         return teamInfo
     }

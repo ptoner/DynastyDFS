@@ -10,7 +10,7 @@
     "test": "truffle test",
     "serve": "http-server ./www/ -o -c 1 -a localhost -p 8081",
     "build": "./build.sh",
-    "watch": "watchify --debug -s Fantasy -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-proposal-class-properties ] ] ./js/index.ts -p [ tsify  ] -o ./www/js/fantasybaseball.js -v"
+    "watch": "watchify --debug -s Fantasy -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-proposal-class-properties ] ] ./js/index.ts -p [ tsify --target es5 ] -o ./www/js/fantasybaseball.js -v"
   },
   "keywords": [
     "framework7",
@@ -48,7 +48,7 @@
     "framework7": "4.2.0",
     "framework7-icons": "^0.9.1",
     "gc-stats": "^1.2.1",
-    "ipfs-http-client": "30.1.3",
+    "ipfs-http-client": "30.1.4",
     "moment": "2.24.0",
     "node-gyp": "^3.8.0",
     "orbit-db": "file:../orbit-db",
@@ -61,6 +61,8 @@
     "typescript": "3.3.1",
     "uglifyify": "5.0.1",
     "watchify": "3.11.0",
-    "xml-js": "1.6.11"
+    "xml-js": "1.6.11",
+    "jsonpack": "1.1.5",
+    "lazykv": "file../orbit-db-lazykv"
   }
 }

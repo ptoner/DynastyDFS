@@ -64,7 +64,7 @@ class PlayerService {
     }
 
     async listBySeason(season: number) : Promise<Player[]> {
-        return await this.db.query( player => player.seasons.has(season) )
+        return await this.db.query( player => player.seasons.includes(season) )
     }
 
 

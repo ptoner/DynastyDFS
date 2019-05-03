@@ -8,25 +8,21 @@ import { ModelView } from "../../model-view";
 var TruffleContract = require('truffle-contract')
 
 const ipfsClient = require('ipfs-http-client')
+const OrbitDB = require('orbit-db')
 
 
 import * as RecordService from '../../../truffle/build/contracts/RecordService.json'
-import { LeagueSettings } from "../../dto/league-settings";
 import { LeagueSettingsService } from "../league-settings-service";
 import { PlayerService } from "../player-service";
-import { FileService } from "./file-service";
-import { GamedayDownloadService } from "../gameday/gameday-service";
-import { GamedayProcessService } from "../gameday/gameday-process-service";
+import { GamedayService } from "../gameday/gameday-service";
 import { PlayerDayService } from "../player-day-service";
 import { HomeController } from "../../controller/home-controller";
 import { AdminController } from "../../controller/admin-controller";
 import { PlayerController } from "../../controller/player-controller";
 import { PagingService } from "./paging-service";
+import { TranslateService } from "./translate-service";
+import { PlayerBoxscoreMapService } from "../gameday/playerboxscoremap-service";
 
-
-// console.log(HomeController)
-// console.log(AdminController)
-// console.log(PlayerController)
 
 const promisify = (inner) =>
   new Promise((resolve, reject) =>
@@ -95,33 +91,49 @@ class RouteService {
     ipfs = ipfsClient({
       host: settings.ipfsHost,
       port: settings.ipfsApiPort,
-      protocol: 'http'
+      protocol: 'http',
+      pubsub: false
     })
 
-    let rootFolder = "/fantasybaseball"
-
-    //@ts-ignore
-    Global.leagueSettingsService = new LeagueSettingsService(ipfs, rootFolder)
-    Global.fileService = new FileService(ipfs)
-    Global.playerService = new PlayerService(ipfs,Global.fileService , rootFolder)
-
+    //Temp until ipfs-http-client properly supports it
+    ipfs.pubsub = null
 
     Global.pagingService = new PagingService()
     
-    Global.playerDayService = new PlayerDayService(playerDayDb, playerService)
+    
 
-    Global.gamedayDownloadService = new GamedayDownloadService(Global.fileService, rootFolder)
+    //Create databases
+    const orbitdb = await OrbitDB.createInstance(ipfs)
 
+    const leagueSettingsDb = await orbitdb.keyvalue('leaguesettings', { overwrite: false })
+    await leagueSettingsDb.load()
+    
+    const scoreboardDb = await orbitdb.docs('scoreboard', { indexBy: 'id', overwrite: false })
+    await scoreboardDb.load()
+  
+    const boxscoreDb = await orbitdb.keyvalue('boxscore', { overwrite: false })
+    // await boxscoreDb.load()
+  
+    const playerDb = await orbitdb.docs('player', { indexBy: 'id', overwrite: false })
+    await playerDb.load()
+  
+    const playerBoxscoreMapDb = await orbitdb.docs('playerboxscoremap', { indexBy: 'id', overwrite: false })
+    await playerBoxscoreMapDb.load()
+  
 
-    Global.gamedayProcessService = new GamedayProcessService(Global.gamedayDownloadService, Global.playerService, Global.hitterDayService, Global.pitcherDayService)
+    
+    Global.leagueSettingsService = new LeagueSettingsService(leagueSettingsDb)
+    Global.translateService = new TranslateService()
+    Global.playerService = new PlayerService(playerDb, Global.translateService)
+    Global.mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, Global.translateService)
+    Global.gamedayService = new GamedayService(scoreboardDb, boxscoreDb,Global.mapService,Global.playerService, Global.translateService)
+    Global.playerDayService = new PlayerDayService(Global.mapService, Global.gamedayService, Global.translateService)
 
 
     Global.homeController = new HomeController(Global.leagueSettingsService, Global.playerService)
     Global.adminController = new AdminController(Global.leagueSettingsService, Global.queueService)
     Global.playerController = new PlayerController(Global.playerService, Global.pagingService)
 
-
-    console.log('init complete')
 
   }
 

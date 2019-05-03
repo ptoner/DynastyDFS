@@ -97,64 +97,65 @@ class AdminController {
 
     _translateFromCommandModel(commandModel: any) {
 
-        let positionLimits: PositionLimits[] = []
+        // let positionLimits: PositionLimits[] = []
 
-        positionLimits.push(new PositionLimits("C", commandModel.catcherStarters, commandModel.catcherMax))
-        positionLimits.push(new PositionLimits("1B", commandModel.firstBaseStarters, commandModel.firstBaseMax))
-        positionLimits.push(new PositionLimits("2B", commandModel.secondBaseStarters, commandModel.secondBaseMax))
-        positionLimits.push(new PositionLimits("3B", commandModel.thirdBaseStarters, commandModel.thirdBaseMax))
-        positionLimits.push(new PositionLimits("SS", commandModel.shortstopStarters, commandModel.shortstopMax))
-        positionLimits.push(new PositionLimits("IF", commandModel.infieldStarters, commandModel.infieldMax))
-        positionLimits.push(new PositionLimits("OF", commandModel.ofStarters, commandModel.ofMax))
-        positionLimits.push(new PositionLimits("UTIL", commandModel.utilStarters, commandModel.utilMax))
-        positionLimits.push(new PositionLimits("P", commandModel.pStarters, commandModel.pMax))
-        positionLimits.push(new PositionLimits("SP", commandModel.spStarters, commandModel.spMax))
-        positionLimits.push(new PositionLimits("RP", commandModel.rpStarters, commandModel.rpMax))
-
-
-        const leagueSettings = new LeagueSettings (
-            commandModel.leagueName,
-            commandModel.rosterSize,
-            commandModel.totalStarters,
-            commandModel.totalBench,
-            commandModel.totalDl,
-            positionLimits,
-            new BattingScoring(
-                commandModel.hitsBatting,
-                commandModel.runsScoredBatting,
-                commandModel.singlesBatting,
-                commandModel.doublesBatting,
-                commandModel.triplesBatting,
-                commandModel.homeRunsBatting,
-                commandModel.rbiBatting,
-                commandModel.bbBatting,
-                commandModel.iBBBatting,
-                commandModel.kBatting,
-                commandModel.hbpBatting,
-                commandModel.sbBatting,
-                commandModel.csBatting
-            ),
-            new PitchingScoring(
-                commandModel.outPitching,
-                commandModel.hitPitching,
-                commandModel.earnedRunPitching,
-                commandModel.homeRunPitching,
-                commandModel.bbPitching,
-                commandModel.hbpPitching,
-                commandModel.kPitching,
-                commandModel.wildPitchPitching,
-                commandModel.balkPitching,
-                commandModel.poPitching,
-                commandModel.cgPitching,
-                commandModel.shutoutPitching,
-                commandModel.bsPitching,
-                commandModel.holdsPitching
-            )
-        )
+        // positionLimits.push(new PositionLimits("C", commandModel.catcherStarters, commandModel.catcherMax))
+        // positionLimits.push(new PositionLimits("1B", commandModel.firstBaseStarters, commandModel.firstBaseMax))
+        // positionLimits.push(new PositionLimits("2B", commandModel.secondBaseStarters, commandModel.secondBaseMax))
+        // positionLimits.push(new PositionLimits("3B", commandModel.thirdBaseStarters, commandModel.thirdBaseMax))
+        // positionLimits.push(new PositionLimits("SS", commandModel.shortstopStarters, commandModel.shortstopMax))
+        // positionLimits.push(new PositionLimits("IF", commandModel.infieldStarters, commandModel.infieldMax))
+        // positionLimits.push(new PositionLimits("OF", commandModel.ofStarters, commandModel.ofMax))
+        // positionLimits.push(new PositionLimits("UTIL", commandModel.utilStarters, commandModel.utilMax))
+        // positionLimits.push(new PositionLimits("P", commandModel.pStarters, commandModel.pMax))
+        // positionLimits.push(new PositionLimits("SP", commandModel.spStarters, commandModel.spMax))
+        // positionLimits.push(new PositionLimits("RP", commandModel.rpStarters, commandModel.rpMax))
 
 
+        // const leagueSettings = new LeagueSettings (
+        //     commandModel.leagueName,
+        //     commandModel.rosterSize,
+        //     commandModel.totalStarters,
+        //     commandModel.totalBench,
+        //     commandModel.totalDl,
+        //     positionLimits,
+        //     new BattingScoring(
+        //         commandModel.hitsBatting,
+        //         commandModel.runsScoredBatting,
+        //         commandModel.singlesBatting,
+        //         commandModel.doublesBatting,
+        //         commandModel.triplesBatting,
+        //         commandModel.homeRunsBatting,
+        //         commandModel.rbiBatting,
+        //         commandModel.bbBatting,
+        //         commandModel.iBBBatting,
+        //         commandModel.kBatting,
+        //         commandModel.hbpBatting,
+        //         commandModel.sbBatting,
+        //         commandModel.csBatting
+        //     ),
+        //     new PitchingScoring(
+        //         commandModel.outPitching,
+        //         commandModel.hitPitching,
+        //         commandModel.earnedRunPitching,
+        //         commandModel.homeRunPitching,
+        //         commandModel.bbPitching,
+        //         commandModel.hbpPitching,
+        //         commandModel.kPitching,
+        //         commandModel.wildPitchPitching,
+        //         commandModel.balkPitching,
+        //         commandModel.poPitching,
+        //         commandModel.cgPitching,
+        //         commandModel.shutoutPitching,
+        //         commandModel.bsPitching,
+        //         commandModel.holdsPitching
+        //     )
+        // )
 
-        return leagueSettings
+
+        let settings: LeagueSettings = new LeagueSettings()
+        return settings
+
 
     }
 

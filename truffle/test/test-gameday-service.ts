@@ -38,15 +38,15 @@ contract('GamedayService', async (accounts) => {
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
         const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id' })
-        const boxscoreDb = await orbitdb.docs('test-boxscore', { indexBy: 'id' })
+        const boxscoreDb = await orbitdb.keyvalue('test-boxscore')
         const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
         const playerDayDb = await orbitdb.docs('test-player-day', { indexBy: 'id' })
         const playerBoxscoreMapDb = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
         translateService = new TranslateService()
 
         mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)
-
-        gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService, translateService)
+        playerService = new PlayerService(playerDb, translateService)
+        gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService, playerService, translateService)
 
     })    
 
@@ -141,12 +141,12 @@ contract('GamedayService', async (accounts) => {
 
         let boxscore: Boxscore = await gamedayService.readBoxScore(529913)
 
-        assert.equal(boxscore.teams.away.teamInfo.id, 112)
-        assert.equal(boxscore.teams.away.teamInfo.name, "Chicago Cubs")
-        assert.equal(boxscore.teams.away.teamInfo.link, "/api/v1/teams/112")
-        assert.equal(boxscore.teams.away.teamInfo.season, 2018)
-        assert.equal(boxscore.teams.away.teamInfo.venue.id, 17)
-        assert.equal(boxscore.teams.away.teamInfo.venue.name, "Wrigley Field")
+        assert.equal(boxscore.teams.away.team.id, 112)
+        assert.equal(boxscore.teams.away.team.name, "Chicago Cubs")
+        assert.equal(boxscore.teams.away.team.link, "/api/v1/teams/112")
+        assert.equal(boxscore.teams.away.team.season, 2018)
+        assert.equal(boxscore.teams.away.team.venue.id, 17)
+        assert.equal(boxscore.teams.away.team.venue.name, "Wrigley Field")
 
         assert.equal(boxscore.teams.away.players[0].person.id, 453344)
         assert.equal(boxscore.teams.away.players[0].person.fullName, "Brandon Morrow")

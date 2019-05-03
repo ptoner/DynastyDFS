@@ -45,7 +45,7 @@ class Boxscore {
 
 class Team {
 
-    public teamInfo: TeamInfo
+    public team: TeamInfo
 
     public players: GamedayPlayer[]
 

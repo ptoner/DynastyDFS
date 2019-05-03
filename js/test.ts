@@ -33,8 +33,8 @@ async function run() {
   const scoreboardDb = await orbitdb.docs('scoreboard', { indexBy: 'id', overwrite: false })
   await scoreboardDb.load()
 
-  const boxscoreDb = await orbitdb.docs('boxscore', { indexBy: 'id', overwrite: false })
-  await boxscoreDb.load()
+  const boxscoreDb = await orbitdb.keyvalue('boxscore', { overwrite: false })
+  // await boxscoreDb.load()
 
   const playerDb = await orbitdb.docs('player', { indexBy: 'id', overwrite: false })
   await playerDb.load()
@@ -48,12 +48,17 @@ async function run() {
   playerService = new PlayerService(playerDb, translateService)
   gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService, playerService, translateService)
 
+
+
+
+
+
   // await gamedayProcessService.processDateRange(start, end)
   // await gamedayDownloadService.downloadRange(start, end)
 
   // await gamedayService.downloadGameFiles(530173,  moment("2018-05-26").toDate())
 
-  await gamedayService.downloadSeason(2014)
+  await gamedayService.downloadSeason(2013)
   // await gamedayDownloadService.downloadSeason(2011)
   // await gamedayDownloadService.downloadSeason(2012)
   // await gamedayDownloadService.downloadSeason(2013)

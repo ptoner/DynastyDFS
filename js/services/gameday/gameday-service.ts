@@ -8,7 +8,7 @@ import { PlayerDayService } from "../player-day-service";
 import { TranslateService } from "../util/translate-service";
 import { PlayerBoxscoreMap } from "../../dto/gameday/player-boxscore-map";
 import { PlayerBoxscoreMapService } from "./playerboxscoremap-service";
-
+var jsonpack = require('jsonpack/main')
 
 const fetch = require("node-fetch");
 
@@ -59,6 +59,13 @@ class GamedayService {
             for (let game of games) {
 
                 if (game.gameType === "R") {
+
+
+                    let existingBoxscore: Boxscore = await this.readBoxScore(game.gamePk)
+                    if (existingBoxscore) {
+                        console.log(`Boxscore #${existingBoxscore.id} already exists`)
+                    }
+
                     console.log(`Downloading box score #${game.gamePk}`)
                     let boxscore: Boxscore = await this.downloadBoxScore(game.gamePk)
                     boxscores.push(boxscore)
@@ -75,8 +82,22 @@ class GamedayService {
         await this.mapService.save(map)
 
 
-        //Any of these players new?
-        for (let playerId of Object.keys(map.playerBoxscore)) {
+        //Any players need updated?
+        await this.updatePlayers(Object.keys(map.playerBoxscore), date)
+
+
+        
+    }
+
+
+    /**
+     * Inserts brand new players and updates any that haven't been tagged to play this season yet.
+     * @param playerBoxscoreMap The daily map between playerId and boxscoreId
+     * @param date 
+     */
+    async updatePlayers(playerIds:any[], date: Date) : Promise<void> {
+
+        for (let playerId of playerIds) {
 
             let existing: Player = await this.playerService.read(parseInt(playerId))
 
@@ -93,8 +114,6 @@ class GamedayService {
                 }
             }
         }
-
-        
     }
 
 
@@ -164,7 +183,11 @@ class GamedayService {
             let boxscore: Boxscore = this.translateService.translateBoxscore(rawJson)
             boxscore.id = gamePk
 
-            await this.boxscoreDb.put(boxscore)
+            let packed = jsonpack.pack(boxscore)
+
+            await this.boxscoreDb.put(gamePk, packed)
+
+            // console.log(`Boxscore size: ${JSON.stringify(packed).length}`)
 
             return boxscore
             
@@ -175,29 +198,6 @@ class GamedayService {
     }
  
     
-    // getPlayerDaysFromBoxscore(boxscore: Boxscore, date: Date) : PlayerDay[] {
-        
-    //     let playerDays: PlayerDay[] = []
-
-    //     try {
-
-    //         for (let gamedayPlayer of boxscore.getPlayers()) {
-    //             let playerDay: PlayerDay = this.translateService.translatePlayerDayFromGamedayPlayer(gamedayPlayer, date)
-
-    //             if (gamedayPlayer.status.code === "A") {
-    //                 playerDays.push(playerDay)
-    //             }
-
-                
-    //         }
-
-    //     } catch(ex) {
-    //         console.log(`Problem processing game #${boxscore.id}`, ex)
-    //     }
-
-    //     return playerDays
-    // }
-
 
 
 
@@ -227,15 +227,15 @@ class GamedayService {
 
     async readBoxScore(gamePk: number) : Promise<Boxscore> {
     
-        let results: any[] = await this.boxscoreDb.get(gamePk)
+        let results: any = await this.boxscoreDb.get(gamePk)
 
-        if (results && results.length > 0) {
-            let boxscore: Boxscore = this.translateService.translateBoxscore(results[0])
+        if (results) {
+            let unpacked = jsonpack.unpack(results)
+
+            let boxscore: Boxscore = this.translateService.translateBoxscore(unpacked)
             boxscore.id = gamePk
             return boxscore
         }
-
-        throw new Error(`Boxscore for game #${gamePk} was not found`)
 
     }
 

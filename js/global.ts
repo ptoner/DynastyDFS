@@ -16,6 +16,8 @@ import { PlayerDayService } from "./services/player-day-service";
 
 import { PlayerController } from "./controller/player-controller";
 import { PagingService } from "./services/util/paging-service";
+import { TranslateService } from "./services/util/translate-service";
+import { PlayerBoxscoreMapService } from "./services/gameday/playerboxscoremap-service";
 
 
 export namespace Global {
@@ -27,14 +29,18 @@ export namespace Global {
     export var app: Framework7
 
     export var leagueSettingsService: LeagueSettingsService
-    export var playerService: PlayerService
     export var settingsService: SettingsService
     export var routeService: RouteService
     export var queueService: QueueService
-    export var fileService: FileService
-    export var GamedayService: GamedayService
-    export var playerDayService: PlayerDayService
     export var pagingService: PagingService
+
+
+    export var translateService: TranslateService
+    export var playerService: PlayerService
+    export var mapService:PlayerBoxscoreMapService
+    export var gamedayService: GamedayService
+    export var playerDayService:PlayerDayService
+
 
 
     export function navigate(url: string) {

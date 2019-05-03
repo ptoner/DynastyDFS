@@ -15,7 +15,6 @@ class PlayerDayService {
 
 
     constructor(
-        private db: any,
         private mapService: PlayerBoxscoreMapService,
         private gamedayService: GamedayService,
         private translateService: TranslateService

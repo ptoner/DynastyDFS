@@ -37,9 +37,8 @@ contract('PlayerDayService', async (accounts) => {
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
         const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id' })
-        const boxscoreDb = await orbitdb.docs('test-boxscore', { indexBy: 'id' })
+        const boxscoreDb = await orbitdb.keyvalue('test-boxscore')
         const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
-        const playerDayDb = await orbitdb.docs('test-player-day', { indexBy: 'id' })
         const playerBoxscoreMapDb = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
 
 
@@ -47,8 +46,8 @@ contract('PlayerDayService', async (accounts) => {
         playerService = new PlayerService(playerDb, translateService)
         mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)
 
-        gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService, translateService)
-        playerDayService = new PlayerDayService(playerDayDb, mapService, gamedayService, translateService)
+        gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService,playerService, translateService)
+        playerDayService = new PlayerDayService( mapService, gamedayService, translateService)
 
 
     })
