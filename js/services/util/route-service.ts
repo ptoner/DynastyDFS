@@ -122,7 +122,7 @@ class RouteService {
     let leagueSettingsAddress = await Global.mainDb.get('leaguesettings')
     let scoreboardAddress = await Global.mainDb.get('scoreboard')
     let boxscoreAddress = await Global.mainDb.get('boxscore')
-    let playerAddress = await Global.mainDb.get('playerAddress')
+    let playerAddress = await Global.mainDb.get('player')
     let playerboxscoreAddress = await Global.mainDb.get('playerboxscoremap')
 
 

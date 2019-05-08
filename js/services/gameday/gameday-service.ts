@@ -82,7 +82,7 @@ class GamedayService {
 
 
         //Any players need updated?
-        // await this.updatePlayers(Object.keys(map.playerBoxscore), date)
+        await this.updatePlayers(Object.keys(map.playerBoxscore), date)
 
 
         
@@ -146,9 +146,11 @@ class GamedayService {
 
         let gamedayScoreboard: GamedayScoreboard = new GamedayScoreboard()
 
-        let result = await this.scoreboardDb.get(moment(date).format("YYYY-MM-DD"))
+        try {
+            let result = await this.scoreboardDb.get(moment(date).format("YYYY-MM-DD"))
+            Object.assign(gamedayScoreboard, result)
+        } catch(ex) {}
 
-        Object.assign(gamedayScoreboard, result)
 
         if (!gamedayScoreboard || !gamedayScoreboard.dates || gamedayScoreboard.dates.length == 0) return
 

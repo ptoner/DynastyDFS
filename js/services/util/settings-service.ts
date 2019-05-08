@@ -18,15 +18,23 @@ class SettingsService {
     let leaguesettings = await orbitdb.open("leaguesettings", {create: true, type: "lazykv"})
     let scoreboard = await orbitdb.open("scoreboard", {create: true, type: "lazykv"})
     let boxscore = await orbitdb.open("boxscore", {create: true, type: "lazykv"})
-    let playerAddress = await orbitdb.open("playerAddress", {create: true, type: "lazykv"})
+    let player = await orbitdb.open("player", {create: true, type: "lazykv"})
     let playerboxscoremap = await orbitdb.open("playerboxscoremap", {create: true, type: "lazykv"})
 
 
     await mainDb.put("leaguesettings", { path: leaguesettings.address.toString()})
     await mainDb.put("scoreboard",  { path: scoreboard.address.toString()})
     await mainDb.put("boxscore",  { path: boxscore.address.toString()})
-    await mainDb.put("playerAddress",  { path: playerAddress.address.toString()})
+    await mainDb.put("player",  { path: player.address.toString()})
     await mainDb.put("playerboxscoremap",  { path: playerboxscoremap.address.toString()})
+
+
+    await orbitdb._ipfs.files.mkdir(leaguesettings.address.toString(), { parents: true })
+    await orbitdb._ipfs.files.mkdir(scoreboard.address.toString(), { parents: true })
+    await orbitdb._ipfs.files.mkdir(boxscore.address.toString(), { parents: true })
+    await orbitdb._ipfs.files.mkdir(player.address.toString(), { parents: true })
+    await orbitdb._ipfs.files.mkdir(playerboxscoremap.address.toString(), { parents: true })
+
 
     //Update settings
     let settings = this.getSettings()
