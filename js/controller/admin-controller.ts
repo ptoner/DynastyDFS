@@ -5,6 +5,7 @@ import {BattingScoring, LeagueSettings, PitchingScoring, PositionLimits} from ".
 import {Dom7} from "framework7";
 import { QueueService } from '../services/util/queue_service'
 import {PromiseView} from "../promise-view"
+import { GamedayService } from '../services/gameday/gameday-service';
 
 var $$ = Dom7;
 
@@ -12,6 +13,7 @@ class AdminController {
 
     constructor(
         private leagueSettingsService: LeagueSettingsService,
+        private gamedayService: GamedayService,
         private queueService: QueueService
     ) {
 
@@ -52,6 +54,16 @@ class AdminController {
         return new ModelView(leagueSettingsCommandModel, "pages/admin/league_settings_form.html")
 
     }
+
+
+
+    async downloadSeason(season: number) : Promise<void> {
+
+        await this.gamedayService.downloadSeason(2010)
+
+    }
+
+    
 
     async saveButtonClicked(e: Event) {
 

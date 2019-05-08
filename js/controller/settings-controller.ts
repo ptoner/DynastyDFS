@@ -20,6 +20,8 @@ class SettingsController {
         $$(document).on('click', '#settings-save', function(e: Event) {
             self.saveButtonClicked(e)
         });
+
+
     }
 
     async showSettingsForm() {
@@ -29,6 +31,8 @@ class SettingsController {
         return new ModelView(settings, 'pages/settings.html')
 
     }
+
+
 
     async saveButtonClicked(e: Event) {
 

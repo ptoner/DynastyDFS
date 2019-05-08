@@ -10,6 +10,7 @@ import { PlayerService } from '../../js/services/player-service';
 import { TranslateService } from '../../js/services/util/translate-service';
 import { PlayerBoxscoreMapService } from '../../js/services/gameday/playerboxscoremap-service';
 import { PlayerBoxscoreMap } from '../../js/dto/gameday/player-boxscore-map';
+const LazyKvStore = require('orbit-db-lazykv')
 
 
 const OrbitDB = require('orbit-db')
@@ -20,6 +21,9 @@ const ipfs = ipfsClient({
     port: 5001,
     protocol: 'http'
   })
+
+
+
 
 
 
@@ -35,13 +39,16 @@ contract('GamedayService', async (accounts) => {
     //@ts-ignore
     before('Main setup', async () => {
 
+        OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id' })
-        const boxscoreDb = await orbitdb.keyvalue('test-boxscore')
-        const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
-        const playerDayDb = await orbitdb.docs('test-player-day', { indexBy: 'id' })
-        const playerBoxscoreMapDb = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
+        const scoreboardDb = await orbitdb.open("test-scoreboard", {create: true, type: "lazykv"})
+        const boxscoreDb = await orbitdb.open("test-boxscore", {create: true, type: "lazykv"})
+        const playerDb = await orbitdb.open("test-player", {create: true, type: "lazykv"})
+        const playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap", {create: true, type: "lazykv"})
+
+
         translateService = new TranslateService()
 
         mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)

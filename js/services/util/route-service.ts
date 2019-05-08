@@ -23,6 +23,9 @@ import { PagingService } from "./paging-service";
 import { TranslateService } from "./translate-service";
 import { PlayerBoxscoreMapService } from "../gameday/playerboxscoremap-service";
 
+const LazyKvStore = require('orbit-db-lazykv')
+
+
 
 const promisify = (inner) =>
   new Promise((resolve, reject) =>
@@ -39,10 +42,10 @@ class RouteService {
   constructor(private settingsService: SettingsService) { }
 
   async initialize(): Promise<void> {
-
+    console.log(3)
     if (ipfs) return
 
-    const settings = this.settingsService.getSettings()
+    let settings = this.settingsService.getSettings()
     if (!settings) {
       throw 'No settings found'
     }
@@ -100,38 +103,45 @@ class RouteService {
 
     Global.pagingService = new PagingService()
     
-    
 
-    //Create databases
-    const orbitdb = await OrbitDB.createInstance(ipfs)
+    OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+    Global.orbitdb = await OrbitDB.createInstance(ipfs)
 
-    const leagueSettingsDb = await orbitdb.keyvalue('leaguesettings', { overwrite: false })
-    await leagueSettingsDb.load()
-    
-    const scoreboardDb = await orbitdb.docs('scoreboard', { indexBy: 'id', overwrite: false })
-    await scoreboardDb.load()
-  
-    const boxscoreDb = await orbitdb.keyvalue('boxscore', { overwrite: false })
-    // await boxscoreDb.load()
-  
-    const playerDb = await orbitdb.docs('player', { indexBy: 'id', overwrite: false })
-    await playerDb.load()
-  
-    const playerBoxscoreMapDb = await orbitdb.docs('playerboxscoremap', { indexBy: 'id', overwrite: false })
-    await playerBoxscoreMapDb.load()
-  
+    if (!settings.dbAddress) {
+      await this.settingsService.generateDatabase(Global.orbitdb)
+      settings = this.settingsService.getSettings()
+    }
 
+
+    let address = OrbitDB.parseAddress(settings.dbAddress)
+
+
+    Global.mainDb = await Global.orbitdb.open(address, {type: "lazykv"})
+
+    //Look up the other database addresses
+    let leagueSettingsAddress = await Global.mainDb.get('leaguesettings')
+    let scoreboardAddress = await Global.mainDb.get('scoreboard')
+    let boxscoreAddress = await Global.mainDb.get('boxscore')
+    let playerAddress = await Global.mainDb.get('playerAddress')
+    let playerboxscoreAddress = await Global.mainDb.get('playerboxscoremap')
+
+
+    Global.leagueSettingsDb = await Global.orbitdb.open(leagueSettingsAddress.path, {type: "lazykv"})
+    Global.scoreboardDb = await Global.orbitdb.open(scoreboardAddress.path, { type: "lazykv"})
+    Global.boxscoreDb = await Global.orbitdb.open(boxscoreAddress.path, {type: "lazykv"})
+    Global.playerDb = await Global.orbitdb.open(playerAddress.path, {type: "lazykv"})
+    Global.playerBoxscoreMapDb = await Global.orbitdb.open(playerboxscoreAddress.path, {type: "lazykv"})
     
-    Global.leagueSettingsService = new LeagueSettingsService(leagueSettingsDb)
+    Global.leagueSettingsService = new LeagueSettingsService(Global.leagueSettingsDb)
     Global.translateService = new TranslateService()
-    Global.playerService = new PlayerService(playerDb, Global.translateService)
-    Global.mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, Global.translateService)
-    Global.gamedayService = new GamedayService(scoreboardDb, boxscoreDb,Global.mapService,Global.playerService, Global.translateService)
+    Global.playerService = new PlayerService(Global.playerDb, Global.translateService)
+    Global.mapService = new PlayerBoxscoreMapService(Global.playerBoxscoreMapDb, Global.translateService)
+    Global.gamedayService = new GamedayService(Global.scoreboardDb, Global.boxscoreDb,Global.mapService,Global.playerService, Global.translateService)
     Global.playerDayService = new PlayerDayService(Global.mapService, Global.gamedayService, Global.translateService)
 
 
     Global.homeController = new HomeController(Global.leagueSettingsService, Global.playerService)
-    Global.adminController = new AdminController(Global.leagueSettingsService, Global.queueService)
+    Global.adminController = new AdminController(Global.leagueSettingsService, Global.gamedayService, Global.queueService)
     Global.playerController = new PlayerController(Global.playerService, Global.pagingService)
 
 
@@ -212,6 +222,17 @@ class RouteService {
       async async(routeTo, routeFrom, resolve, reject) {
         await self.initAndResolve(resolve, function () {
           return Global.adminController.showLeagueSettingsForm()
+        })
+      }
+    })
+
+    routes.push({
+      path: '/admin/downloadSeason',
+
+      // @ts-ignore
+      async async(routeTo, routeFrom, resolve, reject) {
+        await self.initAndResolve(resolve, function () {
+          return Global.adminController.downloadSeason(+routeTo.query.season)
         })
       }
     })

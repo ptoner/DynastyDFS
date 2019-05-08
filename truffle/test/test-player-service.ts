@@ -5,6 +5,7 @@ import { isMainThread } from 'worker_threads';
 
 import { FileService } from '../../js/services/util/file-service';
 import { TranslateService } from '../../js/services/util/translate-service';
+const LazyKvStore = require('orbit-db-lazykv')
 
 
 const OrbitDB = require('orbit-db')
@@ -25,23 +26,26 @@ contract('PlayerService', async (accounts) => {
     let playerService: PlayerService 
     let translateService: TranslateService
 
+    let playerDb
 
     //@ts-ignore
     before('Main setup', async () => {
+        OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const db = await orbitdb.docs('test-player', { indexBy: 'id' })
+        playerDb = await orbitdb.open("test-player", {create: true, type: "lazykv"})
 
         translateService = new TranslateService()
-        playerService = new PlayerService(db, translateService)
+        playerService = new PlayerService(playerDb, translateService)
 
     })
 
     //@ts-ignore
-    beforeEach('Before each', async () => {
-        await playerService.clearAll()
+    beforeEach('Reset', async () => {
+        await playerDb.drop()
     })
+
 
     //@ts-ignore
     it("Test create & read", async () => {
@@ -49,7 +53,7 @@ contract('PlayerService', async (accounts) => {
         // //Arrange
 
         let player: Player = new Player()
-        player.id = 3
+        player.id = 1
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
 
@@ -70,7 +74,7 @@ contract('PlayerService', async (accounts) => {
 
         //Arrange
         let player: Player = new Player()
-        player.id = 1
+        player.id = 2
         player.firstName = "Andrew"
         player.lastName = "McCutchen"
 
@@ -112,44 +116,21 @@ contract('PlayerService', async (accounts) => {
 
 
     //@ts-ignore
-    it("Test delete", async ()  => {
-
-        //Arrange
-        let player: Player = new Player()
-
-        player.id = 1
-        player.firstName = "Andrew"
-        player.lastName = "McCutchen"
-
-        await playerService.create(player)
-
-        //Act
-        await playerService.delete(player)
-
-        //Assert
-        let read: Player = await playerService.read(player.id)
-
-        //Make sure we get nothing back
-        assert.equal(read, undefined)
-
-    })
-
-    //@ts-ignore
     it("Test list", async () => {
 
         //Arrange
         let player1: Player = new Player()
-        player1.id = 1
+        player1.id = 3
         player1.firstName = "Andrew"
         player1.lastName = "McCutchen"
 
         let player2: Player = new Player()
-        player2.id = 2
+        player2.id = 4
         player2.firstName = "Jordy"
         player2.lastName = "Mercer"
 
         let player3: Player = new Player()
-        player3.id = 3
+        player3.id = 5
         player3.firstName = "Pedro"
         player3.lastName = "Alvarez"
 
@@ -179,73 +160,33 @@ contract('PlayerService', async (accounts) => {
 
 
 
-    //@ts-ignore
-    it("Test delete record and check list", async () => {
-
-        //Arrange
-        let player1: Player = new Player()
-        player1.id = 1
-        player1.firstName = "Andrew"
-        player1.lastName = "McCutchen"
-
-        let player2: Player = new Player()
-        player2.id = 2
-        player2.firstName = "Jordy"
-        player2.lastName = "Mercer"
-
-        let player3: Player = new Player()
-        player3.id = 3
-        player3.firstName = "Pedro"
-        player3.lastName = "Alvarez"
-
-
-        await playerService.create(player1)
-        await playerService.create(player2)
-        await playerService.create(player3)
-
-
-        //Act
-        await playerService.delete(player2)
-
-
-        let list: Player[] = await playerService.list(0, 100)
-
-
-        //Assert
-        assert.equal(list[0].firstName, "Andrew")
-        assert.equal(list[0].lastName, "McCutchen")
-
-        assert.equal(list[1].firstName, "Pedro")
-        assert.equal(list[1].lastName, "Alvarez")
-
-    })
 
     //@ts-ignore
     it('Test listBySeason', async () => {
         
         //Arrange
         let player1: Player = new Player()
-        player1.id = 1
+        player1.id = 6
         player1.firstName = "Pedro"
         player1.lastName = "Alvarez"
         player1.seasons.push(2018)
         player1.seasons.push(2019)
 
         let player2: Player = new Player()
-        player2.id = 2
+        player2.id = 7
         player2.firstName = "Andrew"
         player2.lastName = "McCutchen"
         player2.seasons.push(2018)
         player2.seasons.push(2020)
 
         let player3: Player = new Player()
-        player3.id = 3
+        player3.id = 8
         player3.firstName = "Dino"
         player3.lastName = "Jenkins"
         player3.seasons.push(2018)
 
         let player4: Player = new Player()
-        player4.id = 4
+        player4.id = 9
         player4.firstName = "Rube"
         player4.lastName = "Waddell"
         player4.seasons.push(2018)

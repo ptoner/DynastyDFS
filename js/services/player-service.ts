@@ -19,7 +19,7 @@ class PlayerService {
             throw new Error("Player already exists")
         }
 
-        return this.db.put(player)
+        return this.db.put(player.id, player)
 
     }
 
@@ -27,10 +27,10 @@ class PlayerService {
         
         let player: Player
 
-        let results : Player[] = await this.db.get(id)
+        let result = await this.db.get(id)
 
-        if (results && results.length >0) {
-            player = this.translateService.translatePlayer(results[0])
+        if (result) {
+            player = this.translateService.translatePlayer(result)
         }
 
         return player
@@ -38,18 +38,15 @@ class PlayerService {
     }
 
     async update(player: Player): Promise<void> {
-        return this.db.put(player)
-    }
-
-    async delete(player: Player): Promise<void> {
-        return this.db.del(player.id)
+        return this.db.put(player.id, player)
     }
 
 
     async list(offset: number, limit: number) : Promise<Player[]> {
-        let players: Player[] = await this.db.query( player => true) 
+        let players = await this.db.index
+        // let players: Player[] = await this.db.index
 
-        if (!players) return
+        if (!players) return []
 
         if (!offset) offset=0
         if (!limit) limit = players.length
@@ -60,27 +57,18 @@ class PlayerService {
     }
 
     async listAll() : Promise<Player[]> {
-        return this.db.get('all')
+        return this.db.index
     }
 
     async listBySeason(season: number) : Promise<Player[]> {
-        return await this.db.query( player => player.seasons.includes(season) )
+        // return await this.db.query( player => player.seasons.includes(season) )
+        return []
     }
 
 
     async count() : Promise<number> {
         return (await this.listAll()).length
     }
-
-    async clearAll() : Promise<void> {
-        let all = await this.db.query((player)=> player.id != null )
-
-        for (let player of all) {
-            await this.delete(player)
-        }
-
-    }
-
 
 
 

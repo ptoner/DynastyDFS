@@ -8,7 +8,6 @@ import { PlayerDayService } from "../player-day-service";
 import { TranslateService } from "../util/translate-service";
 import { PlayerBoxscoreMap } from "../../dto/gameday/player-boxscore-map";
 import { PlayerBoxscoreMapService } from "./playerboxscoremap-service";
-var jsonpack = require('jsonpack/main')
 
 const fetch = require("node-fetch");
 
@@ -79,11 +78,11 @@ class GamedayService {
         //Save the player-boxscore map
         console.log(`Creating player/boxscore map for #${date}`)
         let map: PlayerBoxscoreMap = this.translateService.translatePlayerBoxscoreMap(date, boxscores)
-        await this.mapService.save(map)
+        await this.mapService.put(date, map)
 
 
         //Any players need updated?
-        await this.updatePlayers(Object.keys(map.playerBoxscore), date)
+        // await this.updatePlayers(Object.keys(map.playerBoxscore), date)
 
 
         
@@ -131,7 +130,7 @@ class GamedayService {
             Object.assign(gamedayScoreboard, rawJson)
 
             if (gamedayScoreboard.id) {
-                await this.scoreboardDb.put(gamedayScoreboard)
+                await this.scoreboardDb.put(moment(date).format("YYYY-MM-DD"), gamedayScoreboard)
             } else {
                 console.log(`No data found for ${date}`)
             }
@@ -147,12 +146,9 @@ class GamedayService {
 
         let gamedayScoreboard: GamedayScoreboard = new GamedayScoreboard()
 
-        let results : GamedayScoreboard[] = await this.scoreboardDb.get(moment(date).format("YYYY-MM-DD"))
+        let result = await this.scoreboardDb.get(moment(date).format("YYYY-MM-DD"))
 
-        if (results && results.length >0) {
-            Object.assign(gamedayScoreboard, results[0])
-        }
-
+        Object.assign(gamedayScoreboard, result)
 
         if (!gamedayScoreboard || !gamedayScoreboard.dates || gamedayScoreboard.dates.length == 0) return
 
@@ -183,9 +179,8 @@ class GamedayService {
             let boxscore: Boxscore = this.translateService.translateBoxscore(rawJson)
             boxscore.id = gamePk
 
-            let packed = jsonpack.pack(boxscore)
 
-            await this.boxscoreDb.put(gamePk, packed)
+            await this.boxscoreDb.put(gamePk, boxscore)
 
             // console.log(`Boxscore size: ${JSON.stringify(packed).length}`)
 
@@ -230,9 +225,7 @@ class GamedayService {
         let results: any = await this.boxscoreDb.get(gamePk)
 
         if (results) {
-            let unpacked = jsonpack.unpack(results)
-
-            let boxscore: Boxscore = this.translateService.translateBoxscore(unpacked)
+            let boxscore: Boxscore = this.translateService.translateBoxscore(results)
             boxscore.id = gamePk
             return boxscore
         }

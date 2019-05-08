@@ -11,20 +11,19 @@ class PlayerBoxscoreMapService {
     ) {}
 
 
-    async save(map: PlayerBoxscoreMap): Promise<void> {
-
-        return this.db.put(map)
+    async put(date: Date, map: PlayerBoxscoreMap): Promise<void> {
+        return this.db.put(moment(date).format("YYYY-MM-DD"), map)
     }
 
     async read(date: Date) : Promise<PlayerBoxscoreMap> {
         
         let map: PlayerBoxscoreMap
 
-        let results : any = await this.db.get(moment(date).format("YYYY-MM-DD"))
+        let result = await this.db.get(moment(date).format("YYYY-MM-DD"))
 
-        if (results && results.length >0) {
-            map = this.translateService.translatePlayerBoxscoreMapRaw(results[0])
-        }
+        if (result == null) return null
+
+        map = this.translateService.translatePlayerBoxscoreMapRaw(result)
 
         return map
 

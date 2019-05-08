@@ -11,6 +11,8 @@ import { Boxscore, GamedayPlayer, Person } from '../../js/dto/gameday/gameday-bo
 import { TranslateService } from '../../js/services/util/translate-service';
 import { PlayerBoxscoreMapService } from '../../js/services/gameday/playerboxscoremap-service';
 import { read } from 'fs';
+const LazyKvStore = require('orbit-db-lazykv')
+
 
 const OrbitDB = require('orbit-db')
 const ipfsClient = require('ipfs-http-client')
@@ -34,10 +36,13 @@ contract('PlayerDayService', async (accounts) => {
     
     //@ts-ignore
     before('Main setup', async () => {
+        OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+
+
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
         const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id' })
-        const boxscoreDb = await orbitdb.keyvalue('test-boxscore')
+        const boxscoreDb = await orbitdb.open("test-boxscore", {create: true, type: "lazykv"})
         const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
         const playerBoxscoreMapDb = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
 
@@ -52,18 +57,12 @@ contract('PlayerDayService', async (accounts) => {
 
     })
     
-    
-    // //@ts-ignore
-    // beforeEach('Setup', async () => {
-    //    await playerDayService.clearAll()
-    // })
 
 
     //@ts-ignore
     it("Test read", async () => {
+
         //Arrange
-        // let player = createTestPlayer()
-        // let playerDay = createTestPlayerDay(player, "2018-05-26")
         await gamedayService.downloadDate(moment("2018-05-26").toDate())
         
         //Act

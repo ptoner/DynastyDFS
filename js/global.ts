@@ -41,6 +41,14 @@ export namespace Global {
     export var gamedayService: GamedayService
     export var playerDayService:PlayerDayService
 
+    //Orbit-db tables
+    export var orbitdb
+    export var mainDb
+    export var leagueSettingsDb
+    export var scoreboardDb
+    export var boxscoreDb
+    export var playerDb
+    export var playerBoxscoreMapDb
 
 
     export function navigate(url: string) {

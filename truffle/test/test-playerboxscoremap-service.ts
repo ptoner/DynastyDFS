@@ -6,7 +6,9 @@ import { TranslateService } from '../../js/services/util/translate-service';
 import { PlayerBoxscoreMapService } from '../../js/services/gameday/playerboxscoremap-service';
 
 import { PlayerBoxscoreMap } from '../../js/dto/gameday/player-boxscore-map';
-import moment = require('moment');
+import moment = require('moment')
+const LazyKvStore = require('orbit-db-lazykv')
+
 
 
 const OrbitDB = require('orbit-db')
@@ -31,12 +33,14 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
     //@ts-ignore
     before('Main setup', async () => {
 
+        OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const db = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
+        const playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap", {create: true, type: "lazykv"})
 
         translateService = new TranslateService()
-        mapService = new PlayerBoxscoreMapService(db, translateService)
+        mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)
 
     })
 
@@ -54,7 +58,7 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
 
 
         // //Act
-        let hash = await mapService.save(map)
+        let hash = await mapService.put(map.getDate(), map)
 
         //Assert
         let fetched: PlayerBoxscoreMap = await mapService.read(moment("2018-05-26").toDate())
@@ -78,7 +82,7 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
         map.playerBoxscore[5] = 2500
         map.playerBoxscore[40]= 1000
 
-        await mapService.save(map)
+        await mapService.put(map.getDate(), map)
 
         //Verify it's right
         let fetched: PlayerBoxscoreMap = await mapService.read(moment("2018-05-26").toDate())
@@ -94,7 +98,8 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
         fetched.playerBoxscore[50] = 9000
 
         //Act
-        await mapService.save(fetched)
+        let hash = await mapService.put(fetched.getDate(), fetched)
+
 
         //Assert
         let read: PlayerBoxscoreMap = await mapService.read(moment("2018-05-26").toDate())
@@ -110,10 +115,11 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
     it("Test read: invalid key", async ()  => {
 
         //Act
-        let map: PlayerBoxscoreMap = await mapService.read(moment("2018-05-27").toDate())
+        let date: Date = moment("2040-05-27").toDate()
+        let map: PlayerBoxscoreMap = await mapService.read(date)
 
         //Assert
-        assert.equal(map == undefined, true)
+        assert.equal(map == null, true)
 
     })
 
