@@ -21,12 +21,13 @@ class PlayerController {
     ) {
     }
 
-    async list(offset: number): Promise<ModelView> {
+    async list(offset2: number): Promise<ModelView> {
         
         let limit: number = 100
+        let offset: number = 0
 
         let players: Player[] = await this.playerService.list(offset, limit)
-
+        
         let page: PagingViewModel = this.pagingService.buildPagingViewModel(offset, limit, await this.playerService.count())
 
         return new ModelView({

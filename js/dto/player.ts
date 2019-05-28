@@ -3,6 +3,9 @@ import { Hand, Position, GamedayFullPlayer } from "./gameday/gameday-boxscore"
 
 class Player {
 
+    constructor() {
+    }
+
     // From gameday
     id: number
     fullName: string
@@ -40,9 +43,6 @@ class Player {
     strikeZoneTop: number
     strikeZoneBottom: number
     //end gameday
-
-    positions: Position[] = []
-    seasons: number[] = []
 
 }
 

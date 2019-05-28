@@ -42,7 +42,7 @@ class RouteService {
   constructor(private settingsService: SettingsService) { }
 
   async initialize(): Promise<void> {
-    console.log(3)
+    
     if (ipfs) return
 
     let settings = this.settingsService.getSettings()

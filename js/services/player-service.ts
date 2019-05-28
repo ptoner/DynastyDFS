@@ -41,30 +41,17 @@ class PlayerService {
         return this.db.put(player.id, player)
     }
 
-
     async list(offset: number, limit: number) : Promise<Player[]> {
-        let players = await this.db.index
-        // let players: Player[] = await this.db.index
-
-        if (!players) return []
-
-        if (!offset) offset=0
-        if (!limit) limit = players.length
-
-        let list = players.slice(offset, offset + limit) 
-        
-        return list
+        return this.db.list(offset, limit)
     }
 
     async listAll() : Promise<Player[]> {
         return this.db.index
     }
 
-    async listBySeason(season: number) : Promise<Player[]> {
-        // return await this.db.query( player => player.seasons.includes(season) )
-        return []
+    async listByLastName(lastName: string, limit: number, offset: number) : Promise<Player[]> {
+        return this.db.getByIndex("lastName", lastName, limit, offset)
     }
-
 
     async count() : Promise<number> {
         return (await this.listAll()).length

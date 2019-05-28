@@ -59,7 +59,7 @@ class AdminController {
 
     async downloadSeason(season: number) : Promise<void> {
 
-        await this.gamedayService.downloadSeason(2010)
+        await this.gamedayService.downloadSeason(season)
 
     }
 

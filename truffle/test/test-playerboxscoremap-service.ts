@@ -33,7 +33,9 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
     //@ts-ignore
     before('Main setup', async () => {
 
-        OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+        if (!OrbitDB.isValidType(LazyKvStore.type)) {
+            OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+        }
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 

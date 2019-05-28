@@ -36,15 +36,18 @@ contract('PlayerDayService', async (accounts) => {
     
     //@ts-ignore
     before('Main setup', async () => {
-        OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+
+        if (!OrbitDB.isValidType(LazyKvStore.type)) {
+            OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+        }
 
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const scoreboardDb = await orbitdb.docs('test-scoreboard', { indexBy: 'id' })
-        const boxscoreDb = await orbitdb.open("test-boxscore", {create: true, type: "lazykv"})
-        const playerDb = await orbitdb.docs('test-player', { indexBy: 'id' })
-        const playerBoxscoreMapDb = await orbitdb.docs('test-playerboxscoremap', { indexBy: 'id' })
+        const scoreboardDb = await orbitdb.open("test-scoreboard2", {create: true, type: "lazykv"})
+        const boxscoreDb = await orbitdb.open("test-boxscore2", {create: true, type: "lazykv"})
+        const playerDb = await orbitdb.open("test-player2", {create: true, type: "lazykv"})
+        const playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap2", {create: true, type: "lazykv"})
 
 
         translateService = new TranslateService()

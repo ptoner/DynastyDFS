@@ -58,13 +58,10 @@ class GamedayService {
             for (let game of games) {
 
                 if (game.gameType === "R") {
-
-
-                    let existingBoxscore: Boxscore = await this.readBoxScore(game.gamePk)
-                    if (existingBoxscore) {
-                        console.log(`Boxscore #${existingBoxscore.id} already exists`)
-                    }
-
+                    // let existingBoxscore: Boxscore = await this.readBoxScore(game.gamePk)
+                    // if (existingBoxscore) {
+                    //     console.log(`Boxscore #${existingBoxscore.id} already exists`)
+                    // }
                     console.log(`Downloading box score #${game.gamePk}`)
                     let boxscore: Boxscore = await this.downloadBoxScore(game.gamePk)
                     boxscores.push(boxscore)
@@ -80,6 +77,7 @@ class GamedayService {
         let map: PlayerBoxscoreMap = this.translateService.translatePlayerBoxscoreMap(date, boxscores)
         await this.mapService.put(date, map)
 
+        
 
         //Any players need updated?
         await this.updatePlayers(Object.keys(map.playerBoxscore), date)
@@ -102,17 +100,27 @@ class GamedayService {
 
             if (!existing) {
                 let player: Player = await this.downloadPlayer(parseInt(playerId))
-                player.seasons.push(date.getFullYear())
+
                 console.log(`Creating player ${player.fullName}`)
+
+                player.season = []
+                player.season.push(date.getFullYear())
+                
                 await this.playerService.create(player)
+            
             } else {
-                if (!existing.seasons.includes(date.getFullYear())) {
-                    existing.seasons.push(date.getFullYear())
+                if (!existing.season.includes(date.getFullYear())) {
+            
                     console.log(`Adding year ${date.getFullYear()} to ${existing.fullName}`)
+
+                    existing.season.push(date.getFullYear())
+            
                     await this.playerService.update(existing)
+            
                 }
             }
         }
+
     }
 
 
