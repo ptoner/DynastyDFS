@@ -44,6 +44,9 @@ class Player {
     strikeZoneBottom: number
     //end gameday
 
+
+    
+
 }
 
 

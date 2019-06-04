@@ -2,6 +2,9 @@ import * as moment from 'moment';
 
 
 class GamedayScoreboard {
+
+    date: string 
+
     copyright: string
     totalItems: number
     totalEvents: number

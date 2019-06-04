@@ -11,6 +11,10 @@ class PlayerService {
         private translateService: TranslateService
     ) {}
 
+    async commit() {
+        return this.db.commit() 
+    }
+
     async create(player: Player): Promise<void> {
 
         let existing: Player = await this.read(player.id)
@@ -54,7 +58,7 @@ class PlayerService {
     }
 
     async count() : Promise<number> {
-        return (await this.listAll()).length
+        return this.db.count()
     }
 
 

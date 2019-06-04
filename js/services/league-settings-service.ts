@@ -9,16 +9,7 @@ class LeagueSettingsService {
     ) {}
 
     async getLeagueSettings(): Promise<LeagueSettings> {
-
-        let leagueSettings: LeagueSettings
-
-        let results : LeagueSettings[] = await this.db.get(1)
-
-        if (results && results.length >0) {
-            leagueSettings = this.translate(results[0])
-        }
-
-        return leagueSettings
+        return await this.db.get(1)
     }
 
     async update(leagueSettings: LeagueSettings) : Promise<void> {
@@ -26,7 +17,7 @@ class LeagueSettingsService {
         //Make sure the ID is 1
         leagueSettings.id = 1
 
-        return this.db.put(leagueSettings)
+        return this.db.put(leagueSettings.id, leagueSettings)
     }
 
     public translate(rawJson) : LeagueSettings {

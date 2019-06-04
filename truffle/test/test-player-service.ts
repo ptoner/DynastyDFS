@@ -1,6 +1,10 @@
 import { PlayerService } from '../../js/services/player-service';
 import assert = require('assert');
 import { Player } from '../../js/dto/player';
+import { PlayerSchema } from '../../js/schemas'
+
+//@ts-ignore
+PlayerSchema.create = true
 
 import { TranslateService } from '../../js/services/util/translate-service';
 const TableStore = require('orbit-db-tablestore')
@@ -24,10 +28,12 @@ contract('PlayerService', async (accounts) => {
     let playerService: PlayerService 
     let translateService: TranslateService
 
-    let playerDb
 
     //@ts-ignore
     before('Main setup', async () => {
+
+        //@ts-ignore
+        PlayerSchema.create = true
 
         if (!OrbitDB.isValidType(TableStore.type)) {
             OrbitDB.addDatabaseType(TableStore.type, TableStore)
@@ -35,18 +41,8 @@ contract('PlayerService', async (accounts) => {
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        playerDb = await orbitdb.open("test-player3", {
-            create: true, 
-            type: "table",
-            indexes: [
-                {column: "id", primary: true, unique: true},
-                {column: "firstName", unique: false},
-                {column: "lastName", unique: false},
-            ]
-        })
-
-        await playerDb.load()
-
+        let playerDb = await orbitdb.open("test-player", {create: true, type: 'table'})
+        await playerDb.createIndexes(PlayerSchema.indexes)
 
         translateService = new TranslateService()
         playerService = new PlayerService(playerDb, translateService)
@@ -206,12 +202,35 @@ contract('PlayerService', async (accounts) => {
         player4.firstName = "Rube"
         player4.lastName = "Waddell"
 
+        let player5: Player = new Player()
+        player5.id = 10
+        player5.firstName = "Rube"
+        player5.lastName = "Waddell"
+
+        let player6: Player = new Player()
+        player6.id = 11
+        player6.firstName = "Rube"
+        player6.lastName = "Waddell"
+
+        let player7: Player = new Player()
+        player7.id = 12
+        player7.firstName = "Rube"
+        player7.lastName = "Waddell"
+
+        let player8: Player = new Player()
+        player8.id = 13
+        player8.firstName = "Rube"
+        player8.lastName = "Waddell"
+
         
         await playerService.create(player1)
         await playerService.create(player2)
         await playerService.create(player3)
         await playerService.create(player4)
-
+        await playerService.create(player5)
+        await playerService.create(player6)
+        await playerService.create(player7)
+        await playerService.create(player8)
 
         //Act
         let jenkins:Player[] = await playerService.listByLastName("Jenkins", 100, 0)
@@ -222,7 +241,7 @@ contract('PlayerService', async (accounts) => {
         //Assert
         assert.equal(jenkins.length, 1)
         assert.equal(cutch.length, 2)
-        assert.equal(waddell.length, 1)
+        assert.equal(waddell.length, 5)
 
 
 

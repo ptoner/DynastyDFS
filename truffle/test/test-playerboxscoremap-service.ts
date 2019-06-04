@@ -3,11 +3,12 @@ import { isMainThread } from 'worker_threads';
 
 import { FileService } from '../../js/services/util/file-service';
 import { TranslateService } from '../../js/services/util/translate-service';
-import { PlayerBoxscoreMapService } from '../../js/services/gameday/playerboxscoremap-service';
+import { PlayerBoxscoreMapService } from '../../js/services/playerboxscoremap-service';
 
 import { PlayerBoxscoreMap } from '../../js/dto/gameday/player-boxscore-map';
 import moment = require('moment')
-const LazyKvStore = require('orbit-db-lazykv')
+import { PlayerBoxscoreMapSchema } from '../../js/schemas';
+const TableStore = require('orbit-db-tablestore')
 
 
 
@@ -33,13 +34,17 @@ contract('PlayerBoxscoreMapService', async (accounts) => {
     //@ts-ignore
     before('Main setup', async () => {
 
-        if (!OrbitDB.isValidType(LazyKvStore.type)) {
-            OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+        //@ts-ignore
+        PlayerBoxscoreMapSchema.create = true
+
+        if (!OrbitDB.isValidType(TableStore.type)) {
+            OrbitDB.addDatabaseType(TableStore.type, TableStore)
         }
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap", {create: true, type: "lazykv"})
+        let playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap", {create: true, type: 'table'})
+        await playerBoxscoreMapDb.createIndexes(PlayerBoxscoreMapSchema.indexes)
 
         translateService = new TranslateService()
         mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)

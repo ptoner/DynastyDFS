@@ -2,7 +2,9 @@ import { LeagueSettingsService } from '../../js/services/league-settings-service
 import { LeagueSettings, PositionLimits, BattingScoring, PitchingScoring } from '../../js/dto/league-settings';
 import assert = require('assert');
 import { platform } from 'os';
+import { LeagueSettingsSchema } from '../../js/schemas';
 
+const TableStore = require('orbit-db-tablestore')
 const OrbitDB = require('orbit-db')
 const ipfsClient = require('ipfs-http-client')
 
@@ -24,9 +26,16 @@ contract('LeagueSettingsService', async (accounts) => {
     //@ts-ignore
     before('Main setup', async () => {
 
+        if (!OrbitDB.isValidType(TableStore.type)) {
+            OrbitDB.addDatabaseType(TableStore.type, TableStore)
+        }
+
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const db = await orbitdb.docs('test-league-settings', { indexBy: 'id' })
+
+        let db = await orbitdb.open("test-league-settings", {create: true, type: 'table'})
+        await db.createIndexes(LeagueSettingsSchema.indexes)
+
 
         leagueSettingsService = new LeagueSettingsService(db)
 

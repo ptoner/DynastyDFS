@@ -23,7 +23,9 @@ import { PagingService } from "./paging-service";
 import { TranslateService } from "./translate-service";
 import { PlayerBoxscoreMapService } from "../gameday/playerboxscoremap-service";
 
-const LazyKvStore = require('orbit-db-lazykv')
+import { PlayerSchema, PlayerBoxscoreMapSchema, BoxscoreSchema, ScoreboardSchema, LeagueSettingsSchema, MainSchema } from '../../schemas'
+
+const TableStore = require('orbit-db-tablestore')
 
 
 
@@ -104,7 +106,7 @@ class RouteService {
     Global.pagingService = new PagingService()
     
 
-    OrbitDB.addDatabaseType(LazyKvStore.type, LazyKvStore)
+    OrbitDB.addDatabaseType(TableStore.type, TableStore)
     Global.orbitdb = await OrbitDB.createInstance(ipfs)
 
     if (!settings.dbAddress) {
@@ -116,7 +118,8 @@ class RouteService {
     let address = OrbitDB.parseAddress(settings.dbAddress)
 
 
-    Global.mainDb = await Global.orbitdb.open(address, {type: "lazykv"})
+    Global.mainDb = await Global.orbitdb.open(address, MainSchema)
+    await Global.mainDb.load()
 
     //Look up the other database addresses
     let leagueSettingsAddress = await Global.mainDb.get('leaguesettings')
@@ -126,11 +129,20 @@ class RouteService {
     let playerboxscoreAddress = await Global.mainDb.get('playerboxscoremap')
 
 
-    Global.leagueSettingsDb = await Global.orbitdb.open(leagueSettingsAddress.path, {type: "lazykv"})
-    Global.scoreboardDb = await Global.orbitdb.open(scoreboardAddress.path, { type: "lazykv"})
-    Global.boxscoreDb = await Global.orbitdb.open(boxscoreAddress.path, {type: "lazykv"})
-    Global.playerDb = await Global.orbitdb.open(playerAddress.path, {type: "lazykv"})
-    Global.playerBoxscoreMapDb = await Global.orbitdb.open(playerboxscoreAddress.path, {type: "lazykv"})
+    Global.leagueSettingsDb = await Global.orbitdb.open(leagueSettingsAddress.path, LeagueSettingsSchema)
+    await Global.leagueSettingsDb.load()
+
+    Global.scoreboardDb = await Global.orbitdb.open(scoreboardAddress.path, ScoreboardSchema)
+    await Global.scoreboardDb.load()
+
+    Global.boxscoreDb = await Global.orbitdb.open(boxscoreAddress.path, BoxscoreSchema)
+    await Global.boxscoreDb.load()
+
+    Global.playerDb = await Global.orbitdb.open(playerAddress.path, PlayerSchema)
+    await Global.playerDb.load()
+
+    Global.playerBoxscoreMapDb = await Global.orbitdb.open(playerboxscoreAddress.path, PlayerBoxscoreMapSchema)
+    await Global.playerBoxscoreMapDb.load()
     
     Global.leagueSettingsService = new LeagueSettingsService(Global.leagueSettingsDb)
     Global.translateService = new TranslateService()

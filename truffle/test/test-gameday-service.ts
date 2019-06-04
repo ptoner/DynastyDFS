@@ -1,4 +1,4 @@
-import { GamedayService } from '../../js/services/gameday/gameday-service'
+import { GamedayService } from '../../js/services/gameday-service'
 import assert = require('assert')
 import { isMainThread } from 'worker_threads'
 import { FileService } from '../../js/services/util/file-service'
@@ -8,8 +8,13 @@ import { Player } from '../../js/dto/player';
 import { PlayerDayService } from '../../js/services/player-day-service';
 import { PlayerService } from '../../js/services/player-service';
 import { TranslateService } from '../../js/services/util/translate-service';
-import { PlayerBoxscoreMapService } from '../../js/services/gameday/playerboxscoremap-service';
+import { PlayerBoxscoreMapService } from '../../js/services/playerboxscoremap-service';
 import { PlayerBoxscoreMap } from '../../js/dto/gameday/player-boxscore-map';
+import { PlayerSchema, PlayerBoxscoreMapSchema, BoxscoreSchema, ScoreboardSchema } from '../../js/schemas'
+
+
+
+
 const TableStore = require('orbit-db-tablestore')
 
 
@@ -37,20 +42,41 @@ contract('GamedayService', async (accounts) => {
     before('Main setup', async () => {
 
 
+        //@ts-ignore
+        PlayerSchema.create = true
+        //@ts-ignore
+        PlayerBoxscoreMapSchema.create = true
+        //@ts-ignore
+        BoxscoreSchema.create = true
+        //@ts-ignore
+        ScoreboardSchema.create = true
+
+        
+
         if (!OrbitDB.isValidType(TableStore.type)) {
             OrbitDB.addDatabaseType(TableStore.type, TableStore)
         }
 
         const orbitdb = await OrbitDB.createInstance(ipfs, "./orbitdb");
 
-        const scoreboardDb = await orbitdb.open("test-scoreboard", {create: true, type: "table"})
-        const boxscoreDb = await orbitdb.open("test-boxscore", {create: true, type: "table"})
-        const playerDb = await orbitdb.open("test-player", {create: true, type: "table"})
-        const playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap", {create: true, type: "table"})
+
+    
+        let scoreboardDb = await orbitdb.open("test-scoreboard", {create: true, type: 'table'})
+        await scoreboardDb.createIndexes(ScoreboardSchema.indexes)
+    
+        let boxscoreDb = await orbitdb.open("test-boxscore", {create: true, type: 'table'})
+        await boxscoreDb.createIndexes(BoxscoreSchema.indexes)
+    
+        let playerDb = await orbitdb.open("test-player", {create: true, type: 'table'})
+        await playerDb.createIndexes(PlayerSchema.indexes)
+    
+        let playerBoxscoreMapDb = await orbitdb.open("test-playerboxscoremap", {create: true, type: 'table'})
+        await playerBoxscoreMapDb.createIndexes(PlayerBoxscoreMapSchema.indexes)
 
 
+
+        
         translateService = new TranslateService()
-
         mapService = new PlayerBoxscoreMapService(playerBoxscoreMapDb, translateService)
         playerService = new PlayerService(playerDb, translateService)
         gamedayService = new GamedayService(scoreboardDb, boxscoreDb, mapService, playerService, translateService)

@@ -40,6 +40,12 @@ class SettingsController {
             //Get the form data
             let settingsData = Global.app.form.convertToData('#settings-form')
 
+            //@ts-ignore
+            if (settingsData.dbAddress == "") {
+                //@ts-ignore
+                delete settingsData.dbAddress
+            }
+
             Global.navigate("/?reinit=true");
 
             await this.queueService.queuePromiseView(

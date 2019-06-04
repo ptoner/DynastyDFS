@@ -3,10 +3,10 @@ import { PlayerDay } from "../dto/player-day";
 import * as moment from 'moment';
 import { BattingStats, PitchingStats, Boxscore, GamedayPlayer, PlayerStats, FieldingStats } from "../dto/gameday/gameday-boxscore";
 import { PlayerService } from "./player-service";
-import { GamedayService } from "./gameday/gameday-service";
+import { GamedayService } from "./gameday-service";
 import { TranslateService } from "./util/translate-service";
 import { PlayerBoxscoreMap } from "../dto/gameday/player-boxscore-map";
-import { PlayerBoxscoreMapService } from "./gameday/playerboxscoremap-service";
+import { PlayerBoxscoreMapService } from "./playerboxscoremap-service";
 
 const _cliProgress = require('cli-progress');
 const bar = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic);
