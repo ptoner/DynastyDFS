@@ -1,0 +1,6 @@
+require('./test-gameday-service')
+require('./test-league-settings-service')
+require('./test-paging-service')
+require('./test-player-day-service')
+require('./test-player-service')
+require('./test-playerboxscoremap-service')

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <!--
@@ -13,11 +14,12 @@
     -->
     <!-- Required meta tags-->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- Color theme for statusbar -->
     <meta name="theme-color" content="#2196f3">
-    <title>League of Legends</title>
+    <title>Dynasty DFS</title>
 
     <link rel="stylesheet" href="css/framework7.bundle.min.css">
     <link rel="stylesheet" href="css/icons.css">
@@ -27,27 +29,63 @@
 
 
 </head>
+
 <body>
 
-<div id="app">
-    <!-- Status bar overlay for fullscreen mode-->
-    <div class="statusbar"></div>
+    <div id="app">
+        <!-- Status bar overlay for fullscreen mode-->
+        <div class="statusbar"></div>
 
-    <!-- Your main view, should have "view-main" class -->
-    <div class="view view-main">
+        <div class="panel panel-left panel-reveal panel-init" data-visible-breakpoint="1024">
+            <div class="list">
+                <ul>
+                    <li>
+                        <a href="/" class="item-link item-content panel-close">
+                            <div class="item-inner">League</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/myteam" class="item-link item-content panel-close">
+                            <div class="item-inner">My Team</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/players" class="item-link item-content panel-close">
+                            <div class="item-inner">Players</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/scoreboard" class="item-link item-content panel-close">
+                            <div class="item-inner">Scoreboard</div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/standings" class="item-link item-content panel-close">
+                            <div class="item-inner">Standings</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+        </div>
+
+
+
     </div>
 
 
 
-</div>
+    <script src="js/fantasybaseball.js"></script>
 
-
-
-<script src="js/fantasybaseball.js"></script>
-
-<script type="module">
-    new Fantasy()
-</script>
+    <script type="module">
+        Fantasy()
+    </script>
 
 </body>
+
 </html>
