@@ -10,6 +10,7 @@ class TeamService {
 
     async loadStoreForWallet(walletAddress:string) {
         this.store = await this.schemaService.getTeamStoreByWalletAddress(walletAddress)
+        await this.store.load()
     }
 
     async get(id: string) : Promise<Team> {
@@ -25,8 +26,11 @@ class TeamService {
         return this.store.put(team)
     }
 
-    async list(offset: number, limit: number) : Promise<Team[]> {
+    async delete(_id:string): Promise<void> {
+        return this.store.del(_id)
+    }
 
+    async list(offset: number, limit: number) : Promise<Team[]> {
         let teams:Team[] = this.store.query( (team) => true  )
 
         return teams.slice(offset).slice(0, limit)

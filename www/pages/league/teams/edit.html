@@ -4,37 +4,42 @@
     <div class="page" data-name="league-teams-edit">
         <div class="page-content">
 
-            <form id="edit-teams-form">
-                <div class="data-table">
-                    <table>
-                        <thead>
-                            <th>Owner</th>
-                            <th>Team Name</th>
-                        </thead>
-                        <tbody>
-                            {{#each teams}}
-                            <tr>
-                                <td class="label-cell">
-                                    <input type="text" name="_id" value="{{_id}}" />
-                                </td>
-                                <td>
-                                    <input type="text" name="name" value="{{name}}" />
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+            {{#if team}}
+
+            <form class="block list" id="edit-teams-form">
+                    <input type="hidden" name="previousId" value="{{team._id}}">
+
+                <ul>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Owner</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="_id" placeholder="Owner address" value="{{team._id}}" required validate>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Team Name</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="name" placeholder="Team name" value="{{team.name}}" required validate/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+
+                <div class="block large-40 float-right">
+                    <a href="#" class="button button-fill display-inline-block" id="save-changes-button">Save</a>
                 </div>
-
-
-                <div class="block large-33 float-right">
-                    <button class="button button-fill"  type="submit">Save Changes</button>
-                </div>
-
-
 
             </form>
-
+            {{/if}}
 
 
 
@@ -53,9 +58,9 @@
             tabMounted: async function (e, page) {
                 const self = this
 
-                this.$$('#edit-teams-form').on('submit', async function (e) {
+                this.$$('#save-changes-button').on('click', async function (e) {
                     e.preventDefault()
-                    await window['teamsController'].saveButtonClicked(e)
+                    await window['teamsController'].saveEditButtonClicked(e)
                 })
 
             }

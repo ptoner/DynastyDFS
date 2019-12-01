@@ -53,9 +53,14 @@ const routes = function (baseurl) {
                     async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamsController.showIndex())
                 },
                 {
-                    path: '/league/teams/edit',
+                    path: '/league/teams/create',
+                    id: 'teams-create',
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamsController.showCreate())
+                },
+                {
+                    path: '/league/teams/edit/:id',
                     id: 'teams-edit',
-                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamsController.showTeamsEdit())
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamsController.showTeamsEdit(routeTo.params.id))
                 },
 
             ]

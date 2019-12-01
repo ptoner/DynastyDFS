@@ -92,7 +92,7 @@ export namespace Global {
         
         Global.leagueController = new LeagueController(Global.leagueSettingsService, Global.uiService)
         Global.settingsController = new SettingsController(Global.leagueSettingsService, Global.uiService)
-        Global.teamsController = new TeamsController(Global.teamService)
+        Global.teamsController = new TeamsController(Global.teamService, Global.uiService)
 
         Global.teamController = new TeamController()
         Global.playerController = new PlayerController(Global.playerService, Global.pagingService)

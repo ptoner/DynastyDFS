@@ -1,0 +1,65 @@
+<!--suppress JSAnnotator -->
+<template>
+
+    <div class="page" data-name="league-teams-create">
+        <div class="page-content">
+
+            <form class="block list no-hairlines" id="create-teams-form">
+
+                <ul>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Owner</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="_id" placeholder="Owner address" required validate>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Team Name</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="name" placeholder="Team name" required validate/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+
+                <div class="block large-40 float-right">
+                    <a href="#" class="button button-fill display-inline-block" id="save-changes-button">Create Team</a>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+
+</template>
+
+
+
+
+<script>
+
+    return {
+        on: {
+            tabMounted: async function (e, page) {
+                const self = this
+
+                this.$$('#save-changes-button').on('click', async function (e) {
+                    e.preventDefault()
+                    await window['teamsController'].saveCreateButtonClicked(e)
+                })
+
+            }
+        }
+    }
+
+</script>
