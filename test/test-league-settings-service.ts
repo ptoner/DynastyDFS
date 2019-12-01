@@ -57,66 +57,73 @@ describe('LeagueSettingsService', async (accounts) => {
     it("Test update & getLeagueSettings: Save default league settings", async () => {
 
         //Arrange
-        const positionLimits: PositionLimits[] = []
-
-        let pLimit = new PositionLimits()
-        pLimit.position = "P"
-        pLimit.starters = 1
-        pLimit.maximums = 1
-
-        positionLimits.push(pLimit)
-
-        let battingScoring = new BattingScoring()
-        battingScoring.hits = 1
-        battingScoring.runsScored = 1
-        battingScoring.singles = 1
-        battingScoring.doubles = 1
-        battingScoring.triples = 1
-        battingScoring.homeRuns = 1
-        battingScoring.rbi = 1
-        battingScoring.bb = 1
-        battingScoring.ibb = 1
-        battingScoring.k = 1
-        battingScoring.hbp = 1
-        battingScoring.sb = 1
-        battingScoring.cs = 1
+        const positionLimits: PositionLimits[] = [
+            {
+                position: "P",
+                starters: 1,
+                maximums: 1
+            }
+        ]
 
 
-        let pitchingScoring = new PitchingScoring()
-
-        pitchingScoring.ip = 1
-        pitchingScoring.h = 1
-        pitchingScoring.er = 1
-        pitchingScoring.hr = 1
-        pitchingScoring.bb = 1
-        pitchingScoring.hbp = 1
-        pitchingScoring.k = 1
-        pitchingScoring.wp = 1
-        pitchingScoring.balks = 1
-        pitchingScoring.pickOffs = 1
-        pitchingScoring.completeGame = 1
-        pitchingScoring.shutOut = 1
-        pitchingScoring.blownSave = 1
-        pitchingScoring.holds = 1
+        let battingScoring = {
+            hits: 1,
+            runsScored:  1,
+            singles:  1,
+            doubles:  1,
+            triples: 1,
+            homeRuns:  1,
+            rbi:  1,
+            bb:  1,
+            ibb:  1,
+            k: 1,
+            hbp:  1,
+            sb:  1,
+            cs:  1
+        }
 
 
 
-        const leagueSettings: LeagueSettings = new LeagueSettings()
-        leagueSettings.leagueName = "League of Legends"
-        leagueSettings.rosterSize = 32
-        leagueSettings.totalStarters =  21
-        leagueSettings.totalBench = 11
-        leagueSettings.totalDl = 4
-        leagueSettings.pitchingScoring = pitchingScoring
-        leagueSettings.battingScoring = battingScoring
-        leagueSettings.positionLimits = positionLimits
+        let pitchingScoring = {
+            ip: 1,
+            h: 1,
+            er: 1,
+            hr: 1,
+            bb: 1,
+            hbp: 1,
+            k : 1,
+            wp: 1,
+            balks: 1,
+            pickOffs: 1,
+            completeGame: 1,
+            shutOut: 1,
+            blownSave: 1,
+            holds: 1
+        }
+
+
+
+
+
+        const leagueSettings: LeagueSettings = {
+            owner: address.toString(),
+            leagueName: "League of Legends",
+            rosterSize: 32,
+            totalStarters: 21,
+            totalBench:11,
+            totalDl: 4,
+            pitchingScoring: pitchingScoring,
+            battingScoring: battingScoring,
+            positionLimits: positionLimits
+        }
+
 
         
         //Act
         await leagueSettingsService.update(leagueSettings)
         
         //Assert
-        let read: LeagueSettings = await leagueSettingsService.getLeagueSettings()
+        let read: LeagueSettings = await leagueSettingsService.getLeagueSettings(address.toString())
 
         assert.deepEqual(read, leagueSettings)
 
@@ -129,7 +136,7 @@ describe('LeagueSettingsService', async (accounts) => {
     it("Test update when already exists", async () => {
 
         //Arrange
-        let leagueSettings: LeagueSettings = await leagueSettingsService.getLeagueSettings()
+        let leagueSettings: LeagueSettings = await leagueSettingsService.getLeagueSettings(address.toString())
 
         leagueSettings.leagueName = "A Different League"
 
@@ -137,7 +144,7 @@ describe('LeagueSettingsService', async (accounts) => {
         await leagueSettingsService.update(leagueSettings)
 
         //Assert
-        let read: LeagueSettings = await leagueSettingsService.getLeagueSettings()
+        let read: LeagueSettings = await leagueSettingsService.getLeagueSettings(address.toString())
 
         assert.equal(read.leagueName, "A Different League")
 

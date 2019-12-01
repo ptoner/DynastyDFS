@@ -21,7 +21,9 @@ class PlayerController {
     }
 
     async showIndex(): Promise<ModelView> {
-        return new ModelView({}, 'pages/player/index.html')
+        return new ModelView(async () => {
+
+        }, 'pages/player/index.html')
 
     }
 

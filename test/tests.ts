@@ -1,3 +1,4 @@
+require('./test-team-service')
 require('./test-gameday-service')
 require('./test-league-settings-service')
 require('./test-paging-service')

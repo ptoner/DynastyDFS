@@ -103,6 +103,14 @@ class SchemaService {
         })
     }
 
+    async getTeamStoreByWalletAddress(walletAddress: string) {
+        let schema:Schema = await this.getSchemaByWalletAddress(walletAddress)
+        return Global.orbitDb.open(schema.teamStore, {
+            fetchEntryTimeout: 5000
+        })
+    }
+
+
     async getPlayerBoxscoreMapStoreByWalletAddress(walletAddress: string) {
         let schema:Schema = await this.getSchemaByWalletAddress(walletAddress)
         return Global.orbitDb.open(schema.playerBoxscoreMapStore, {
@@ -126,6 +134,7 @@ class SchemaService {
         let playerStore = await this.generatePlayerStore(orbitdb, accessController, walletAddress)
         let playerBoxscoreMapStore = await this.generatePlayerBoxscoreMapStore(orbitdb, accessController, walletAddress)
         let leagueSettingsStore = await this.generateLeagueSettingsStore(orbitdb, accessController, walletAddress)
+        let teamStore = await this.generateTeamStore(orbitdb, accessController, walletAddress)
 
 
         let schema:Schema = {
@@ -134,7 +143,8 @@ class SchemaService {
             boxscoreStore: boxscoreStore.address.toString(),
             playerStore: playerStore.address.toString(),
             playerBoxscoreMapStore: playerBoxscoreMapStore.address.toString(),
-            leagueSettingsStore: leagueSettingsStore.address.toString()
+            leagueSettingsStore: leagueSettingsStore.address.toString(),
+            teamStore: teamStore.address.toString()
         }
 
         await mainStore.put({
@@ -181,6 +191,12 @@ class SchemaService {
         if (!schema.leagueSettingsStore) {
             let leagueSettingsStore = await this.generateLeagueSettingsStore(Global.orbitDb, Global.orbitAccessControl, walletAddress)
             schema.playerBoxscoreMapStore = leagueSettingsStore.address.toString()
+            schemaUpdated = true
+        }
+
+        if (!schema.teamStore) {
+            let teamStore = await this.generateTeamStore(Global.orbitDb, Global.orbitAccessControl, walletAddress)
+            schema.teamStore = teamStore.address.toString()
             schemaUpdated = true
         }
 
@@ -252,6 +268,20 @@ class SchemaService {
         })
 
     }
+
+
+    async generateTeamStore(orbitdb, accessController, walletAddress:string) {
+
+        console.log("Generating team store")
+
+        return orbitdb.docstore(`team-${walletAddress.toLowerCase()}`, {
+          create: true,
+          accessController: accessController
+        })
+
+    }
+
+
 
     async generatePlayerBoxscoreMapStore(orbitdb, accessController, walletAddress:string) {
 

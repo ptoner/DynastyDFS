@@ -19,6 +19,9 @@ module.exports = async () => {
 
     //Detect page root
 
+
+
+
     // @ts-ignore
     const rootUrl = new URL(window.location)
 
@@ -28,7 +31,7 @@ module.exports = async () => {
         root: '#app', // App root element
         id: 'fantasybaseball', // App bundle ID
         name: 'Fantasy Baseball', // App name
-        theme: 'aurora', // Automatic theme detection
+        theme: 'auto', // Automatic theme detection
 
         // App routes
         routes: routes(rootUrl.pathname)
@@ -36,10 +39,9 @@ module.exports = async () => {
     })
 
 
-    // Init/Create main view
-    const mainView = Global.app.views.create('.view-main', {
-        pushState: true
-    });
+    Global.uiService = new UiService(Global.app)
+    Global.queueService = new QueueService(Global.uiService)
+
 
 
     try {
@@ -48,10 +50,16 @@ module.exports = async () => {
         console.log(ex)
     }
 
-    Global.uiService = new UiService(Global.app)
-    Global.queueService = new QueueService(Global.uiService)
 
     Global.initializeControllers()
+
+
+    // Init/Create main view
+    const mainView = Global.app.views.create('.view-main', {
+        pushState: true
+    });
+
+
 
 
     window['Global'] = Global

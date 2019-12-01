@@ -1,0 +1,576 @@
+<!--suppress JSAnnotator -->
+<template>
+
+    <div class="page" data-name="league-settings-form">
+
+        <div class="page-content">
+
+            <div class="row">
+                <div class="col-100 large-50 center margin-top">
+                    <form id="league-settings-form">
+
+                        <input type="hidden" name="id" value="{{id}}" />
+                        <input type="hidden" name="owner" value="{{owner}}" />
+
+
+                        <div class="block-title">Basic Settings</div>
+                        <div class="list no-hairlines">
+                            <ul>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">League Name</div>
+                                            <div class="item-input-wrap">
+                                                <input type="text" name="leagueName" value="{{leagueName}}"
+                                                    placeholder="Enter a league name" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="block-title">Roster Limits</div>
+                        <div class="list no-hairlines">
+                            <ul>
+
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Roster Size</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="rosterSize" value="{{rosterSize}}"
+                                                    placeholder="Enter max roster size" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Total Starters</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="totalStarters" value="{{totalStarters}}"
+                                                    placeholder="Enter total starters" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Total Bench</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="totalBench" value="{{totalBench}}"
+                                                    placeholder="Enter total bench" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Total DL</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="totalDl" value="{{totalDl}}"
+                                                    placeholder="Enter total DL players" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+
+                        <div class="block-title">Position Limits</div>
+                        <div class="list no-hairlines">
+                            <ul>
+                                <li class="item-content">
+                                    <div class="item-inner item-cell">
+                                        <div class="item-row">
+                                            <div class="item-cell"><strong>Position</strong></div>
+                                            <div class="item-cell"><strong>Starters</strong></div>
+                                            <div class="item-cell"><strong>Maximum</strong></div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">C</div>
+                                            <div class="item-cell">
+                                                <input type="number" name="catcherStarters" value="{{catcherStarters}}"
+                                                    required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="catcherMax" value="{{catcherMax}}" required
+                                                    validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">1B</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="firstBaseStarters"
+                                                    value="{{firstBaseStarters}}" required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="firstBaseMax" value="{{firstBaseMax}}"
+                                                    required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">2B</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="secondBaseStarters"
+                                                    value="{{secondBaseStarters}}" required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="secondBaseMax" value="{{secondBaseMax}}"
+                                                    required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">3B</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="thirdBaseStarters"
+                                                    value="{{thirdBaseStarters}}" required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="thirdBaseMax" value="{{thirdBaseMax}}"
+                                                    required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">SS</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="shortstopStarters"
+                                                    value="{{shortstopStarters}}" required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="shortstopMax" value="{{shortstopMax}}"
+                                                    required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">IF</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="infieldStarters" value="{{infieldStarters}}"
+                                                    required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="infieldMax" value="{{infieldMax}}" required
+                                                    validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">OF</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="ofStarters" value="{{ofStarters}}" required
+                                                    validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="ofMax" value="{{ofMax}}" required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">UTIL</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="utilStarters" value="{{utilStarters}}"
+                                                    required validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="utilMax" value="{{utilMax}}" required
+                                                    validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">SP</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="spStarters" value="{{spStarters}}" required
+                                                    validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="spMax" value="{{spMax}}" required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">RP</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="rpStarters" value="{{rpStarters}}" required
+                                                    validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="rpMax" value="{{rpMax}}" required validate />
+                                            </div>
+                                        </div>
+                                        <div class="item-row">
+                                            <div class="item-cell">P</div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="pStarters" value="{{pStarters}}" required
+                                                    validate />
+                                            </div>
+                                            <div class="item-cell item-input-wrap">
+                                                <input type="number" name="pMax" value="{{pMax}}" required validate />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div class="block-title">Batting Scoring</div>
+                        <div class="list no-hairlines">
+                            <ul>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Hits</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="hitsBatting" value="{{hitsBatting}}"
+                                                    placeholder="Hits" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Runs Scored</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="runsScoredBatting"
+                                                    value="{{runsScoredBatting}}" placeholder="Runs Scored" required
+                                                    validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Singles</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="singlesBatting" value="{{singlesBatting}}"
+                                                    placeholder="Singles" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Doubles</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="doublesBatting" value="{{doublesBatting}}"
+                                                    placeholder="Doubles" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Triples</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="triplesBatting" value="{{triplesBatting}}"
+                                                    placeholder="Triples" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Home Runs</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="homeRunsBatting" value="{{homeRunsBatting}}"
+                                                    placeholder="Home Runs" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">RBI</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="rbiBatting" value="{{rbiBatting}}"
+                                                    placeholder="RBI" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Walks</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="bbBatting" value="{{bbBatting}}"
+                                                    placeholder="Walks" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Intentional Walk</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="iBBBatting" value="{{iBBBatting}}"
+                                                    placeholder="Intentional Walk" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Strikeout</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="kBatting" value="{{kBatting}}"
+                                                    placeholder="Strikeout" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Hit By Pitch</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="hbpBatting" value="{{hbpBatting}}"
+                                                    placeholder="HBP" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Stolen Base</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="sbBatting" value="{{sbBatting}}"
+                                                    placeholder="SB" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Caught Stealing</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="csBatting" value="{{csBatting}}"
+                                                    placeholder="CS" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="block-title-medium">Pitching Scoring</div>
+                        <div class="list no-hairlines">
+                            <ul>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Per Out</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="outPitching" value="{{outPitching}}"
+                                                    placeholder="Per Out" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Hit</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="hitPitching" value="{{hitPitching}}"
+                                                    placeholder="Hit" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Earned Run</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="earnedRunPitching"
+                                                    value="{{earnedRunPitching}}" placeholder="Earned Run" required
+                                                    validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Home Run</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="homeRunPitching" value="{{homeRunPitching}}"
+                                                    placeholder="Home Run" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">BB</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="bbPitching" value="{{bbPitching}}"
+                                                    placeholder="BB" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">HBP</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="hbpPitching" value="{{hbpPitching}}"
+                                                    placeholder="HBP" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Strikeout</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="kPitching" value="{{kPitching}}"
+                                                    placeholder="Strikeout" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Wild Pitch</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="wildPitchPitching"
+                                                    value="{{wildPitchPitching}}" placeholder="Wild Pitch" required
+                                                    validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Balk</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="balkPitching" value="{{balkPitching}}"
+                                                    placeholder="Balk" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Pickoff</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="poPitching" value="{{poPitching}}"
+                                                    placeholder="Pickoff" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Complete Game</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="cgPitching" value="{{cgPitching}}"
+                                                    placeholder="Complete Game" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Shut Out</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="shutoutPitching" value="{{shutoutPitching}}"
+                                                    placeholder="Shut Out" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Blown Save</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="bsPitching" value="{{bsPitching}}"
+                                                    placeholder="Blown Save" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Holds</div>
+                                            <div class="item-input-wrap">
+                                                <input type="number" name="holdsPitching" value="{{holdsPitching}}"
+                                                    placeholder="Holds" required validate />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-66"></div>
+                            <div class="col-33">
+                                <button class="button button-fill" id="save-league-settings" type="submit">Save
+                                    Settings</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+
+
+
+<script>
+
+    return {
+        on: {
+            tabMounted: async function (e, page) {
+                const self = this
+
+                this.$$('#league-settings-form').on('submit', async function (e) {
+                    e.preventDefault()
+                    await window['settingsController'].saveButtonClicked(e)
+                })
+            }
+        }
+    }
+
+</script>

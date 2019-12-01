@@ -1,10 +1,10 @@
 import { Global } from "./global"
-import Web from 'large-web'
+import Web, { ModelView } from 'large-web'
 
 const routes = function (baseurl) {
 
     const homeRoute = async function (routeTo, routeFrom, resolve, reject) {
-    
+
         let promise
         if (Global.isElectron) {
 
@@ -27,73 +27,70 @@ const routes = function (baseurl) {
 
     }
 
-    let routes = []
+    let routes = [
+        {
+            path: '/',
+            url: 'pages/league/tabs.html',
+            tabs: [
+                {
+                    path: '/',
+                    id: 'home',
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.leagueController.showIndex())
+                },
+                {
+                    path: '/league/settings',
+                    id: 'settings',
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.settingsController.showSettings())
+                },
+                {
+                    path: '/league/settings/edit',
+                    id: 'settings-edit',
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.settingsController.showSettingsForm())
+                },
+                {
+                    path: '/league/teams',
+                    id: 'teams',
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamsController.showIndex())
+                },
+                {
+                    path: '/league/teams/edit',
+                    id: 'teams-edit',
+                    async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamsController.showTeamsEdit())
+                },
 
-    if (baseurl != '/') {
-        routes.push({
-            path: baseurl,
-            async: homeRoute
-        })
-    }
-
-    routes.push({
-        path: '/',
-        async: homeRoute
-    })
-
-
-    routes.push({
-        path: '/myteam',
-        async async(routeTo, routeFrom, resolve, reject) {
-
-            try {
-                Web.modelViewService.resolve(resolve, Global.teamController.showIndex())
-            } catch (ex) {
-                Global.uiService.showExceptionPopup(ex)
-            }
-
+            ]
+        },
+        {
+            path: '/myteam',
+            async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.teamController.showIndex())
+        },
+        {
+            path: '/players',
+            async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.playerController.showIndex())
+        },
+        {
+            path: '/scoreboard',
+            async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.scoreboardController.showIndex())
+        },
+        {
+            path: '/standings',
+            async: async (routeTo, routeFrom, resolve, reject) => await defaultResolve(resolve, Global.standingsController.showIndex())
         }
-    })
 
+    ]
 
-    routes.push({
-        path: '/players',
-        async async(routeTo, routeFrom, resolve, reject) {
+    // if (baseurl != '/') {
+    //     routes.push({
+    //         path: baseurl,
+    //         async: homeRoute
+    //     })
+    // }
 
-            try {
-                Web.modelViewService.resolve(resolve, Global.playerController.showIndex())
-            } catch (ex) {
-                Global.uiService.showExceptionPopup(ex)
-            }
+    // routes.push({
+    //     path: '/',
+    //     async: homeRoute
+    // })
 
-        }
-    })
-
-    routes.push({
-        path: '/scoreboard',
-        async async(routeTo, routeFrom, resolve, reject) {
-
-            try {
-                Web.modelViewService.resolve(resolve, Global.scoreboardController.showIndex())
-            } catch (ex) {
-                Global.uiService.showExceptionPopup(ex)
-            }
-
-        }
-    })
-
-    routes.push({
-        path: '/standings',
-        async async(routeTo, routeFrom, resolve, reject) {
-
-            try {
-                Web.modelViewService.resolve(resolve, Global.standingsController.showIndex())
-            } catch (ex) {
-                Global.uiService.showExceptionPopup(ex)
-            }
-
-        }
-    })
 
 
     //Needs to be last
@@ -106,6 +103,35 @@ const routes = function (baseurl) {
     })
 
     return routes
+}
+
+async function defaultResolve(resolve, promise: Promise<ModelView>) {
+    try {
+        await doResolve(resolve, promise)
+    } catch (ex) {
+        Global.uiService.showExceptionPopup(ex)
+    }
+}
+
+
+//Handles routing to a controller
+async function doResolve(resolve, controller_promise: Promise<ModelView>) {
+
+    let modelView: ModelView = await controller_promise;
+
+    if (!modelView) return
+
+    let ctx = await modelView.model
+
+    let context = await ctx()
+
+    resolve({
+        componentUrl: modelView.view
+    },
+        {
+            context: context
+        })
+
 }
 
 export default routes 

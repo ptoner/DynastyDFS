@@ -10,7 +10,9 @@ class ScoreboardController {
 
 
     async showIndex(): Promise<ModelView> {
-        return new ModelView({}, 'pages/scoreboard/index.html')
+        return new ModelView(async () => {
+
+        }, 'pages/scoreboard/index.html')
 
     }
 

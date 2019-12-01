@@ -1,5 +1,4 @@
 import {LeagueSettings, BattingScoring, PitchingScoring, PositionLimits} from "../dto/league-settings";
-import { Buffer } from "buffer"
 import { SchemaService } from "./util/schema-service";
 
 
@@ -14,26 +13,23 @@ class LeagueSettingsService {
 
     async loadStoreForWallet(walletAddress:string) {
         this.db = await this.schemaService.getLeagueSettingsStoreByWalletAddress(walletAddress)
+        return this.db.load()
     }
 
 
-    async getLeagueSettings(): Promise<LeagueSettings> {
-        return await this.db.get(1)
+    async getLeagueSettings(walletAddress:string): Promise<LeagueSettings> {
+        return this.db.get(walletAddress)
     }
 
     async update(leagueSettings: LeagueSettings) : Promise<void> {
-
-        //Make sure the ID is 1
-        leagueSettings.id = 1
-
-        return this.db.put(leagueSettings.id, leagueSettings)
+        return this.db.put(leagueSettings.owner, leagueSettings)
     }
 
     public translate(rawJson) : LeagueSettings {
 
         if (!rawJson) return
 
-        let leagueSettings: LeagueSettings = new LeagueSettings()
+        let leagueSettings: LeagueSettings
 
         Object.assign(leagueSettings, rawJson)
 
@@ -46,13 +42,13 @@ class LeagueSettingsService {
     }
 
     public translateBattingScoring(rawJson) : BattingScoring {
-        let battingScoring: BattingScoring = new BattingScoring()
+        let battingScoring: BattingScoring = {}
         Object.assign(battingScoring, rawJson)
         return battingScoring
     }
 
     public translatePitchingScoring(rawJson) : PitchingScoring {
-        let pitchingScoring: PitchingScoring = new PitchingScoring()
+        let pitchingScoring: PitchingScoring = {}
         Object.assign(pitchingScoring, rawJson)
         return pitchingScoring
     }
@@ -62,7 +58,7 @@ class LeagueSettingsService {
         let positionLimits: PositionLimits[] = []
 
         for (let positionLimit of rawJson) {
-            let created: PositionLimits = new PositionLimits()
+            let created: PositionLimits = {}
             Object.assign(created, positionLimit)
             positionLimits.push(created)
         }
@@ -79,5 +75,3 @@ class LeagueSettingsService {
 }
 
 export { LeagueSettingsService }
-//
-// module.exports = LeagueSettingsService

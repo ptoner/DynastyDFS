@@ -1,0 +1,280 @@
+<!--suppress JSAnnotator -->
+<template>
+
+    <div class="page" data-name="league-settings-show">
+
+        <div class="fab fab-extended fab-right-bottom">
+            <a href="/league/settings/edit">
+                <i class="icon f7-icons">edit</i>
+                <div class="fab-text">Edit Settings</div>
+            </a>
+        </div>
+
+        <div class="page-content">
+
+            <div class="row">
+                <div class="col-100 large-50 center">
+
+                    <div class="block-title">Basic Settings</div>
+                    <div class="data-table">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="label-cell">League Name</td>
+                                    <td>{{leagueName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="block-title">Roster Limits</div>
+                    <div class="data-table">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="label-cell">Roster Size</td>
+                                    <td>{{rosterSize}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Total Starters</td>
+                                    <td>{{totalStarters}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Total Bench</td>
+                                    <td>{{totalBench}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Total DL</td>
+                                    <td>{{totalDl}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="block-title">Position Limits</div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <th>Position</th>
+                                <th>Starters</th>
+                                <th>Maximums</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="label-cell">C</td>
+                                    <td>{{catcherStarters}}</td>
+                                    <td>{{catcherMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">1B</td>
+                                    <td>{{firstBaseStarters}}</td>
+                                    <td>{{firstBaseMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">2B</td>
+                                    <td>{{secondBaseStarters}}</td>
+                                    <td>{{secondBaseMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">3B</td>
+                                    <td>{{thirdBaseStarters}}</td>
+                                    <td>{{thirdBaseMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">SS</td>
+                                    <td>{{shortstopStarters}}</td>
+                                    <td>{{shortstopMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">IF</td>
+                                    <td>{{infieldStarters}}</td>
+                                    <td>{{infieldMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">OF</td>
+                                    <td>{{ofStarters}}</td>
+                                    <td>{{ofMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">UTIL</td>
+                                    <td>{{utilStarters}}</td>
+                                    <td>{{utilMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">SP</td>
+                                    <td>{{spStarters}}</td>
+                                    <td>{{spMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">RP</td>
+                                    <td>{{rpStarters}}</td>
+                                    <td>{{rpMax}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">P</td>
+                                    <td>{{pStarters}}</td>
+                                    <td>{{pMax}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="block-title">Batting Scoring</div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <th>Category</th>
+                                <th>Points</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="label-cell">Hits</td>
+                                    <td>{{hitsBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Runs Scored</td>
+                                    <td>{{runsScoredBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Singles</td>
+                                    <td>{{singlesBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Doubles</td>
+                                    <td>{{doublesBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Triples</td>
+                                    <td>{{triplesBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Home Runs</td>
+                                    <td>{{homeRunsBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">RBI</td>
+                                    <td>{{rbiBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Walks</td>
+                                    <td>{{bbBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Intentional Walk</td>
+                                    <td>{{iBBBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Strikeout</td>
+                                    <td>{{kBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Hit By Pitch</td>
+                                    <td>{{hbpBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Stolen Base</td>
+                                    <td>{{sbBatting}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Caught Stealing</td>
+                                    <td>{{csBatting}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="block-title">Pitching Scoring</div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <th>Category</th>
+                                <th>Points</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="label-cell">Per Out</td>
+                                    <td>{{outPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Hits</td>
+                                    <td>{{hitPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Earned Run</td>
+                                    <td>{{earnedRunPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Home Run</td>
+                                    <td>{{homeRunPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">BB</td>
+                                    <td>{{bbPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">HBP</td>
+                                    <td>{{hbpPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Strikeout</td>
+                                    <td>{{kPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Wild Pitch</td>
+                                    <td>{{wildPitchPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Pickoff</td>
+                                    <td>{{poPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Complete Game</td>
+                                    <td>{{cgPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Shut Out</td>
+                                    <td>{{shutoutPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Blown Save</td>
+                                    <td>{{bsPitching}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Holds</td>
+                                    <td>{{holdsPitching}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</template>
+
+
+
+
+<script>
+
+    return {
+        on: {
+            tabMounted: async function (e, page) {
+                const self = this
+
+                this.$$('#league-settings-form').on('submit', async function (e) {
+                    e.preventDefault()
+                    await window['leagueController'].saveButtonClicked(e)
+                })
+            }
+        }
+    }
+
+</script>

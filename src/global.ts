@@ -1,4 +1,4 @@
-import { LeagueController } from "./controller/league-controller";
+import { LeagueController } from "./controller/league/league-controller";
 import { AdminController } from "./controller/admin-controller";
 
 import { LeagueSettingsService } from "./services/league-settings-service"
@@ -25,6 +25,9 @@ import { Player } from "./dto/player";
 import { TeamController } from "./controller/team-controller";
 import { StandingsController } from "./controller/standings-controller";
 import { ScoreboardController } from "./controller/scoreboard-controller";
+import { SettingsController } from "./controller/league/settings-controller";
+import { TeamsController } from "./controller/league/teams-controller";
+import { TeamService } from "./services/team-service";
 
 const { providers, ethers } = require('ethers')
 const IPFS = require('ipfs')
@@ -41,14 +44,18 @@ const promisify = (inner) =>
 
 export namespace Global {
 
-    // export var homeController: HomeController
-    // export var adminController: AdminController
-    // export var playerController: PlayerController
+    /* League Tab */
     export var leagueController: LeagueController
+    export var settingsController: SettingsController
+    export var teamsController: TeamsController
+    /* End League Tab */
+
+
     export var teamController: TeamController
     export var playerController: PlayerController
     export var standingsController: StandingsController 
     export var scoreboardController: ScoreboardController 
+
     export var app: Framework7
 
 
@@ -74,6 +81,7 @@ export namespace Global {
     export var playerBoxscoreMapService: PlayerBoxscoreMapService
     export var gamedayService: GamedayService
     export var playerDayService: PlayerDayService
+    export var teamService:TeamService
 
     //Orbit-db tables
     export var ipfs: any
@@ -81,7 +89,11 @@ export namespace Global {
     export var orbitAccessControl: any  //this is temporary. This will need to be refactored. Remove it and actually create access control
 
     export function initializeControllers() {
-        Global.leagueController = new LeagueController()
+        
+        Global.leagueController = new LeagueController(Global.leagueSettingsService, Global.uiService)
+        Global.settingsController = new SettingsController(Global.leagueSettingsService, Global.uiService)
+        Global.teamsController = new TeamsController(Global.teamService)
+
         Global.teamController = new TeamController()
         Global.playerController = new PlayerController(Global.playerService, Global.pagingService)
         Global.scoreboardController = new ScoreboardController()
@@ -89,9 +101,11 @@ export namespace Global {
 
         window['leagueController'] = Global.leagueController
         window['teamController'] = Global.teamController
+        window['teamsController'] = Global.teamsController
         window['playerController'] = Global.playerController
         window['scoreboardController'] = Global.scoreboardController
         window['standingsController'] = Global.standingsController
+        window['settingsController'] = Global.settingsController
 
 
     }
@@ -187,6 +201,7 @@ export namespace Global {
 
         Global.translateService = new TranslateService()
         Global.leagueSettingsService = new LeagueSettingsService(Global.schemaService)
+        Global.teamService = new TeamService(Global.schemaService)
         Global.playerService = new PlayerService(Global.translateService, Global.schemaService)
         Global.playerBoxscoreMapService = new PlayerBoxscoreMapService(Global.translateService, Global.schemaService)
 

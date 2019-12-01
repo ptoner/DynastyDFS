@@ -1,11 +1,11 @@
 import {LeagueSettingsService} from "../services/league-settings-service";
 import {Global} from "../global";
 import {BattingScoring, LeagueSettings, PitchingScoring, PositionLimits} from "../dto/league-settings";
-import {Dom7} from "framework7";
 import { QueueService } from '../services/util/queue_service'
 import { GamedayService } from '../services/gameday-service';
 import { UiService } from '../services/util/ui-sevice';
 import { ModelView, PromiseView } from "large-web";
+import { Dom7, Template7 } from "framework7/js/framework7.bundle"
 
 var $$ = Dom7;
 
@@ -27,14 +27,16 @@ class AdminController {
     }
 
     async index() {
-        return new ModelView({}, "pages/admin/index.html")
+        return new ModelView(async () => {
+
+        }, "pages/admin/index.html")
 
     }
 
 
     async showLeagueSettings() {
 
-        let leagueSettings = await this.leagueSettingsService.getLeagueSettings()
+        let leagueSettings = await this.leagueSettingsService.getLeagueSettings(window['currentAccount'])
 
         let leagueSettingsViewModel = this._translateToCommandModel(leagueSettings)
 
@@ -44,7 +46,7 @@ class AdminController {
 
     async showLeagueSettingsForm() {
 
-        let leagueSettings = await this.leagueSettingsService.getLeagueSettings()
+        let leagueSettings = await this.leagueSettingsService.getLeagueSettings(window['currentAccount'])
 
         let leagueSettingsCommandModel
 
@@ -166,7 +168,7 @@ class AdminController {
         // )
 
 
-        let settings: LeagueSettings = new LeagueSettings()
+        let settings: LeagueSettings = {}
         return settings
 
 

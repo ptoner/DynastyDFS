@@ -1,71 +1,69 @@
 {
-    "configurations": [
-        {
-            "name": "Test PlayerService",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-player-service.ts"],
-            "cwd": "${workspaceRoot}/truffle",
-            "outFiles": [
-                "${workspaceRoot}/test/**/*"
-            ],
-          },
-          {
-            "name": "Test League Settings Service",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-league-settings-service.ts"],
-            "cwd": "${workspaceRoot}/truffle",
-            "outFiles": [
-                "${workspaceRoot}/test/**/*"
-            ],
-          },
-          {
-            "name": "Test Player Day Service",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-player-day-service.ts"],
-            "cwd": "${workspaceRoot}/truffle",
-            "outFiles": [
-                "${workspaceRoot}/test/**/*"
-            ],
-          },
-          {
-            "name": "Test PlayerBoxscoreMap Service",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-playerboxscoremap-service.ts"],
-            "cwd": "${workspaceRoot}/truffle",
-            "outFiles": [
-                "${workspaceRoot}/test/**/*"
-            ],
-          },
-          {
-            "name": "Test Gameday Service",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/truffle/node_modules/truffle/build/cli.bundled.js",
-            "args": ["test", "test/test-gameday-service.ts"],
-            "cwd": "${workspaceRoot}/truffle",
-            "outFiles": [
-                "${workspaceRoot}/test/**/*"
-            ],
-          },
-          {
-            "name": "Launch test.ts",
-            "type": "node",
-            "request": "launch",
-            "runtimeArgs": [
-                "-r",
-                "ts-node/register"
-            ],
-            "args": ["test.ts"],
-            "cwd": "${workspaceRoot}/js"
-          }
-    ]
+  "configurations": [
+    {
+      "name": "Test Gameday Service",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "${workspaceFolder}/node_modules/ts-mocha/bin/ts-mocha",
+        "--timeout",
+        "999999",
+        "-p",
+        "${workspaceFolder}/tsconfig.json",
+        "${workspaceFolder}/test/test-gameday-service.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceRoot}/test",
+    },
+
+    {
+      "name": "Test Team Service",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "${workspaceFolder}/node_modules/ts-mocha/bin/ts-mocha",
+        "--timeout",
+        "999999",
+        "-p",
+        "${workspaceFolder}/tsconfig.json",
+        "${workspaceFolder}/test/test-team-service.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceRoot}/test",
+    },
+
+    {
+      "name": "Test Player Day Service",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "${workspaceFolder}/node_modules/ts-mocha/bin/ts-mocha",
+        "--timeout",
+        "999999",
+        "-p",
+        "${workspaceFolder}/tsconfig.json",
+        "${workspaceFolder}/test/test-player-day-service.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceRoot}/test",
+    },
+
+    {
+      "name": "Test Player Service",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "${workspaceFolder}/node_modules/ts-mocha/bin/ts-mocha",
+        "--timeout",
+        "999999",
+        "-p",
+        "${workspaceFolder}/tsconfig.json",
+        "${workspaceFolder}/test/test-player-service.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceRoot}/test",
+    },
+
+  ]
 
 }

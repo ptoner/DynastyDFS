@@ -1,0 +1,65 @@
+<!--suppress JSAnnotator -->
+<template>
+
+    <div class="page" data-name="league-teams-edit">
+        <div class="page-content">
+
+            <form id="edit-teams-form">
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <th>Owner</th>
+                            <th>Team Name</th>
+                        </thead>
+                        <tbody>
+                            {{#each teams}}
+                            <tr>
+                                <td class="label-cell">
+                                    <input type="text" name="_id" value="{{_id}}" />
+                                </td>
+                                <td>
+                                    <input type="text" name="name" value="{{name}}" />
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="block large-33 float-right">
+                    <button class="button button-fill"  type="submit">Save Changes</button>
+                </div>
+
+
+
+            </form>
+
+
+
+
+        </div>
+    </div>
+
+</template>
+
+
+
+
+<script>
+
+    return {
+        on: {
+            tabMounted: async function (e, page) {
+                const self = this
+
+                this.$$('#edit-teams-form').on('submit', async function (e) {
+                    e.preventDefault()
+                    await window['teamsController'].saveButtonClicked(e)
+                })
+
+            }
+        }
+    }
+
+</script>

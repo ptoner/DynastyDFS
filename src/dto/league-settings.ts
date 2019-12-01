@@ -1,72 +1,58 @@
-class LeagueSettings {
-
-    id: number
-    leagueName: string
-    rosterSize: number
-    totalStarters: number
-    totalBench: number
-    totalDl: number
-    positionLimits: PositionLimits[]
-    battingScoring: BattingScoring
-    pitchingScoring: PitchingScoring
-
-    constructor(
-
-    ) { }
+interface LeagueSettings {
+    owner?: string,
+    leagueName?: string
+    rosterSize?: number
+    totalStarters?: number
+    totalBench?: number
+    totalDl?: number
+    positionLimits?: PositionLimits[]
+    battingScoring?: BattingScoring
+    pitchingScoring?: PitchingScoring
 }
 
-class PositionLimits {
+interface PositionLimits {
 
-    position: string
-    starters: Number
-    maximums: Number
+    position?: string
+    starters?: Number
+    maximums?: Number
 
-    constructor(
-    ) { }
 }
 
 
-class BattingScoring {
+interface BattingScoring {
 
-    hits: Number
-    runsScored: Number
-    singles: Number
-    doubles: Number
-    triples: Number
-    homeRuns: Number
-    rbi: Number
-    bb: Number
-    ibb: Number
-    k: Number
-    hbp: Number
-    sb: Number
-    cs: Number
+    hits?: Number
+    runsScored?: Number
+    singles?: Number
+    doubles?: Number
+    triples?: Number
+    homeRuns?: Number
+    rbi?: Number
+    bb?: Number
+    ibb?: Number
+    k?: Number
+    hbp?: Number
+    sb?: Number
+    cs?: Number
 
-    constructor(
-
-    ) { }
 }
 
-class PitchingScoring {
+interface PitchingScoring {
+    ip?: Number
+    h?: Number
+    er?: Number
+    hr?: Number
+    bb?: Number
+    hbp?: Number
+    k?: Number
+    wp?: Number
+    balks?: Number
+    pickOffs?: Number
+    completeGame?: Number
+    shutOut?: Number
+    blownSave?: Number
+    holds?: Number
 
-    ip: Number
-    h: Number
-    er: Number
-    hr: Number
-    bb: Number
-    hbp: Number
-    k: Number
-    wp: Number
-    balks: Number
-    pickOffs: Number
-    completeGame: Number
-    shutOut: Number
-    blownSave: Number
-    holds: Number
-
-    constructor(
-
-    ) { }
 }
 
 

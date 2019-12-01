@@ -10,7 +10,8 @@ class TeamController {
 
 
     async showIndex(): Promise<ModelView> {
-        return new ModelView({}, 'pages/team/index.html')
+        return new ModelView(async () => {
+        }, 'pages/team/index.html')
 
     }
 

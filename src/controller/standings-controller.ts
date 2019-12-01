@@ -10,7 +10,9 @@ class StandingsController {
 
 
     async showIndex(): Promise<ModelView> {
-        return new ModelView({}, 'pages/standings/index.html')
+        return new ModelView(async () => {
+
+        }, 'pages/standings/index.html')
 
     }
 

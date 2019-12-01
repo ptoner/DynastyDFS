@@ -32,9 +32,10 @@ class UiService {
         let context = component.$route.context
 
         //Get promise from component and await it. Then set the state to the result.
-        let model = await context.fn()
-
-        component.$setState(model)
+        if (context) {
+            let model = await context.fn()
+            component.$setState(model)
+        }
 
         if (showSpinner) this.app.preloader.hide()
     }

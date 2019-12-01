@@ -1,0 +1,51 @@
+<!--suppress JSAnnotator -->
+<template>
+
+    <div class="page" data-name="league-teams">
+
+        <div class="fab fab-extended fab-right-bottom">
+            <a href="/league/teams/edit">
+                <i class="icon f7-icons">edit</i>
+                <div class="fab-text">Edit Teams</div>
+            </a>
+        </div>
+
+        <div class="page-content">
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <th>Owner</th>
+                        <th>Team Name</th>
+                    </thead>
+                    <tbody>
+                        {{#each teams}}
+                            <tr>
+                                <td class="label-cell">{{_id}}</td>
+                                <td>{{name}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+
+</template>
+
+
+
+
+<script>
+
+    return {
+        on: {
+            tabMounted: async function (e, page) {
+                const self = this
+            }
+        }
+    }
+
+</script>
