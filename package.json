@@ -41,7 +41,7 @@
     "browser-resolve": "1.11.3",
     "browserify": "16.2.3",
     "cpy-cli": "^1.0.1",
-    "electron": "6.0.10",
+    "electron": "18.3.7",
     "electron-builder": "21.2.0",
     "http-server": "^0.10.0",
     "large-web": "0.0.14",
