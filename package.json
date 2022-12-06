@@ -43,7 +43,7 @@
     "cpy-cli": "^1.0.1",
     "electron": "6.0.10",
     "electron-builder": "21.2.0",
-    "http-server": "^0.10.0",
+    "http-server": "^14.1.1",
     "large-web": "0.0.14",
     "moment": "2.24.0",
     "ts-node": "8.3.0",
