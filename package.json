@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "orbit-db": "0.22.1",
-    "ipfs": "0.38.0",
+    "ipfs": "0.65.0",
     "ethers": "4.0.33",
     "js-sha256": "0.9.0",
     "framework7": "5.1.3",
